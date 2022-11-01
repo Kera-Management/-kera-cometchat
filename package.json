@@ -1,0 +1,19 @@
+{
+  "name": "@kera/cometchat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kera-Management/-kera-cometchat.git"
+  },
+  "author": "Kera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kera-Management/-kera-cometchat/issues"
+  },
+  "homepage": "https://github.com/Kera-Management/-kera-cometchat#readme"
+}
