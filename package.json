@@ -1,6 +1,6 @@
 {
   "name": "@kera-management/cometchat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "publishConfig": {
     "@Kera-Management:registry": "https://npm.pkg.github.com"
