@@ -3,13 +3,13 @@ export {
   CometChatIncomingDirectCall,
   CometChatOutgoingCall,
   CometChatOutgoingDirectCall,
-} from "./Calls";
+} from "./components/Calls";
 export {
   CometChatConversationList,
   CometChatConversationListItem,
   CometChatConversationListWithMessages,
-} from "./Chats";
-export { CometChatUI } from "./CometChatUI";
+} from "./components/Chats";
+export { CometChatUI } from "./components/CometChatUI";
 export {
   CometChatAddGroupMemberList,
   CometChatAddGroupMemberListItem,
@@ -22,7 +22,7 @@ export {
   CometChatGroupListWithMessages,
   CometChatViewGroupMemberList,
   CometChatViewGroupMemberListItem,
-} from "./Groups";
+} from "./components/Groups";
 export {
   CometChatActionMessageBubble,
   CometChatCreatePoll,
@@ -62,18 +62,18 @@ export {
   CometChatSmartReplyPreview,
   CometChatStickerKeyboard,
   CometChatThreadedMessageReplyCount,
-} from "./Messages";
+} from "./components/Messages";
 export {
   CometChatAvatar,
   CometChatBackdrop,
   CometChatBadgeCount,
   CometChatToastNotification,
   CometChatUserPresence,
-} from "./Shared";
-export { CometChatUserProfile } from "./UserProfile";
+} from "./components/Shared";
+export { CometChatUserProfile } from "./components/UserProfile";
 export {
   CometChatUserDetails,
   CometChatUserList,
   CometChatUserListItem,
   CometChatUserListWithMessages,
-} from "./Users";
+} from "./components/Users";
