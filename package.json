@@ -5,8 +5,9 @@
   "publishConfig": {
     "@Kera-Management:registry": "https://npm.pkg.github.com"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "typings": "dist/index",
+  "main": "dist/index",
+  "module": "dist/index",
   "files": [
     "dist"
   ],
