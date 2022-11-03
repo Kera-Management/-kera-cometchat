@@ -4,8 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatAvatar = void 0;
-require("core-js/modules/es.string.trim.js");
-require("core-js/modules/es.regexp.to-string.js");
+require("core-js/modules/es6.regexp.to-string.js");
 var _react = _interopRequireDefault(require("react"));
 var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));

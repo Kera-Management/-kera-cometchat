@@ -4,11 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.thumbnailStyle = exports.nameStyle = exports.incomingCallWrapperStyle = exports.headerWrapperStyle = exports.headerButtonStyle = exports.callTypeStyle = exports.callIconStyle = exports.callDetailStyle = exports.callContainerStyle = exports.ButtonStyle = void 0;
-require("core-js/modules/es.array.includes.js");
-require("core-js/modules/es.string.includes.js");
-require("core-js/modules/es.regexp.exec.js");
-require("core-js/modules/es.string.replace.js");
-require("core-js/modules/es.parse-int.js");
+require("core-js/modules/es7.array.includes.js");
+require("core-js/modules/es6.regexp.replace.js");
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 const incomingCallWrapperStyle = (props, keyframes) => {

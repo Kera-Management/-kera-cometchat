@@ -1,10 +1,11 @@
 "use strict";
 
+require("core-js/modules/es6.symbol.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatReceiverWhiteboardBubble = void 0;
-require("core-js/modules/es.json.stringify.js");
+require("core-js/modules/es6.regexp.split.js");
 var _react = _interopRequireDefault(require("react"));
 var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));

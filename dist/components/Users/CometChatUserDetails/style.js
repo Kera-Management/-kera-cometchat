@@ -1,10 +1,10 @@
 "use strict";
 
+require("core-js/modules/es6.symbol.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.userThumbnailStyle = exports.userStatusStyle = exports.userPresenceStyle = exports.userNameStyle = exports.userInfoSectionStyle = exports.userDetailStyle = exports.sectionStyle = exports.sectionHeaderStyle = exports.sectionContentStyle = exports.privacySectionStyle = exports.mediaSectionStyle = exports.itemLinkStyle = exports.headerTitleStyle = exports.headerStyle = exports.headerCloseStyle = exports.contentItemStyle = exports.actionSectionStyle = void 0;
-require("core-js/modules/web.dom-collections.iterator.js");
 var _chat = require("@cometchat-pro/chat");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

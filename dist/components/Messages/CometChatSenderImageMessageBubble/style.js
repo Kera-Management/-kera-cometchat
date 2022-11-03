@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.messageWrapperStyle = exports.messageReactionsWrapperStyle = exports.messageInfoWrapperStyle = exports.messageImgWrapper = exports.messageContainerStyle = void 0;
-require("core-js/modules/web.dom-collections.iterator.js");
 const messageContainerStyle = () => {
   return {
     alignSelf: "flex-end",

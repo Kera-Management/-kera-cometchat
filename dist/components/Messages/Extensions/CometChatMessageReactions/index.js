@@ -1,15 +1,12 @@
 "use strict";
 
-require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/es6.symbol.js");
+require("core-js/modules/web.dom.iterable.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatMessageReactions = void 0;
-require("core-js/modules/es.regexp.exec.js");
-require("core-js/modules/es.string.replace.js");
-require("core-js/modules/esnext.string.replace-all.js");
-require("core-js/modules/es.array.includes.js");
-require("core-js/modules/es.string.includes.js");
+require("core-js/modules/es7.array.includes.js");
 var _react = _interopRequireDefault(require("react"));
 var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
