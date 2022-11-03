@@ -1,11 +1,15 @@
 {
   "name": "@kera-management/cometchat",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.2",
+  "description": "Comet chat ui personalized for kera",
   "publishConfig": {
     "@Kera-Management:registry": "https://npm.pkg.github.com"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "jest --passWithNoTests",
     "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files"
