@@ -1,11 +1,10 @@
 "use strict";
 
-require("core-js/modules/es6.symbol.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatDeleteMessageBubble = void 0;
-require("core-js/modules/web.dom.iterable.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireWildcard(require("react"));
 var _dateformat = _interopRequireDefault(require("dateformat"));
 var _react2 = require("@emotion/react");

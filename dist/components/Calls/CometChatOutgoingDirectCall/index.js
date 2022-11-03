@@ -1,7 +1,6 @@
 "use strict";
 
-require("core-js/modules/es6.symbol.js");
-require("core-js/modules/web.dom.iterable.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });

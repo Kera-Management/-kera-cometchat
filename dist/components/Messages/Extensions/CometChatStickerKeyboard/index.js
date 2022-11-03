@@ -1,12 +1,12 @@
 "use strict";
 
-require("core-js/modules/es6.symbol.js");
-require("core-js/modules/web.dom.iterable.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatStickerKeyboard = void 0;
-require("core-js/modules/es6.array.sort.js");
+require("core-js/modules/es.array.sort.js");
+require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/es.array.reduce.js");
 var _react = _interopRequireDefault(require("react"));
 var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.stickerWrapperStyle = exports.stickerSectionListStyle = exports.stickerMsgTxtStyle = exports.stickerMsgStyle = exports.stickerListStyle = exports.stickerItemStyle = exports.stickerCloseStyle = exports.sectionListItemStyle = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 const stickerWrapperStyle = (context, keyframes) => {

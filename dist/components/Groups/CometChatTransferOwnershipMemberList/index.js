@@ -1,10 +1,10 @@
 "use strict";
 
-require("core-js/modules/web.dom.iterable.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatTransferOwnershipMemberList = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireDefault(require("react"));
 var _react2 = require("@emotion/react");
 var _chat = require("@cometchat-pro/chat");

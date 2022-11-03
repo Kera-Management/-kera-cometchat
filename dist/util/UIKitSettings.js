@@ -4,7 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.UIKitSettings = void 0;
-require("core-js/modules/web.dom.iterable.js");
+require("core-js/modules/es.string.trim.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 var _tabs = _interopRequireDefault(require("../resources/tabs.json"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }

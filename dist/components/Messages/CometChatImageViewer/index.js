@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatImageViewer = void 0;
-require("core-js/modules/web.dom.iterable.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireWildcard(require("react"));
 var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));

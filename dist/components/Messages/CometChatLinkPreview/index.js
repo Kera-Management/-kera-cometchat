@@ -4,7 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatLinkPreview = void 0;
-require("core-js/modules/es6.regexp.match.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.match.js");
+require("core-js/modules/es.symbol.description.js");
 var _react = _interopRequireDefault(require("react"));
 var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));

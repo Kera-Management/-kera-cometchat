@@ -4,11 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.linkify = exports.getUnixTimestamp = exports.getTimeStampForLastMessage = exports.getMessageSentTime = exports.getMessageFileMetadata = exports.getMessageDate = exports.countEmojiOccurences = exports.checkMessageForExtensionsData = exports.ID = void 0;
-require("core-js/modules/es6.regexp.constructor.js");
-require("core-js/modules/es6.regexp.replace.js");
-require("core-js/modules/es6.regexp.match.js");
-require("core-js/modules/es6.regexp.to-string.js");
-require("core-js/modules/es6.regexp.split.js");
+require("core-js/modules/es.regexp.constructor.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.regexp.to-string.js");
+require("core-js/modules/es.string.replace.js");
+require("core-js/modules/es.string.match.js");
+require("core-js/modules/es.string.trim.js");
+require("core-js/modules/es.string.starts-with.js");
+require("core-js/modules/es.string.split.js");
 var _dateformat = _interopRequireDefault(require("dateformat"));
 var _translator = _interopRequireDefault(require("../resources/localization/translator"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

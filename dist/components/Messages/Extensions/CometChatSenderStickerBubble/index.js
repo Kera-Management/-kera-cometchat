@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatSenderStickerBubble = void 0;
+require("core-js/modules/es.json.stringify.js");
 var _react = _interopRequireDefault(require("react"));
 var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));

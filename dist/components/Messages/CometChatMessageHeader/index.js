@@ -1,10 +1,11 @@
 "use strict";
 
-require("core-js/modules/web.dom.iterable.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatMessageHeader = void 0;
+require("core-js/modules/es.parse-int.js");
 var _react = _interopRequireDefault(require("react"));
 var _dateformat = _interopRequireDefault(require("dateformat"));
 var _react2 = require("@emotion/react");

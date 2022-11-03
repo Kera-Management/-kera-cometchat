@@ -4,7 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.msgTimestampStyle = exports.iconStyle = void 0;
-require("core-js/modules/es6.regexp.search.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.search.js");
 const msgTimestampStyle = (context, props, loggedInUser) => {
   return {
     display: "flex",

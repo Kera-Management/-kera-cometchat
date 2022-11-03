@@ -1,10 +1,11 @@
 "use strict";
 
-require("core-js/modules/web.dom.iterable.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.MessageListManager = void 0;
+require("core-js/modules/es.promise.js");
 var _chat = require("@cometchat-pro/chat");
 var enums = _interopRequireWildcard(require("../../../util/enums.js"));
 var _MessageFilter = _interopRequireDefault(require("./MessageFilter"));

@@ -1,12 +1,12 @@
 "use strict";
 
-require("core-js/modules/web.dom.iterable.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-require("core-js/modules/es7.array.includes.js");
-require("core-js/modules/es6.regexp.split.js");
+require("core-js/modules/es.array.includes.js");
+require("core-js/modules/es.string.includes.js");
 var enums = _interopRequireWildcard(require("../../util/enums.js"));
 var _translation = _interopRequireDefault(require("./locales/ar/translation.json"));
 var _translation2 = _interopRequireDefault(require("./locales/de/translation.json"));

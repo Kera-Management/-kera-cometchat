@@ -1,11 +1,11 @@
 "use strict";
 
-require("core-js/modules/web.dom.iterable.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatSenderTextMessageBubble = void 0;
-require("core-js/modules/es6.regexp.split.js");
+require("core-js/modules/es.json.stringify.js");
 var _react = _interopRequireDefault(require("react"));
 var _twemoji = _interopRequireDefault(require("twemoji"));
 var _htmlReactParser = _interopRequireDefault(require("html-react-parser"));

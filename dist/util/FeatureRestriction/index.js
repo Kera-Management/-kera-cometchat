@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.FeatureRestriction = void 0;
+require("core-js/modules/es.promise.js");
 var _chat = require("@cometchat-pro/chat");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 class FeatureRestriction {

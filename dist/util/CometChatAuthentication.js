@@ -1,6 +1,6 @@
 "use strict";
 
-require("core-js/modules/es6.symbol.js");
+require("core-js/modules/es.object.assign.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
