@@ -1,4 +1,5 @@
-export const replyCountStyle = (context) => {
+export const replyCountStyle = context => {
+
 	return {
 		display: "inline-block",
 		fontSize: "11px",

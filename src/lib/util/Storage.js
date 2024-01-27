@@ -1,23 +1,26 @@
 export class Storage {
-	static attachChangeDetection = (callback) => {
-		window.addEventListener("storage", callback);
-	};
 
-	static detachChangeDetection = (callback) => {
-		window.removeEventListener("storage", callback);
-	};
+    static attachChangeDetection = (callback) => {
+        window.addEventListener('storage', callback);
+    }
 
-	static setItem = (storageKey, storageValue) => {
-		localStorage.setItem(storageKey, JSON.stringify(storageValue));
-	};
+    static detachChangeDetection = (callback) => {
+        window.removeEventListener('storage', callback);
+    }
 
-	static getItem = (storageKey) => {
-		return JSON.parse(localStorage.getItem(storageKey));
-	};
+    static setItem = (storageKey, storageValue) => {
+        localStorage.setItem(storageKey, JSON.stringify(storageValue));
+    }
 
-	static removeItem = (storageKey) => {
-		localStorage.removeItem(storageKey);
-	};
+    static getItem = (storageKey) => {
+        return JSON.parse(localStorage.getItem(storageKey));
+    }
 
-	static clear = () => {};
+    static removeItem = (storageKey) => {
+        localStorage.removeItem(storageKey);
+    }
+
+    static clear = () => {
+
+    }
 }

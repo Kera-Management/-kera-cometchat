@@ -46,11 +46,11 @@ export class SoundManager {
 		}
 	};
 
-	static onIncomingMessage = (context) => {
-		this.enableSoundForMessages(context).then((response) => {
+	static onIncomingMessage = context => {
+		this.enableSoundForMessages(context).then(response => {
 			if (response === true) {
 				if (this.incomingMessageAudio === null) {
-					import("../resources/audio/incomingmessage.wav").then((response) => {
+					import("../resources/audio/incomingmessage.wav").then(response => {
 						this.incomingMessageAudio = new Audio(response.default);
 						this.playMessageAlert(this.incomingMessageAudio);
 					});
@@ -61,16 +61,14 @@ export class SoundManager {
 		});
 	};
 
-	static onIncomingOtherMessage = (context) => {
-		this.enableSoundForMessages(context).then((response) => {
+	static onIncomingOtherMessage = context => {
+		this.enableSoundForMessages(context).then(response => {
 			if (response === true) {
 				if (this.incomingOtherMessageAudio === null) {
-					import("../resources/audio/incomingothermessage.wav").then(
-						(response) => {
-							this.incomingOtherMessageAudio = new Audio(response.default);
-							this.playMessageAlert(this.incomingOtherMessageAudio);
-						}
-					);
+					import("../resources/audio/incomingothermessage.wav").then(response => {
+						this.incomingOtherMessageAudio = new Audio(response.default);
+						this.playMessageAlert(this.incomingOtherMessageAudio);
+					});
 				} else {
 					this.playMessageAlert(this.incomingOtherMessageAudio);
 				}
@@ -78,11 +76,11 @@ export class SoundManager {
 		});
 	};
 
-	static onOutgoingMessage = (context) => {
-		this.enableSoundForMessages(context).then((response) => {
+	static onOutgoingMessage = context => {
+		this.enableSoundForMessages(context).then(response => {
 			if (response === true) {
 				if (this.outgoingMessageAudio === null) {
-					import("../resources/audio/outgoingmessage.wav").then((response) => {
+					import("../resources/audio/outgoingmessage.wav").then(response => {
 						this.outgoingMessageAudio = new Audio(response.default);
 						this.playMessageAlert(this.outgoingMessageAudio);
 					});
@@ -93,16 +91,16 @@ export class SoundManager {
 		});
 	};
 
-	static playMessageAlert = (messageAudio) => {
+	static playMessageAlert = messageAudio => {
 		messageAudio.currentTime = 0;
 		messageAudio.play();
 	};
 
-	static onIncomingCall = (context) => {
-		this.enableSoundForCalls(context).then((response) => {
+	static onIncomingCall = context => {
+		this.enableSoundForCalls(context).then(response => {
 			if (response === true) {
 				if (this.incomingCallAudio === null) {
-					import("../resources/audio/incomingcall.wav").then((response) => {
+					import("../resources/audio/incomingcall.wav").then(response => {
 						this.incomingCallAudio = new Audio(response.default);
 						this.playCallAlert(this.incomingCallAudio);
 					});
@@ -113,11 +111,11 @@ export class SoundManager {
 		});
 	};
 
-	static onOutgoingCall = (context) => {
-		this.enableSoundForCalls(context).then((response) => {
+	static onOutgoingCall = context => {
+		this.enableSoundForCalls(context).then(response => {
 			if (response === true) {
 				if (this.outgoingCallAudio === null) {
-					import("../resources/audio/outgoingcall.wav").then((response) => {
+					import("../resources/audio/outgoingcall.wav").then(response => {
 						this.outgoingCallAudio = new Audio(response.default);
 						this.playCallAlert(this.outgoingCallAudio);
 					});
@@ -128,7 +126,7 @@ export class SoundManager {
 		});
 	};
 
-	static playCallAlert = (callAudio) => {
+	static playCallAlert = callAudio => {
 		try {
 			callAudio.currentTime = 0;
 			if (typeof callAudio.loop == "boolean") {
@@ -140,15 +138,15 @@ export class SoundManager {
 						this.currentTime = 0;
 						this.play();
 					},
-					false
+					false,
 				);
 			}
 			callAudio.play();
 		} catch (error) {}
 	};
 
-	static pauseIncomingCall = (context) => {
-		this.enableSoundForCalls(context).then((response) => {
+	static pauseIncomingCall = context => {
+		this.enableSoundForCalls(context).then(response => {
 			if (response === true) {
 				if (this.incomingCallAudio) {
 					this.incomingCallAudio.pause();
@@ -157,8 +155,8 @@ export class SoundManager {
 		});
 	};
 
-	static pauseOutgoingCall = (context) => {
-		this.enableSoundForCalls(context).then((response) => {
+	static pauseOutgoingCall = context => {
+		this.enableSoundForCalls(context).then(response => {
 			if (response === true) {
 				if (this.outgoingCallAudio) {
 					this.outgoingCallAudio.pause();
@@ -167,19 +165,19 @@ export class SoundManager {
 		});
 	};
 
-	static enableSoundForCalls = (context) => {
-		return new Promise((resolve) => {
+	static enableSoundForCalls = context => {
+		return new Promise(resolve => {
 			context.FeatureRestriction.isCallsSoundEnabled()
-				.then((response) => resolve(response))
-				.catch((error) => resolve(false));
+				.then(response => resolve(response))
+				.catch(error => resolve(false));
 		});
 	};
 
-	static enableSoundForMessages = (context) => {
-		return new Promise((resolve) => {
+	static enableSoundForMessages = context => {
+		return new Promise(resolve => {
 			context.FeatureRestriction.isMessagesSoundEnabled()
-				.then((response) => resolve(response))
-				.catch((error) => resolve(false));
+				.then(response => resolve(response))
+				.catch(error => resolve(false));
 		});
 	};
 }

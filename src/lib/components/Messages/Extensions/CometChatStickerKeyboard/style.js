@@ -1,4 +1,5 @@
 export const stickerWrapperStyle = (context, keyframes) => {
+
 	const slideAnimation = keyframes`
     from {
         bottom: -55px
@@ -20,7 +21,8 @@ export const stickerWrapperStyle = (context, keyframes) => {
 	};
 };
 
-export const stickerSectionListStyle = (context) => {
+export const stickerSectionListStyle = context => {
+
 	return {
 		borderTop: `1px solid ${context.theme.borderColor.primary}`,
 		backgroundColor: `${context.theme.backgroundColor.silver}`,
@@ -41,30 +43,34 @@ export const stickerSectionListStyle = (context) => {
 };
 
 export const sectionListItemStyle = () => {
-	return {
-		height: "35px",
-		width: "35px",
-		cursor: "pointer",
-		flexShrink: "0",
-		":not(:first-of-type)": {
-			marginLeft: "16px",
-		},
-	};
-};
+
+    return {
+
+        height: "35px",
+        width: "35px",
+        cursor: "pointer",
+        flexShrink: "0",
+        ":not(:first-of-type)": {
+            marginLeft: "16px",
+        },
+    }
+}
 
 export const stickerListStyle = () => {
-	return {
-		height: "calc(100% - 50px)",
-		display: "flex",
-		overflowX: "hidden",
-		overflowY: "auto",
-		flexWrap: "wrap",
-		justifyContent: "space-between",
-		alignItems: "center",
-	};
-};
 
-export const stickerItemStyle = (context) => {
+    return {
+        height: "calc(100% - 50px)",
+        display: "flex",
+        overflowX: "hidden",
+        overflowY: "auto",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems: "center"
+    }
+}
+
+export const stickerItemStyle = context => {
+
 	const mq = [...context.theme.breakPoints];
 
 	return {
@@ -83,18 +89,20 @@ export const stickerItemStyle = (context) => {
 };
 
 export const stickerMsgStyle = () => {
-	return {
-		overflow: "hidden",
-		width: "100%",
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		position: "absolute",
-		top: "35%",
-	};
-};
 
-export const stickerMsgTxtStyle = (context) => {
+    return {
+        overflow: "hidden",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: "35%",
+    }
+}
+
+export const stickerMsgTxtStyle = context => {
+
 	return {
 		margin: "0",
 		height: "30px",
@@ -105,6 +113,7 @@ export const stickerMsgTxtStyle = (context) => {
 };
 
 export const stickerCloseStyle = (img, context) => {
+	
 	return {
 		width: "20px",
 		height: "20px",

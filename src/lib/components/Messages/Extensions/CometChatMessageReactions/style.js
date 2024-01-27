@@ -1,9 +1,5 @@
-export const messageReactionsStyle = (
-	props,
-	reactionData,
-	context,
-	loggedInUser
-) => {
+export const messageReactionsStyle = (props, reactionData, context, loggedInUser) => {
+
 	const uid = loggedInUser?.uid;
 	let borderStyle = {};
 	let hoveredBorderStyle = {};
@@ -40,7 +36,7 @@ export const messageReactionsStyle = (
 			alignItems: "center",
 			justifyContent: "center",
 			cursor: "pointer",
-			fontSize: "16px",
+			fontSize: "16px"
 		},
 		"&:hover": {
 			...hoveredBorderStyle,
@@ -49,24 +45,26 @@ export const messageReactionsStyle = (
 };
 
 export const emojiButtonStyle = (img, context) => {
-	return {
-		outline: "0",
-		border: "0",
-		borderRadius: "4px",
-		alignItems: "center",
-		display: "inline-flex",
-		justifyContent: "center",
-		position: "relative",
-		i: {
-			height: "24px",
-			width: "24px",
-			mask: `url(${img}) center center no-repeat`,
-			backgroundColor: `${context.theme.secondaryTextColor}`,
-		},
-	};
-};
 
-export const reactionCountStyle = (context) => {
+    return {
+        outline: "0",
+        border: "0",
+        borderRadius: "4px",
+        alignItems: "center",
+        display: "inline-flex",
+        justifyContent: "center",
+        position: "relative",
+        "i": {
+            height: "24px",
+            width: "24px",
+            mask: `url(${img}) center center no-repeat`,
+			backgroundColor: `${context.theme.secondaryTextColor}`,
+        }        
+    }
+}
+
+export const reactionCountStyle = context => {
+
 	return {
 		color: `${context.theme.color.primary}`,
 		padding: "0 1px 0 3px",

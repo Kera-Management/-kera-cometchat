@@ -1,7 +1,7 @@
-import { CometChat } from "@cometchat-pro/chat";
+import {CometChat} from "@cometchat-pro/chat";
 import Translator from "../../../resources/localization/translator";
 
-export const userDetailStyle = (context) => {
+export const userDetailStyle = context => {
 	return {
 		display: "flex",
 		flexDirection: "column",
@@ -16,7 +16,7 @@ export const userDetailStyle = (context) => {
 	};
 };
 
-export const headerStyle = (context) => {
+export const headerStyle = context => {
 	return {
 		padding: "16px",
 		position: "relative",
@@ -29,6 +29,7 @@ export const headerStyle = (context) => {
 };
 
 export const headerCloseStyle = (img, context) => {
+	
 	const mq = [...context.theme.breakPoints];
 
 	return {
@@ -63,7 +64,7 @@ export const sectionStyle = () => {
 	};
 };
 
-export const actionSectionStyle = (context) => {
+export const actionSectionStyle = context => {
 	return {
 		width: "100%",
 		"> div": {
@@ -77,7 +78,7 @@ export const actionSectionStyle = (context) => {
 	};
 };
 
-export const privacySectionStyle = (context) => {
+export const privacySectionStyle = context => {
 	return {
 		width: "100%",
 		"> div": {
@@ -102,7 +103,7 @@ export const mediaSectionStyle = () => {
 	};
 };
 
-export const sectionHeaderStyle = (context) => {
+export const sectionHeaderStyle = context => {
 	return {
 		margin: "0",
 		width: "100%",
@@ -123,14 +124,14 @@ export const sectionContentStyle = () => {
 
 export const contentItemStyle = () => {
 	return {
-		width: 100 % "",
+		"width": 100 % "",
 		"&:not(:first-of-type):not(:last-of-type)": {
 			padding: "6px 0",
 		},
 	};
 };
 
-export const itemLinkStyle = (context) => {
+export const itemLinkStyle = context => {
 	return {
 		fontSize: "15px",
 		lineHeight: "20px",
@@ -178,15 +179,10 @@ export const userStatusStyle = () => {
 };
 
 export const userPresenceStyle = (context, state) => {
+	
 	let status = state.status ? state.status.toLowerCase() : "";
-	let compareTo = Translator.translate(
-		CometChat.USER_STATUS.ONLINE.toUpperCase(),
-		context.language
-	).toLowerCase();
-	status =
-		status === compareTo
-			? { color: `${context.theme.color.blue}` }
-			: { color: `${context.theme.color.helpText}` };
+	let compareTo = Translator.translate((CometChat.USER_STATUS.ONLINE).toUpperCase(), context.language).toLowerCase();
+	status = status === compareTo ? { color: `${context.theme.color.blue}` } : { color: `${context.theme.color.helpText}` };
 
 	return {
 		width: "calc(100% - 50px)",

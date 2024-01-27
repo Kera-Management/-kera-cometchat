@@ -1,4 +1,5 @@
-export const messagePreviewContainerStyle = (context) => {
+export const messagePreviewContainerStyle = context => {
+
 	return {
 		display: "inline-block",
 		borderRadius: "12px",
@@ -10,22 +11,25 @@ export const messagePreviewContainerStyle = (context) => {
 };
 
 export const messagePreviewWrapperStyle = () => {
-	return {
-		display: "flex",
-		flexDirection: "column",
-	};
-};
+
+    return {
+        display: "flex",
+        flexDirection: "column"
+    }
+}
 
 export const previewImageStyle = (img) => {
-	return {
-		background: `url(${img}) no-repeat center center`,
-		backgroundSize: "contain",
-		height: "150px",
-		margin: "12px 0",
-	};
-};
 
-export const previewDataStyle = (context) => {
+    return {
+        background: `url(${img}) no-repeat center center`,
+        backgroundSize: "contain",
+        height: "150px",
+        margin: "12px 0",
+    }
+}
+
+export const previewDataStyle = context => {
+
 	return {
 		borderTop: `1px solid  ${context.theme.borderColor.primary}`,
 		borderBottom: `1px solid  ${context.theme.borderColor.primary}`,
@@ -33,7 +37,8 @@ export const previewDataStyle = (context) => {
 	};
 };
 
-export const previewTitleStyle = (context) => {
+export const previewTitleStyle = context => {
+
 	return {
 		whiteSpace: "pre-wrap",
 		wordBreak: "break-word",
@@ -45,7 +50,8 @@ export const previewTitleStyle = (context) => {
 	};
 };
 
-export const previewDescStyle = (context) => {
+export const previewDescStyle = context => {
+
 	return {
 		whiteSpace: "pre-wrap",
 		wordBreak: "break-word",
@@ -57,7 +63,8 @@ export const previewDescStyle = (context) => {
 	};
 };
 
-export const previewTextStyle = (context) => {
+export const previewTextStyle = context => {
+
 	return {
 		whiteSpace: "pre-wrap",
 		wordBreak: "break-word",
@@ -72,7 +79,8 @@ export const previewTextStyle = (context) => {
 	};
 };
 
-export const previewLinkStyle = (context) => {
+export const previewLinkStyle = context => {
+
 	return {
 		display: "flex",
 		alignItems: "center",
