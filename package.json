@@ -1,30 +1,44 @@
 {
-	"name": "cometchat-pro-react-ui-kit",
-	"version": "3.0.11-2",
-	"description": "CometChat UI Kit for React App",
-	"author": "CometChat",
-	"dependencies": {
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
-		"react-scripts": "^4.0.3",
-		"@cometchat-pro/chat": "3.0.11",
-		"@emotion/react": "^11",
-		"dateformat": "^4.0.0",
-		"html-react-parser": "^1.4.5",
-		"@twemoji/api": "^14.1.0"
-	},
-	"devDependencies": {
-		"web-vitals": "^3.0.4",
-		"jest": "26.6.0",
-		"jest-canvas-mock": "^2.3.1",
-		"babel-jest": "26.6.0"
-	},
-	"scripts": {
-		"test": "jest"
-	},
-	"jest": {
-		"moduleNameMapper": {
-			"\\.(css|scss|png|svg|pdf|jpg|jpeg|wav)$": "<rootDir>/src/resources/__mocks__/fileMock.js"
-		}
-	}
+  "name": "@kera/cometchat",
+  "version": "1.0.0",
+  "description": "",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@cometchat-pro/chat": "3.0.11",
+    "@emotion/react": "^11",
+    "@twemoji/api": "^14.1.0",
+    "dateformat": "^4.0.0",
+    "fix": "^0.0.6",
+    "html-react-parser": "^1.4.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3"
+  },
+  "devDependencies": {
+    "babel-jest": "26.6.0",
+    "jest": "26.6.0",
+    "jest-canvas-mock": "^2.3.1",
+    "web-vitals": "^3.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kera-Management/-kera-cometchat.git"
+  },
+  "author": "Kera",
+  "license": "ISC",
+  "homepage": "https://github.com/Kera-Management/-kera-cometchat#readme",
+  "scripts": {
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/Kera-Management/-kera-cometchat/issues"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|scss|png|svg|pdf|jpg|jpeg|wav)$": "<rootDir>/src/resources/__mocks__/fileMock.js"
+    }
+  }
 }
