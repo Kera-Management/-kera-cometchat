@@ -117,6 +117,7 @@ class CometChatUI extends React.Component {
 
   render() {
     const { receiverId } = this.props;
+    console.log(receiverId);
     if (receiverId) {
       this.props.chatWithUser = receiverId;
     }
