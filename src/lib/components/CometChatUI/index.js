@@ -116,6 +116,11 @@ class CometChatUI extends React.Component {
   };
 
   render() {
+    const { receiverId } = this.props;
+    if (receiverId) {
+      this.props.chatWithUser = receiverId;
+    }
+
     let messageScreen = (
       <CometChatMessages
         theme={this.props.theme}
