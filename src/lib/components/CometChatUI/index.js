@@ -117,7 +117,6 @@ class CometChatUI extends React.Component {
 
   render() {
     const { receiverId } = this.props;
-    console.log(receiverId);
     if (receiverId) {
       this.props.chatWithUser = receiverId;
     }
@@ -128,6 +127,7 @@ class CometChatUI extends React.Component {
         lang={this.props.lang}
         _parent="unified"
         actionGenerated={this.actionHandler}
+        chatWithUser={this.props.chatWithUser}
       />
     );
 
