@@ -1115,7 +1115,7 @@ class CometChatGroupDetails extends React.Component {
           ref={(el) => (this.toastRef = el)}
           lang={this.props.lang}
         />
-      </div>
+      </Box>
     );
   }
 }

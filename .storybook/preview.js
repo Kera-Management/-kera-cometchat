@@ -1,7 +1,10 @@
 import React from 'react';
-import { ChakraProvider, Box, defaultSystem } from '@chakra-ui/react';
+import { ChakraProvider, Box, createSystem, defaultConfig } from '@chakra-ui/react';
 import { CometChatContext } from '../src/lib/util/CometChatContext';
 import { theme as cometChatTheme } from '../src/lib/resources/theme';
+
+// Create a Chakra system
+const system = createSystem(defaultConfig);
 
 // Mock CometChat context for Storybook
 const mockCometChatContext = {
@@ -36,7 +39,7 @@ const preview = {
   },
   decorators: [
     (Story) => (
-      <ChakraProvider value={defaultSystem}>
+      <ChakraProvider value={system}>
         <CometChatContext.Provider value={mockCometChatContext}>
           <Box p={5}>
             <Story />
