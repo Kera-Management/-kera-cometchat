@@ -1,11 +1,9 @@
 import React from "react";
 import dateFormat from "dateformat";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 import { Info } from "phosphor-react";
+import { Box, Flex, Text, Heading } from "@chakra-ui/react";
 
 import { MessageHeaderManager } from "./controller";
 
@@ -16,18 +14,6 @@ import * as enums from "../../../util/enums.js";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import {
-  chatHeaderStyle,
-  chatDetailStyle,
-  chatSideBarBtnStyle,
-  chatThumbnailStyle,
-  chatUserStyle,
-  chatNameStyle,
-  chatStatusStyle,
-  chatOptionWrapStyle,
-  chatOptionStyle,
-} from "./style";
 
 import menuIcon from "./resources/menu.svg";
 import audioCallIcon from "./resources/audio-call.svg";
@@ -628,22 +614,30 @@ class CometChatMessageHeader extends React.Component {
     let typing = null;
     if (this.state.typing) {
       typing = (
-        <span
-          css={chatStatusStyle(this.state, this.context)}
+        <Text
+          fontSize="13px"
+          width="100%"
+          color={this.context.theme.color.helpText}
+          fontStyle="italic"
           className={chatStatusClassName}
         >
           {this.state.typing}
-        </span>
+        </Text>
       );
     }
 
     let status = (
-      <span
-        css={chatStatusStyle(this.state, this.context)}
+      <Text
+        fontSize="13px"
+        width="100%"
+        color={this.context.type === CometChat.ACTION_TYPE.TYPE_USER 
+          ? (this.state.presence === "offline" ? this.context.theme.color.helpText : this.context.theme.color.blue)
+          : this.context.theme.color.helpText}
+        textTransform={this.context.type === CometChat.ACTION_TYPE.TYPE_USER ? "capitalize" : "none"}
         className={chatStatusClassName}
       >
         {this.state.status}
-      </span>
+      </Text>
     );
 
     const viewDetailText = Translator.translate(
@@ -651,14 +645,19 @@ class CometChatMessageHeader extends React.Component {
       this.context.language
     );
     let viewDetailBtn = (
-      <div
+      <Box
         className={viewDetailClassName}
-        css={chatOptionStyle(detailPaneIcon, this.context, 0)}
+        w="24px"
+        h="24px"
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        ml="16px"
         title={viewDetailText}
         onClick={this.viewDetail}
       >
         <Info size={32} weight="duotone" />
-      </div>
+      </Box>
     );
 
     /**
@@ -734,33 +733,83 @@ class CometChatMessageHeader extends React.Component {
     }
 
     return (
-      <div css={chatHeaderStyle(this.context)} className="chat__header">
-        <div css={chatDetailStyle()} className="chat__details">
-          <div
-            css={chatSideBarBtnStyle(menuIcon, this.props, this.context)}
+      <Flex
+        className="chat__header"
+        p="16px"
+        w="100%"
+        bg={this.context.theme.backgroundColor.white}
+        zIndex="1"
+        borderBottom={`1px solid ${this.context.theme.borderColor.primary}`}
+        justify="space-between"
+        align="center"
+      >
+        <Flex
+          className="chat__details"
+          align="center"
+          width="calc(100% - 116px)"
+        >
+          <Box
             className="chat__sidebar-menu"
+            cursor="pointer"
+            display={{ base: "block", md: "none" }}
+            sx={{
+              mask: `url(${menuIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.primaryColor,
+              width: "24px",
+              height: "24px",
+              ...(this.props.hasOwnProperty("sidebar") && this.props.sidebar === 0 ? { display: "none !important" } : {})
+            }}
             onClick={this.resetChat}
-          ></div>
-          <div css={chatThumbnailStyle()} className="chat__thumbnail">
+          />
+          <Box
+            className="chat__thumbnail"
+            display="inline-block"
+            w="36px"
+            h="36px"
+            flexShrink="0"
+            m="0 16px"
+            position="relative"
+          >
             {avatar}
             {presence}
-          </div>
-          <div css={chatUserStyle(this.context)} className={chatWithClassName}>
-            <h6
-              css={chatNameStyle(this.context)}
+          </Box>
+          <Box
+            className={chatWithClassName}
+            w={{ base: "calc(100% - 80px)", md: "calc(100% - 50px)" }}
+            p="0"
+            flexGrow="1"
+            display="flex"
+            flexDirection="column"
+          >
+            <Heading
+              as="h6"
               className={chatNameClassName}
+              m="0"
+              fontSize="15px"
+              fontWeight="600"
+              lineHeight="22px"
+              w="100%"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              color={this.context.theme.primary}
               onMouseEnter={(event) => this.toggleTooltip(event, true)}
               onMouseLeave={(event) => this.toggleTooltip(event, false)}
             >
               {this.context.item.name}
-            </h6>
+            </Heading>
             {typing ? typing : status}
-          </div>
-        </div>
-        <div css={chatOptionWrapStyle()} className="chat__options">
+          </Box>
+        </Flex>
+        <Flex
+          className="chat__options"
+          justify="space-between"
+          align="center"
+          w="auto"
+        >
           {viewDetailBtn}
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   }
 }

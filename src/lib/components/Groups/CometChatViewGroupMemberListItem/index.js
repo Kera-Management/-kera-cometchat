@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Select, Icon } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -11,21 +9,6 @@ import { CometChatContext } from "../../../util/CometChatContext";
 import * as enums from "../../../util/enums.js";
 
 import Translator from "../../../resources/localization/translator";
-
-import {
-  modalRowStyle,
-  nameColumnStyle,
-  avatarStyle,
-  nameStyle,
-  roleStyle,
-  scopeColumnStyle,
-  scopeIconStyle,
-  actionColumnStyle,
-  banIconStyle,
-  kickIconStyle,
-  scopeWrapperStyle,
-  scopeSelectionStyle,
-} from "./style";
 
 import scopeIcon from "./resources/edit.svg";
 import doneIcon from "./resources/done.svg";
@@ -96,14 +79,18 @@ class CometChatViewGroupMemberListItem extends React.Component {
 
     let name = this.props.member.name;
     let scope = (
-      <span css={roleStyle()}>
+      <Text fontSize="12px" maxWidth="calc(100% - 20px)">
         {this.context.roles[this.props.member.scope]}
-      </span>
+      </Text>
     );
     let changescope = null;
     let ban = (
-      <i
-        css={banIconStyle(banIcon, this.context)}
+      <Box
+        as="i"
+        width="24px"
+        height="24px"
+        display="inline-block"
+        cursor="pointer"
         title={Translator.translate("BAN", this.context.language)}
         onClick={() => {
           this.props.actionGenerated(
@@ -111,11 +98,19 @@ class CometChatViewGroupMemberListItem extends React.Component {
             this.props.member
           );
         }}
-      ></i>
+        sx={{
+          mask: `url(${banIcon}) center center no-repeat`,
+          backgroundColor: this.context.theme.secondaryTextColor,
+        }}
+      />
     );
     let kick = (
-      <i
-        css={kickIconStyle(kickIcon, this.context)}
+      <Box
+        as="i"
+        width="24px"
+        height="24px"
+        display="inline-block"
+        cursor="pointer"
         title={Translator.translate("KICK", this.context.language)}
         onClick={() => {
           this.props.actionGenerated(
@@ -123,7 +118,10 @@ class CometChatViewGroupMemberListItem extends React.Component {
             this.props.member
           );
         }}
-      ></i>
+        sx={{
+          background: `url(${kickIcon}) center center no-repeat`,
+        }}
+      />
     );
 
     if (this.state.showChangeScope) {
@@ -158,26 +156,58 @@ class CometChatViewGroupMemberListItem extends React.Component {
       }
 
       changescope = (
-        <div css={scopeWrapperStyle()} className="scope__wrapper">
-          <select
-            css={scopeSelectionStyle()}
+        <Flex
+          className="scope__wrapper"
+          direction="row"
+          align="center"
+          justify="center"
+          width="100%"
+          transition="opacity .1s linear"
+        >
+          <Select
             className="scope__select"
+            width="65%"
+            border="0"
+            boxShadow="rgba(20, 20, 20, 0.04) 0 0 0 1px inset"
+            borderRadius="8px"
+            backgroundColor="rgba(20, 20, 20, 0.04)"
+            padding="8px"
+            color="rgba(20, 20, 20, 0.6)"
+            float="left"
             onChange={this.scopeChangeHandler}
             defaultValue={this.props.member.scope}
           >
             {options}
-          </select>
-          <i
-            css={scopeIconStyle(doneIcon, this.context)}
+          </Select>
+          <Box
+            as="i"
+            width="24px"
+            height="24px"
+            display="inline-block"
+            cursor="pointer"
+            margin="0px 4px"
             title={Translator.translate("CHANGE_SCOPE", this.context.language)}
             onClick={this.updateMemberScope}
-          ></i>
-          <i
-            css={scopeIconStyle(clearIcon, this.context)}
+            sx={{
+              mask: `url(${doneIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.secondaryTextColor,
+            }}
+          />
+          <Box
+            as="i"
+            width="24px"
+            height="24px"
+            display="inline-block"
+            cursor="pointer"
+            margin="0px 4px"
             title={Translator.translate("CHANGE_SCOPE", this.context.language)}
             onClick={() => this.toggleChangeScope(false)}
-          ></i>
-        </div>
+            sx={{
+              mask: `url(${clearIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.secondaryTextColor,
+            }}
+          />
+        </Flex>
       );
     } else {
       if (
@@ -188,14 +218,22 @@ class CometChatViewGroupMemberListItem extends React.Component {
         changescope = (
           <React.Fragment>
             {scope}
-            <i
-              css={scopeIconStyle(scopeIcon, this.context)}
+            <Box
+              as="i"
+              width="24px"
+              height="24px"
+              display="inline-block"
+              cursor="pointer"
               title={Translator.translate(
                 "CHANGE_SCOPE",
                 this.context.language
               )}
               onClick={() => this.toggleChangeScope(true)}
-            ></i>
+              sx={{
+                mask: `url(${scopeIcon}) center center no-repeat`,
+                backgroundColor: this.context.theme.secondaryTextColor,
+              }}
+            />
           </React.Fragment>
         );
       }
@@ -204,9 +242,9 @@ class CometChatViewGroupMemberListItem extends React.Component {
     //disable change scope, kick, ban of group owner
     if (this.context.item.owner === this.props.member.uid) {
       scope = (
-        <span css={roleStyle()}>
+        <Text fontSize="12px" maxWidth="calc(100% - 20px)">
           {Translator.translate("OWNER", this.context.language)}
-        </span>
+        </Text>
       );
       changescope = scope;
       ban = null;
@@ -251,12 +289,18 @@ class CometChatViewGroupMemberListItem extends React.Component {
     } else {
       editAccess = (
         <React.Fragment>
-          <div css={actionColumnStyle(this.context)} className="ban">
+          <Box 
+            className="ban"
+            width={{ base: "40px", md: "40px", lg: "70px" }}
+          >
             {ban}
-          </div>
-          <div css={actionColumnStyle(this.context)} className="kick">
+          </Box>
+          <Box 
+            className="kick"
+            width={{ base: "40px", md: "40px", lg: "70px" }}
+          >
             {kick}
-          </div>
+          </Box>
         </React.Fragment>
       );
 
@@ -271,16 +315,22 @@ class CometChatViewGroupMemberListItem extends React.Component {
       } else if (this.props.enableBanGroupMembers === false) {
         //if ban feature is disabled
         editAccess = (
-          <div css={actionColumnStyle(this.context)} className="kick">
+          <Box 
+            className="kick"
+            width={{ base: "40px", md: "40px", lg: "70px" }}
+          >
             {kick}
-          </div>
+          </Box>
         );
       } else if (this.props.enableKickGroupMembers === false) {
         //if kick feature is disabled
         editAccess = (
-          <div css={actionColumnStyle(this.context)} className="ban">
+          <Box 
+            className="ban"
+            width={{ base: "40px", md: "40px", lg: "70px" }}
+          >
             {ban}
-          </div>
+          </Box>
         );
       }
 
@@ -296,35 +346,86 @@ class CometChatViewGroupMemberListItem extends React.Component {
       <CometChatUserPresence status={this.props.member.status} />
     );
 
+    const isParticipantView = editClassName === "true";
+
     return (
-      <div css={modalRowStyle(this.context)} className="content__row">
-        <div
-          css={nameColumnStyle(this.context, editClassName)}
+      <Flex
+        className="content__row"
+        borderLeft={`1px solid ${this.context.theme.borderColor.primary}`}
+        borderRight={`1px solid ${this.context.theme.borderColor.primary}`}
+        borderBottom={`1px solid ${this.context.theme.borderColor.primary}`}
+        width="100%"
+        fontSize="14px"
+        direction="row"
+        justify="flex-start"
+        align="center"
+        padding="8px"
+      >
+        <Flex
           className="userinfo"
+          direction="row"
+          justify="flex-start"
+          align="center"
+          width={isParticipantView ? {
+            base: "calc(100% - 140px)",
+            sm: "calc(100% - 140px)",
+            md: "calc(100% - 180px)"
+          } : {
+            base: "calc(100% - 240px)",
+            sm: "calc(100% - 220px)",
+            md: "calc(100% - 260px)",
+            lg: "calc(100% - 260px)"
+          }}
         >
-          <div
-            css={avatarStyle(this.context, editClassName)}
+          <Box
             className="thumbnail"
+            width="36px"
+            height="36px"
+            flexShrink="0"
+            marginRight={{ base: isParticipantView ? "8px" : "0", md: "8px" }}
             onMouseEnter={(event) => this.toggleTooltip(event, true)}
             onMouseLeave={(event) => this.toggleTooltip(event, false)}
           >
             <CometChatAvatar user={this.props.member} />
             {userPresence}
-          </div>
-          <div
-            css={nameStyle(this.context, editClassName)}
+          </Box>
+          <Text
             className="name"
+            margin="8px 0"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            width={isParticipantView ? "100%" : "calc(100% - 50px)"}
+            display={{ base: isParticipantView ? "inline" : "none", sm: "inline" }}
             onMouseEnter={(event) => this.toggleTooltip(event, true)}
             onMouseLeave={(event) => this.toggleTooltip(event, false)}
           >
             {name}
-          </div>
-        </div>
-        <div css={scopeColumnStyle(this.context)} className="scope">
+          </Text>
+        </Flex>
+        <Flex
+          className="scope"
+          direction="row"
+          align="center"
+          justify="flex-start"
+          width={{
+            base: "120px",
+            sm: "140px",
+            md: "180px",
+            lg: "180px"
+          }}
+          sx={{
+            "img": {
+              width: "24px",
+              height: "24px",
+              cursor: "pointer",
+            }
+          }}
+        >
           {changescope}
-        </div>
+        </Flex>
         {editAccess}
-      </div>
+      </Flex>
     );
   }
 }

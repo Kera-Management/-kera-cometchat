@@ -1,8 +1,6 @@
 import React from "react";
 import dateFormat from "dateformat";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -43,14 +41,6 @@ import { getMessageDate } from "../../../util/common";
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  chatListStyle,
-  listWrapperStyle,
-  messageDateContainerStyle,
-  messageDateStyle,
-  decoratorMessageStyle,
-  decoratorMessageTxtStyle,
-} from "./style";
 
 class CometChatMessageList extends React.PureComponent {
   loggedInUser = null;
@@ -1003,17 +993,28 @@ class CometChatMessageList extends React.PureComponent {
       this.props.messages.length === 0
     ) {
       messageContainer = (
-        <div
-          css={decoratorMessageStyle()}
+        <Box
           className="messages__decorator-message"
+          overflow="hidden"
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          position="absolute"
+          top="50%"
         >
-          <p
-            css={decoratorMessageTxtStyle(this.context)}
+          <Text
             className="decorator-message"
+            m={0}
+            height="36px"
+            color={this.context.theme.color.secondary}
+            fontSize="20px"
+            fontWeight="600"
+            lineHeight="30px"
           >
             {Translator.translate(this.state.decoratorMessage, this.props.lang)}
-          </p>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -1028,11 +1029,23 @@ class CometChatMessageList extends React.PureComponent {
 
       if (cDate !== messageSentDate) {
         dateSeparator = (
-          <div css={messageDateContainerStyle()} className="message__date">
-            <span css={messageDateStyle(this.context)}>
+          <Flex
+            className="message__date"
+            mb={4}
+            alignItems="center"
+            justifyContent="center"
+            height="35px"
+          >
+            <Text
+              px={3}
+              py={2}
+              backgroundColor={this.context.theme.backgroundColor.secondary}
+              color={this.context.theme.color.primary}
+              borderRadius="10px"
+            >
               {getMessageDate(dateField, this.context.language)}
-            </span>
-          </div>
+            </Text>
+          </Flex>
         );
       }
       cDate = messageSentDate;
@@ -1046,19 +1059,38 @@ class CometChatMessageList extends React.PureComponent {
     });
 
     return (
-      <div className="chat__list" css={chatListStyle(this.context)}>
+      <Box
+        className="chat__list"
+        backgroundColor={this.context.theme.backgroundColor.white}
+        zIndex={1}
+        width="100%"
+        flex="1 1 0"
+        order={2}
+        position="relative"
+      >
         {messageContainer}
-        <div
+        <Box
           className="list__wrapper"
-          css={listWrapperStyle()}
+          boxSizing="border-box"
+          display="flex"
+          flexDirection="column"
+          height="100%"
+          overflowX="hidden"
+          overflowY="scroll"
+          position="absolute"
+          top={0}
+          transition="background .3s ease-out .1s"
+          width="100%"
+          zIndex={100}
+          pt={4}
           ref={(el) => {
             this.messagesEnd = el;
           }}
           onScroll={this.handleScroll}
         >
           {messages}
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 }

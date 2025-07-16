@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Heading, Input, Text, IconButton } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -19,19 +17,6 @@ import * as enums from "../../../util/enums.js";
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  groupWrapperStyle,
-  groupHeaderStyle,
-  groupHeaderCloseStyle,
-  groupHeaderTitleStyle,
-  groupAddStyle,
-  groupSearchStyle,
-  groupSearchButtonStyle,
-  groupSearchInputStyle,
-  groupMsgStyle,
-  groupMsgTxtStyle,
-  groupListStyle,
-} from "./style";
 
 import searchIcon from "./resources/search.svg";
 import navigateIcon from "./resources/back.svg";
@@ -460,11 +445,30 @@ class CometChatGroupList extends React.PureComponent {
 
     if (this.state.decoratorMessage.length !== 0) {
       messageContainer = (
-        <div css={groupMsgStyle()} className="groups__decorator-message">
-          <p css={groupMsgTxtStyle(theme)} className="decorator-message">
+        <Box
+          className="groups__decorator-message"
+          overflow="hidden"
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          position="absolute"
+          top="50%"
+        >
+          <Text
+            className="decorator-message"
+            m={0}
+            minHeight="36px"
+            color={theme.color.secondary}
+            fontSize="20px"
+            fontWeight="600"
+            lineHeight="30px"
+            wordWrap="break-word"
+            px={4}
+          >
             {this.state.decoratorMessage}
-          </p>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -486,13 +490,28 @@ class CometChatGroupList extends React.PureComponent {
     });
 
     let createGroupBtn = (
-      <div
-        css={groupAddStyle(addIcon, theme)}
+      <IconButton
+        aria-label={Translator.translate("CREATE_GROUP", this.props.lang)}
         title={Translator.translate("CREATE_GROUP", this.props.lang)}
         onClick={() => this.createGroupHandler(true)}
+        height="24px"
+        width="24px"
+        minWidth="24px"
+        cursor="pointer"
+        background="none"
+        _hover={{ background: "none" }}
+        sx={{
+          "& > *": {
+            display: "inline-block",
+            width: "24px",
+            height: "24px",
+            mask: `url(${addIcon}) center center no-repeat`,
+            backgroundColor: theme.primaryColor,
+          },
+        }}
       >
-        <i></i>
-      </div>
+        <Box />
+      </IconButton>
     );
 
     //if create group feature is disabled
@@ -501,11 +520,21 @@ class CometChatGroupList extends React.PureComponent {
     }
 
     let closeBtn = (
-      <div
-        css={groupHeaderCloseStyle(navigateIcon, theme)}
+      <Box
         className="header__close"
+        cursor="pointer"
+        display="none"
+        sx={{
+          mask: `url(${navigateIcon}) left center no-repeat`,
+          backgroundColor: theme.primaryColor,
+          [theme.breakPoints[0]]: {
+            display: "block !important",
+          },
+        }}
+        height="24px"
+        width="33%"
         onClick={this.handleMenuClose}
-      ></div>
+      />
     );
     if (this.getContext() && Object.keys(this.getContext().item).length === 0) {
       closeBtn = null;
@@ -514,16 +543,36 @@ class CometChatGroupList extends React.PureComponent {
     let searchGroup = null;
     if (this.state.enableSearchGroup) {
       searchGroup = (
-        <div css={groupSearchStyle()} className="groups__search">
-          <input
+        <Box
+          className="groups__search"
+          m={4}
+          position="relative"
+          borderRadius="8px"
+          boxShadow="rgba(20, 20, 20, 0.04) 0 0 0 1px inset"
+          backgroundColor="rgba(20, 20, 20, 0.04)"
+          height="35px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Input
             type="text"
             autoComplete="off"
-            css={groupSearchInputStyle(this.props)}
             className="search__input"
             placeholder={Translator.translate("SEARCH", this.props.lang)}
             onChange={this.searchGroup}
+            width="calc(100% - 30px)"
+            height="100%"
+            p={2}
+            fontSize="15px"
+            fontWeight="400"
+            lineHeight="20px"
+            outline="none"
+            border="none"
+            color={this.props.theme.color.search}
+            backgroundColor="transparent"
           />
-        </div>
+        </Box>
       );
     }
 
@@ -540,29 +589,86 @@ class CometChatGroupList extends React.PureComponent {
 
     const groupListTemplate = (
       <React.Fragment>
-        <div css={groupWrapperStyle(this.props, theme)} className="groups">
-          <div css={groupHeaderStyle(theme)} className="groups__header">
+        <Box
+          className="groups"
+          display="flex"
+          flexDirection="column"
+          height="100%"
+          boxSizing="border-box"
+          sx={{
+            ...(this.props._parent === ""
+              ? { border: `1px solid ${theme.borderColor.primary}` }
+              : {}),
+            "*": {
+              boxSizing: "border-box",
+              "::-webkit-scrollbar": {
+                width: "8px",
+                height: "4px",
+              },
+              "::-webkit-scrollbar-track": {
+                background: "#ffffff00",
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: "#ccc",
+                "&:hover": {
+                  background: "#aaa",
+                },
+              },
+            },
+          }}
+        >
+          <Flex
+            className="groups__header"
+            p={4}
+            position="relative"
+            justifyContent="space-between"
+            alignItems="center"
+            borderBottom={`1px solid ${theme.borderColor.primary}`}
+            height="70px"
+          >
             {closeBtn}
-            <h4
-              css={groupHeaderTitleStyle(this.props)}
+            <Heading
               className="header__title"
+              as="h4"
+              m={0}
+              display="inline-block"
+              width="100%"
+              textAlign="left"
+              fontSize="22px"
+              fontWeight="700"
+              lineHeight="26px"
               dir={Translator.getDirection(this.props.lang)}
+              sx={{
+                ...(this.props.hasOwnProperty("enableCloseMenu") &&
+                this.props.enableCloseMenu.length > 0
+                  ? {
+                      width: "33%",
+                      textAlign: "center",
+                    }
+                  : {}),
+                "&[dir=rtl]": {
+                  textAlign: "right",
+                },
+              }}
             >
               {Translator.translate("GROUPS", this.props.lang)}
-            </h4>
+            </Heading>
             {createGroupBtn}
-          </div>
+          </Flex>
           {searchGroup}
           {messageContainer}
-          <div
-            css={groupListStyle()}
+          <Box
             className="groups__list"
+            height="calc(100% - 125px)"
+            overflowY="auto"
+            m={0}
+            p={0}
             onScroll={this.handleScroll}
             ref={(el) => (this.groupListRef = el)}
           >
             {groups}
-          </div>
-        </div>
+          </Box>
+        </Box>
         {createGroup}
         <CometChatToastNotification
           ref={(el) => (this.toastRef = el)}

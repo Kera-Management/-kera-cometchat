@@ -1,9 +1,7 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
+import { Box, Flex, Text, UnorderedList, ListItem } from "@chakra-ui/react";
 
 import {
   CometChatMessageActions,
@@ -19,23 +17,6 @@ import * as enums from "../../../util/enums.js";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageThumbnailStyle,
-  messageDetailStyle,
-  nameWrapperStyle,
-  nameStyle,
-  messageTxtContainerStyle,
-  messageTxtWrapperStyle,
-  messageTxtTitleStyle,
-  messageTxtStyle,
-  messageBtnStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-  iconStyle,
-} from "./style";
 
 import callIcon from "./resources/video-call.svg";
 
@@ -78,17 +59,32 @@ class CometChatReceiverDirectCallBubble extends React.Component {
       name = null;
     if (this.props.message.receiverType === CometChat.RECEIVER_TYPE.GROUP) {
       avatar = (
-        <div css={messageThumbnailStyle} className="message__thumbnail">
+        <Box
+          w="36px"
+          h="36px"
+          m="10px 5px"
+          float="left"
+          flexShrink="0"
+          className="message__thumbnail"
+        >
           <CometChatAvatar user={this.props.message.sender} />
-        </div>
+        </Box>
       );
 
       name = (
-        <div css={nameWrapperStyle(avatar)} className="message__name__wrapper">
-          <span css={nameStyle(this.context)} className="message__name">
+        <Box
+          alignSelf="flex-start"
+          padding={avatar ? "3px 5px" : "0"}
+          className="message__name__wrapper"
+        >
+          <Text
+            fontSize="11px"
+            color={this.context.theme.color.search}
+            className="message__name"
+          >
             {this.props.message.sender.name}
-          </span>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -100,15 +96,19 @@ class CometChatReceiverDirectCallBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
+            alignSelf="flex-start"
+            w="100%"
+            flexWrap="wrap"
+            justifyContent="flex-start"
+            minH="36px"
             className="message__reaction__wrapper"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -139,11 +139,34 @@ class CometChatReceiverDirectCallBubble extends React.Component {
     ) {
       //ongoing call in same group
       callMessage = (
-        <li className="directcall__row" title={joinCallMessage}>
-          <p className="directcall__text">
+        <ListItem
+          backgroundColor={this.context.theme.backgroundColor.white}
+          borderRadius="8px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          w="100%"
+          cursor="pointer"
+          position="relative"
+          m="0"
+          p="8px"
+          className="directcall__row"
+          title={joinCallMessage}
+        >
+          <Text
+            background="0 0"
+            textAlign="center"
+            color={this.context.theme.primaryColor}
+            w="100%"
+            display="inline-block"
+            fontSize="14px"
+            fontWeight="600"
+            m="0"
+            className="directcall__text"
+          >
             {Translator.translate("JOIN", this.context.language)}
-          </p>
-        </li>
+          </Text>
+        </ListItem>
       );
     } else if (
       this.context.checkIfDirectCallIsOngoing() ===
@@ -152,25 +175,81 @@ class CometChatReceiverDirectCallBubble extends React.Component {
       //ongoing call in different group
 
       callMessage = (
-        <li className="directcall__row" title={joinCallMessage}>
-          <p className="directcall__text">
+        <ListItem
+          backgroundColor={this.context.theme.backgroundColor.white}
+          borderRadius="8px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          w="100%"
+          cursor="pointer"
+          position="relative"
+          m="0"
+          p="8px"
+          className="directcall__row"
+          title={joinCallMessage}
+        >
+          <Text
+            background="0 0"
+            textAlign="center"
+            color={this.context.theme.primaryColor}
+            w="100%"
+            display="inline-block"
+            fontSize="14px"
+            fontWeight="600"
+            m="0"
+            className="directcall__text"
+          >
             {Translator.translate("JOIN", this.context.language)}
-          </p>
-        </li>
+          </Text>
+        </ListItem>
       );
     } else if (this.context.checkIfCallIsOngoing()) {
       //ongoing call
 
       callMessage = (
-        <li className="directcall__row" title={joinCallMessage}>
-          <p className="directcall__text">
+        <ListItem
+          backgroundColor={this.context.theme.backgroundColor.white}
+          borderRadius="8px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          w="100%"
+          cursor="pointer"
+          position="relative"
+          m="0"
+          p="8px"
+          className="directcall__row"
+          title={joinCallMessage}
+        >
+          <Text
+            background="0 0"
+            textAlign="center"
+            color={this.context.theme.primaryColor}
+            w="100%"
+            display="inline-block"
+            fontSize="14px"
+            fontWeight="600"
+            m="0"
+            className="directcall__text"
+          >
             {Translator.translate("JOIN", this.context.language)}
-          </p>
-        </li>
+          </Text>
+        </ListItem>
       );
     } else {
       callMessage = (
-        <li
+        <ListItem
+          backgroundColor={this.context.theme.backgroundColor.white}
+          borderRadius="8px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          w="100%"
+          cursor="pointer"
+          position="relative"
+          m="0"
+          p="8px"
           className="directcall__row"
           onClick={() =>
             this.props.actionGenerated(
@@ -179,72 +258,136 @@ class CometChatReceiverDirectCallBubble extends React.Component {
             )
           }
         >
-          <p className="directcall__text">
+          <Text
+            background="0 0"
+            textAlign="center"
+            color={this.context.theme.primaryColor}
+            w="100%"
+            display="inline-block"
+            fontSize="14px"
+            fontWeight="600"
+            m="0"
+            className="directcall__text"
+          >
             {Translator.translate("JOIN", this.context.language)}
-          </p>
-        </li>
+          </Text>
+        </ListItem>
       );
     }
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
+        alignSelf="flex-start"
+        mb="16px"
+        pl="16px"
+        pr="16px"
+        maxW="305px"
+        clear="both"
+        position="relative"
+        flexDirection="column"
+        flexShrink="0"
         className="receiver__message__container message__directcall"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
-        <div css={messageWrapperStyle()} className="message__wrapper">
+        <Flex
+          w="auto"
+          flex="1 1"
+          alignSelf="flex-start"
+          className="message__wrapper"
+        >
           {avatar}
-          <div css={messageDetailStyle()} className="message__details">
+          <Flex
+            flex="1 1"
+            flexDirection="column"
+            className="message__details"
+          >
             {name}
             {toolTipView}
-            <div
-              css={messageTxtContainerStyle()}
+            <Box
+              w="auto"
+              flex="1 1"
+              alignSelf="flex-start"
               className="message__directcall__container"
+              sx={{
+                img: {
+                  width: "35px"
+                }
+              }}
             >
-              <div
-                css={messageTxtWrapperStyle(this.context)}
+              <Box
+                display="flex"
+                flexDirection="column"
+                borderRadius="12px"
+                backgroundColor={this.context.theme.backgroundColor.secondary}
+                p="16px"
+                alignSelf="flex-start"
+                w="100%"
+                minH="106px"
                 className="message__directcall__wrapper"
               >
-                <div
-                  css={messageTxtTitleStyle(this.context)}
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  color={this.context.theme.color.primary}
                   className="message__directcall__title"
                 >
-                  <i
-                    css={iconStyle(callIcon, this.context)}
+                  <Box
+                    w="30px"
+                    h="24px"
+                    display="inline-block"
+                    sx={{
+                      mask: `url(${callIcon}) center center no-repeat`,
+                      backgroundColor: this.context.theme.primaryColor,
+                    }}
                     title={Translator.translate(
                       "VIDEO_CALL",
                       this.context.language
                     )}
-                  ></i>
-                  <p css={messageTxtStyle()} className="directcall__title">
+                  />
+                  <Text
+                    m="0"
+                    whiteSpace="pre-wrap"
+                    wordWrap="break-word"
+                    textAlign="left"
+                    w="calc(100% - 30px)"
+                    fontSize="14px"
+                    ml="8px"
+                    className="directcall__title"
+                  >
                     {messageTitle}
-                  </p>
-                </div>
+                  </Text>
+                </Flex>
 
-                <ul
-                  css={messageBtnStyle(this.context)}
+                <UnorderedList
+                  listStyleType="none"
+                  p="0"
+                  m="16px 0 0 0"
                   className="directcall__button"
                 >
                   {callMessage}
-                </ul>
-              </div>
-            </div>
+                </UnorderedList>
+              </Box>
+            </Box>
 
             {messageReactions}
 
-            <div
-              css={messageInfoWrapperStyle()}
+            <Flex
+              alignSelf="flex-start"
+              p="4px 8px"
+              alignItems="center"
+              justifyContent="flex-start"
+              h="25px"
               className="message__info__wrapper"
             >
               <CometChatReadReceipt message={this.props.message} />
               <CometChatThreadedMessageReplyCount
                 message={this.props.message}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
     );
   }
 }

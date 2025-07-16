@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, UnorderedList, ListItem, Icon } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -18,23 +16,6 @@ import { checkMessageForExtensionsData } from "../../../../util/common";
 
 import { theme } from "../../../../resources/theme";
 import Translator from "../../../../resources/localization/translator";
-
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageThumbnailStyle,
-  messageDetailStyle,
-  nameWrapperStyle,
-  nameStyle,
-  messageTxtContainerStyle,
-  messageTxtWrapperStyle,
-  messageTxtTitleStyle,
-  messageTxtStyle,
-  messageBtnStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-  iconStyle,
-} from "./style";
 
 import documentIcon from "./resources/collaborative-document.svg";
 
@@ -93,17 +74,33 @@ class CometChatReceiverDocumentBubble extends React.Component {
       name = null;
     if (this.props.message.receiverType === CometChat.RECEIVER_TYPE.GROUP) {
       avatar = (
-        <div css={messageThumbnailStyle} className="message__thumbnail">
+        <Box
+          width="36px"
+          height="36px"
+          margin="10px 5px"
+          float="left"
+          flexShrink="0"
+          className="message__thumbnail"
+        >
           <CometChatAvatar user={this.props.message.sender} />
-        </div>
+        </Box>
       );
 
       name = (
-        <div css={nameWrapperStyle(avatar)} className="message__name__wrapper">
-          <span css={nameStyle(this.context)} className="message__name">
+        <Box
+          alignSelf="flex-start"
+          padding="3px 5px"
+          className="message__name__wrapper"
+        >
+          <Text
+            as="span"
+            fontSize="11px"
+            color={this.context.theme.color.search}
+            className="message__name"
+          >
             {this.props.message.sender.name}
-          </span>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -115,15 +112,20 @@ class CometChatReceiverDocumentBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
+            display="flex"
+            alignSelf="flex-start"
+            width="100%"
+            flexWrap="wrap"
+            justifyContent="flex-start"
+            minHeight="36px"
             className="message__reaction__wrapper"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -146,56 +148,121 @@ class CometChatReceiverDocumentBubble extends React.Component {
     )}`;
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
+        alignSelf="flex-start"
+        marginBottom="16px"
+        paddingLeft="16px"
+        paddingRight="16px"
+        maxWidth="305px"
+        clear="both"
+        position="relative"
+        display="flex"
+        flexDirection="column"
+        flexShrink="0"
         className="receiver__message__container message__document"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
-        <div css={messageWrapperStyle()} className="message__wrapper">
+        <Flex
+          width="auto"
+          flex="1 1"
+          alignSelf="flex-start"
+          display="flex"
+          className="message__wrapper"
+        >
           {avatar}
-          <div css={messageDetailStyle()} className="message__details">
+          <Flex
+            flex="1 1"
+            display="flex"
+            flexDirection="column"
+            className="message__details"
+          >
             {name}
             {toolTipView}
-            <div
-              css={messageTxtContainerStyle()}
+            <Box
+              width="auto"
+              flex="1 1"
+              alignSelf="flex-start"
+              display="flex"
               className="message__document__container"
             >
-              <div
-                css={messageTxtWrapperStyle(this.context)}
+              <Box
+                display="inline-block"
+                borderRadius="12px"
+                backgroundColor={this.context.theme.backgroundColor.secondary}
+                padding="8px 12px"
+                alignSelf="flex-start"
+                width="100%"
                 className="message__document__wrapper"
               >
-                <div
-                  css={messageTxtTitleStyle(this.context)}
+                <Flex
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="center"
                   className="message__document__title"
                 >
-                  <i
-                    css={iconStyle(documentIcon, this.context)}
+                  <Box
+                    as="i"
+                    width="24px"
+                    height="24px"
+                    margin="0 12px 0 0"
+                    sx={{
+                      mask: `url(${documentIcon}) center center no-repeat`,
+                      backgroundColor: this.context.theme.primaryColor,
+                    }}
                     title={Translator.translate(
                       "COLLABORATIVE_DOCUMENT",
                       this.context.language
                     )}
-                  ></i>
-                  <p css={messageTxtStyle()} className="document__title">
+                  ></Box>
+                  <Text
+                    fontSize="14px"
+                    fontWeight="500"
+                    margin="0"
+                    className="document__title"
+                  >
                     {documentTitle}
-                  </p>
-                </div>
+                  </Text>
+                </Flex>
 
-                <ul
-                  css={messageBtnStyle(this.context)}
+                <UnorderedList
+                  listStyleType="none"
+                  margin="0"
+                  padding="0"
                   className="document__button"
+                  sx={{
+                    "li": {
+                      background: this.context.theme.primaryColor,
+                      borderRadius: "12px",
+                      display: "inline-block",
+                      padding: "8px 12px",
+                      margin: "5px 0 0 0",
+                      cursor: "pointer",
+                      "p": {
+                        margin: "0",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        color: this.context.theme.color.white,
+                      },
+                    },
+                  }}
                 >
-                  <li onClick={this.launchCollaborativeDocument}>
-                    <p>{Translator.translate("JOIN", this.context.language)}</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
+                  <ListItem onClick={this.launchCollaborativeDocument}>
+                    <Text>{Translator.translate("JOIN", this.context.language)}</Text>
+                  </ListItem>
+                </UnorderedList>
+              </Box>
+            </Box>
 
             {messageReactions}
 
-            <div
-              css={messageInfoWrapperStyle()}
+            <Flex
+              alignSelf="flex-start"
+              padding="4px 8px"
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-start"
+              height="25px"
               className="message__info__wrapper"
             >
               <CometChatReadReceipt message={this.props.message} />
@@ -203,10 +270,10 @@ class CometChatReceiverDocumentBubble extends React.Component {
                 message={this.props.message}
                 actionGenerated={this.props.actionGenerated}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
     );
   }
 }

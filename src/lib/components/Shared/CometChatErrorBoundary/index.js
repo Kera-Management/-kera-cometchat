@@ -1,12 +1,8 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import Translator from "../../../resources/localization/translator";
-
-import { errorContainerStyle } from "./style";
 
 export class CometChatErrorBoundary extends React.Component {
   constructor(props) {
@@ -30,9 +26,21 @@ export class CometChatErrorBoundary extends React.Component {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        <div css={errorContainerStyle()}>
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          width="100%"
+          height="auto"
+          padding="16px"
+          zIndex="2"
+          display="flex"
+          justifyContent="center"
+          backgroundColor="#F35051"
+          color="#fff"
+        >
           {Translator.translate("USER_NOT_LOGGED_IN", this.props.lang)}
-        </div>
+        </Box>
       );
     }
 

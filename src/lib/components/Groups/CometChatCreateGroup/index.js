@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Table, Tbody, Tfoot, Tr, Td, Input, Select, Button, Text } from "@chakra-ui/react";
 import { CometChat } from "@cometchat-pro/chat";
 
 import { CometChatBackdrop } from "../../Shared";
@@ -10,17 +8,6 @@ import { CometChatContext } from "../../../util/CometChatContext";
 import * as enums from "../../../util/enums.js";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  modalWrapperStyle,
-  modalCloseStyle,
-  modalBodyStyle,
-  modalTableStyle,
-  tableCaptionStyle,
-  tableBodyStyle,
-  inputStyle,
-  tableFootStyle,
-  modalErrorStyle,
-} from "./style";
 
 import creatingIcon from "./resources/creating.svg";
 import closeIcon from "./resources/close.svg";
@@ -268,14 +255,21 @@ class CometChatCreateGroup extends React.Component {
 
       if (groupTypeKeys.length > 1) {
         groupTypeSelect = (
-          <tr>
-            <td>
-              <select
-                css={inputStyle(this.props)}
+          <Tr>
+            <Td>
+              <Select
                 className="grouptype"
                 onChange={this.typeChangeHandler}
                 value={this.state.type}
                 tabIndex="2"
+                display="block"
+                width="100%"
+                border="0"
+                boxShadow="rgba(20, 20, 20, 0.04) 0 0 0 1px inset"
+                borderRadius="8px"
+                backgroundColor={this.context.theme.backgroundColor.grey}
+                color={this.context.theme.color.helpText}
+                fontSize="14px"
               >
                 <option value="">
                   {Translator.translate(
@@ -284,25 +278,32 @@ class CometChatCreateGroup extends React.Component {
                   )}
                 </option>
                 {groupTypeListOptions}
-              </select>
-            </td>
-          </tr>
+              </Select>
+            </Td>
+          </Tr>
         );
       } else {
         groupTypeSelect = (
-          <tr>
-            <td>
-              <select
-                css={inputStyle(this.props)}
+          <Tr>
+            <Td>
+              <Select
                 className="grouptype"
                 onChange={this.typeChangeHandler}
                 value={this.state.type}
                 tabIndex="2"
+                display="block"
+                width="100%"
+                border="0"
+                boxShadow="rgba(20, 20, 20, 0.04) 0 0 0 1px inset"
+                borderRadius="8px"
+                backgroundColor={this.context.theme.backgroundColor.grey}
+                color={this.context.theme.color.helpText}
+                fontSize="14px"
               >
                 {groupTypeListOptions}
-              </select>
-            </td>
-          </tr>
+              </Select>
+            </Td>
+          </Tr>
         );
       }
     }
@@ -310,11 +311,10 @@ class CometChatCreateGroup extends React.Component {
     let password = null;
     if (this.state.passwordInput) {
       password = (
-        <tr>
-          <td>
-            <input
+        <Tr>
+          <Td>
+            <Input
               autoComplete="off"
-              css={inputStyle(this.context)}
               placeholder={Translator.translate(
                 "ENTER_GROUP_PASSWORD",
                 this.context.language
@@ -323,9 +323,17 @@ class CometChatCreateGroup extends React.Component {
               tabIndex="3"
               onChange={this.passwordChangeHandler}
               value={this.state.password}
+              display="block"
+              width="100%"
+              border="0"
+              boxShadow="rgba(20, 20, 20, 0.04) 0 0 0 1px inset"
+              borderRadius="8px"
+              backgroundColor={this.context.theme.backgroundColor.grey}
+              color={this.context.theme.color.helpText}
+              fontSize="14px"
             />
-          </td>
-        </tr>
+          </Td>
+        </Tr>
       );
     }
 
@@ -336,38 +344,116 @@ class CometChatCreateGroup extends React.Component {
     return (
       <React.Fragment>
         <CometChatBackdrop show={true} clicked={this.props.close} />
-        <div
-          css={modalWrapperStyle(this.context)}
+        <Box
           className="modal__creategroup"
+          minWidth="350px"
+          minHeight="350px"
+          width="40%"
+          height="40%"
+          overflow="hidden"
+          backgroundColor={this.context.theme.backgroundColor.white}
+          position="fixed"
+          left="50%"
+          top="50%"
+          transform="translate(-50%, -50%)"
+          zIndex={4}
+          margin="0 auto"
+          boxShadow="rgba(20, 20, 20, 0.2) 0 16px 32px, rgba(20, 20, 20, 0.04) 0 0 0 1px"
+          borderRadius="12px"
+          display="block"
+          sx={{
+            [this.context.theme.breakPoints[0]]: {
+              width: "100%",
+              height: "100%",
+            },
+          }}
         >
-          <span
-            css={modalCloseStyle(closeIcon, this.context)}
+          <Box
             className="modal__close"
+            position="absolute"
+            width="32px"
+            height="32px"
+            borderRadius="50%"
+            top="16px"
+            right="16px"
+            sx={{
+              mask: `url(${closeIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.primaryColor,
+            }}
+            cursor="pointer"
             onClick={this.props.close}
             title={Translator.translate("CLOSE", this.context.language)}
-          ></span>
-          <div css={modalBodyStyle()} className="modal__body">
-            <table css={modalTableStyle(this.props)}>
-              <caption css={tableCaptionStyle()} className="modal__title">
-                {" "}
+          />
+          <Box className="modal__body" p={6} height="100%" width="100%">
+            <Table
+              borderCollapse="collapse"
+              m={0}
+              p={0}
+              width="100%"
+              height="90%"
+              sx={{
+                "tr": {
+                  display: "table",
+                  width: "100%",
+                  tableLayout: "fixed",
+                },
+              }}
+            >
+              <Text
+                as="caption"
+                className="modal__title"
+                fontSize="20px"
+                mb={4}
+                fontWeight="bold"
+                textAlign="left"
+              >
                 {Translator.translate(
                   "CREATE_GROUP",
                   this.context.language
-                )}{" "}
-              </caption>
-              <tbody css={tableBodyStyle()} className="modal__search">
-                <tr>
-                  <td>
-                    <div css={modalErrorStyle(this.context)}>
+                )}
+              </Text>
+              <Tbody
+                className="modal__search"
+                height="calc(100% - 40px)"
+                overflowY="auto"
+                display="block"
+                sx={{
+                  "tr": {
+                    "td": {
+                      padding: "8px 0",
+                      fontSize: "14px",
+                      "input": {
+                        width: "100%",
+                        border: "none",
+                        padding: "8px 16px",
+                        fontSize: "14px",
+                        outline: "none",
+                      },
+                      "select": {
+                        outline: "none",
+                        padding: "8px 16px",
+                      },
+                    },
+                  },
+                }}
+              >
+                <Tr>
+                  <Td>
+                    <Box
+                      fontSize="12px"
+                      color={this.context.theme.color.red}
+                      textAlign="center"
+                      margin="8px 0"
+                      width="100%"
+                    >
                       {this.state.errorMessage}
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input
+                    </Box>
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    <Input
                       autoComplete="off"
-                      css={inputStyle(this.props)}
                       className="search__input"
                       placeholder={Translator.translate(
                         "ENTER_GROUP_NAME",
@@ -377,30 +463,71 @@ class CometChatCreateGroup extends React.Component {
                       tabIndex="1"
                       onChange={this.nameChangeHandler}
                       value={this.state.name}
+                      display="block"
+                      width="100%"
+                      border="0"
+                      boxShadow="rgba(20, 20, 20, 0.04) 0 0 0 1px inset"
+                      borderRadius="8px"
+                      backgroundColor={this.context.theme.backgroundColor.grey}
+                      color={this.context.theme.color.helpText}
+                      fontSize="14px"
                     />
-                  </td>
-                </tr>
+                  </Td>
+                </Tr>
                 {groupTypeSelect}
                 {password}
-              </tbody>
-              <tfoot
-                css={tableFootStyle(this.context, this.state, creatingIcon)}
+              </Tbody>
+              <Tfoot
+                display="inline-block"
+                sx={{
+                  "tr": {
+                    border: "none",
+                    "td": {
+                      textAlign: "center",
+                    },
+                  },
+                }}
               >
-                <tr className="creategroup">
-                  <td>
-                    <button
+                <Tr className="creategroup">
+                  <Td>
+                    <Button
                       type="button"
                       tabIndex="4"
                       onClick={this.createGroup}
+                      cursor="pointer"
+                      p="8px 16px"
+                      backgroundColor={this.context.theme.primaryColor}
+                      borderRadius="5px"
+                      color={this.context.theme.color.white}
+                      fontSize="14px"
+                      outline="0"
+                      border="0"
+                      sx={{
+                        ...(this.state.creatingGroup
+                          ? {
+                              disabled: "true",
+                              pointerEvents: "none",
+                              background: `url(${creatingIcon}) no-repeat right 10px center ${this.context.theme.primaryColor}`,
+                            }
+                          : {}),
+                      }}
                     >
-                      <span>{createText}</span>
-                    </button>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
+                      <Text
+                        sx={{
+                          ...(this.state.creatingGroup
+                            ? { marginRight: "24px" }
+                            : {}),
+                        }}
+                      >
+                        {createText}
+                      </Text>
+                    </Button>
+                  </Td>
+                </Tr>
+              </Tfoot>
+            </Table>
+          </Box>
+        </Box>
       </React.Fragment>
     );
   }

@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Image } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import {
@@ -21,13 +19,6 @@ import {
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageImgWrapper,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-} from "./style";
 
 import srcIcon from "./resources/1px.png";
 
@@ -231,15 +222,20 @@ class CometChatSenderImageMessageBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
             className="message__reaction__wrapper"
+            display="flex"
+            alignSelf="flex-end"
+            width="100%"
+            flexWrap="wrap"
+            justifyContent="flex-end"
+            minHeight="36px"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -255,40 +251,78 @@ class CometChatSenderImageMessageBubble extends React.Component {
     }
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
         className="sender__message__container message__image"
+        alignSelf="flex-end"
+        marginBottom="16px"
+        paddingLeft="16px"
+        paddingRight="16px"
+        maxWidth="65%"
+        clear="both"
+        position="relative"
+        display="flex"
+        flexDirection="column"
+        flexShrink="0"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
         {toolTipView}
 
-        <div css={messageWrapperStyle()} className="message__wrapper">
-          <div
-            css={messageImgWrapper(this.context)}
-            onClick={this.open}
+        <Flex 
+          className="message__wrapper"
+          width="auto"
+          flex="1 1"
+          alignSelf="flex-end"
+          display="flex"
+        >
+          <Box
             className="message__img__wrapper"
+            onClick={this.open}
+            cursor="pointer"
+            display="inline-block"
+            alignSelf="flex-end"
+            maxWidth="300px"
+            height="200px"
+            flexShrink="0"
+            sx={{
+              [`@media ${this.context.theme.breakPoints[1]}, ${this.context.theme.breakPoints[2]}`]: {
+                minWidth: "50px",
+                maxWidth: "150px",
+                height: "100px",
+                padding: "2px 2px",
+              },
+            }}
           >
-            <img
+            <Image
               src={this.state.imageUrl}
               alt={this.state.imageName}
+              borderRadius="8px"
+              height="100%"
               ref={(el) => {
                 this.imgRef = el;
               }}
             />
-          </div>
-        </div>
+          </Box>
+        </Flex>
 
         {messageReactions}
 
-        <div css={messageInfoWrapperStyle()} className="message__info__wrapper">
+        <Flex 
+          className="message__info__wrapper"
+          alignSelf="flex-end"
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          height="25px"
+          padding="4px 8px"
+        >
           <CometChatThreadedMessageReplyCount
             message={this.props.message}
             actionGenerated={this.props.actionGenerated}
           />
           <CometChatReadReceipt message={this.props.message} />
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   }
 }

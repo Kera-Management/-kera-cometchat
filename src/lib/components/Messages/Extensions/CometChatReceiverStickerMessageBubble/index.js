@@ -97,7 +97,7 @@ class CometChatReceiverStickerMessageBubble extends React.Component {
         const stickerName = stickerData.hasOwnProperty("sticker_name")
           ? stickerData.sticker_name
           : Translator.translate("STICKER", this.context.language);
-        stickerImg = <img src={stickerData.sticker_url} alt={stickerName} />;
+        stickerImg = <Image src={stickerData.sticker_url} alt={stickerName} />;
       }
     }
 

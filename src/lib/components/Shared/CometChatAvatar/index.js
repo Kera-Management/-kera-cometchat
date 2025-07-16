@@ -1,13 +1,9 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Image } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
 import { theme } from "../../../resources/theme";
-
-import { imgStyle } from "./style";
 
 import srcIcon from "./resources/1px.png";
 
@@ -116,22 +112,19 @@ class CometChatAvatar extends React.Component {
     const borderColor = this.props.borderColor;
     const cornerRadius = this.props.cornerRadius;
 
-    const getStyle = () => ({
-      borderWidth: borderWidth,
-      borderStyle: borderStyle,
-      borderColor: borderColor,
-      borderRadius: cornerRadius,
-    });
-
     return (
-      <img
+      <Image
         src={this.state.avatarImage}
-        css={imgStyle()}
         alt={this.state.avatarImage}
-        style={getStyle()}
-        ref={(el) => {
-          this.imgRef = el;
-        }}
+        overflow="hidden"
+        display="inherit"
+        width="100%"
+        height="100%"
+        borderWidth={borderWidth}
+        borderStyle={borderStyle}
+        borderColor={borderColor}
+        borderRadius={cornerRadius}
+        ref={this.imgRef}
       />
     );
   }

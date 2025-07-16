@@ -9,9 +9,7 @@ module.exports = {
       }
     }],
     ['@babel/preset-react', { 
-      runtime: 'classic',
-      pragma: 'jsx'
-    }],
-    '@emotion/babel-preset-css-prop'
+      runtime: 'automatic'
+    }]
   ]
 };

@@ -1,9 +1,7 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
+import { Box, Button, Text } from "@chakra-ui/react";
 
 import { CometChatContext } from "../../../../util/CometChatContext";
 import * as enums from "../../../../util/enums.js";
@@ -11,12 +9,6 @@ import { checkMessageForExtensionsData } from "../../../../util/common";
 
 import { theme } from "../../../../resources/theme";
 import Translator from "../../../../resources/localization/translator";
-
-import {
-  messageReactionsStyle,
-  reactionCountStyle,
-  emojiButtonStyle,
-} from "./style";
 
 import reactIcon from "./resources/reactions.svg";
 import { Emojis } from "./EmojiMapping";
@@ -129,27 +121,47 @@ class CometChatMessageReactions extends React.Component {
       }
 
       const reactionClassName = `reaction reaction__${reactionName}`;
+      const uid = this.loggedInUser?.uid;
+      const hasUserReacted = reactionData.hasOwnProperty(uid);
+      
       return (
-        <div
+        <Box
           key={key}
-          css={messageReactionsStyle(
-            this.props,
-            reactionData,
-            this.context,
-            this.loggedInUser
-          )}
+          fontSize="11px"
+          p="2px 6px"
+          display="inline-flex"
+          alignItems="center"
+          verticalAlign="top"
+          backgroundColor={this.context.theme.backgroundColor.secondary}
+          borderRadius="12px"
+          m="4px 4px 0 0"
+          cursor="pointer"
+          border={hasUserReacted ? `1px solid ${this.context.theme.primaryColor}` : "1px solid transparent"}
+          _hover={{
+            border: hasUserReacted ? `1px solid ${this.context.theme.primaryColor}` : `1px solid ${this.context.theme.borderColor.primary}`,
+          }}
           onClick={this.reactToMessages.bind(this, reactionName)}
           className={reactionClassName}
           title={reactionTitle}
         >
-          <div className="emoji">{reactionName}</div>
-          <span
-            css={reactionCountStyle(this.context)}
+          <Box
+            display="inline-flex"
+            alignItems="center"
+            justifyContent="center"
+            cursor="pointer"
+            fontSize="16px"
+            className="emoji"
+          >
+            {reactionName}
+          </Box>
+          <Text
+            color={this.context.theme.color.primary}
+            p="0 1px 0 3px"
             className="reaction__count"
           >
             {reactionCount}
-          </span>
-        </div>
+          </Text>
+        </Box>
       );
     });
 
@@ -163,15 +175,38 @@ class CometChatMessageReactions extends React.Component {
     }
 
     const addReactionEmoji = (
-      <div
+      <Box
         key="-1"
-        css={messageReactionsStyle(this.props, {}, this.context)}
+        fontSize="11px"
+        p="2px 6px"
+        display="inline-flex"
+        alignItems="center"
+        verticalAlign="top"
+        backgroundColor={this.context.theme.backgroundColor.secondary}
+        borderRadius="12px"
+        m="4px 4px 0 0"
+        cursor="pointer"
+        border="1px solid transparent"
+        _hover={{
+          border: `1px solid ${this.context.theme.borderColor.primary}`,
+        }}
         className="reaction reaction__add"
         title={Translator.translate("ADD_REACTION", this.context.language)}
       >
-        <button
+        <Button
           type="button"
-          css={emojiButtonStyle(reactIcon, this.context)}
+          p="0"
+          minW="auto"
+          h="auto"
+          outline="0"
+          border="0"
+          borderRadius="4px"
+          alignItems="center"
+          display="inline-flex"
+          justifyContent="center"
+          position="relative"
+          bg="transparent"
+          _hover={{ bg: "transparent" }}
           className="button__reacttomessage"
           onClick={() =>
             this.props.actionGenerated(
@@ -180,9 +215,16 @@ class CometChatMessageReactions extends React.Component {
             )
           }
         >
-          <i></i>
-        </button>
-      </div>
+          <Box
+            h="24px"
+            w="24px"
+            sx={{
+              mask: `url(${reactIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.secondaryTextColor,
+            }}
+          />
+        </Button>
+      </Box>
     );
 
     return addReactionEmoji;

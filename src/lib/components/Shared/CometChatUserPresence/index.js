@@ -1,12 +1,8 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { CometChatContext } from "../../../util/CometChatContext";
-
-import { presenceStyle } from "./style";
 
 const CometChatUserPresence = (props) => {
   const context = React.useContext(CometChatContext);
@@ -44,12 +40,23 @@ const CometChatUserPresence = (props) => {
     borderRadius: cornerRadius,
   });
 
+  const backgroundColor = (props.status === "online" || props.status === "available") ? "#3BDF2F" : "#C4C4C4";
+
   return (
-    <span
-      css={presenceStyle(props)}
+    <Box
+      as="span"
+      width="9px"
+      height="9px"
+      top="-12px"
+      float="right"
+      position="relative"
+      backgroundColor={backgroundColor}
+      borderWidth={borderWidth}
+      borderStyle="solid"
+      borderColor={borderColor}
+      borderRadius={cornerRadius}
       className="presence"
-      style={getStyle()}
-    ></span>
+    />
   );
 };
 

@@ -1,14 +1,10 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Button, List, ListItem } from "@chakra-ui/react";
 
 import { CometChatContext } from "../../../util/CometChatContext";
 import * as enums from "../../../util/enums.js";
 
 import Translator from "../../../resources/localization/translator";
-
-import { conversationActionStyle, groupButtonStyle } from "./style.js";
 
 import loadingIcon from "./resources/progress.svg";
 import deleteIcon from "./resources/delete.svg";
@@ -51,31 +47,45 @@ class CometChatConversationListActions extends React.PureComponent {
   };
 
   render() {
+    const backgroundImage = this.state.deleteInProgress ? loadingIcon : deleteIcon;
+
     const deleteConversation = (
-      <li>
-        <button
-          type="button"
-          css={groupButtonStyle(
-            this.state.deleteInProgress,
-            loadingIcon,
-            deleteIcon
-          )}
+      <ListItem>
+        <Button
+          variant="unstyled"
+          height="24px"
+          width="24px"
+          borderRadius="4px"
           className="group__button button__delete"
           data-title={Translator.translate("DELETE", this.context.language)}
           onMouseEnter={(event) => this.toggleTooltip(event, true)}
           onMouseLeave={(event) => this.toggleTooltip(event, false)}
           onClick={this.deleteConversation}
+          sx={{
+            background: `url(${backgroundImage}) center center no-repeat`,
+          }}
         />
-      </li>
+      </ListItem>
     );
 
     return (
-      <ul
-        css={conversationActionStyle(this.context)}
+      <List
+        display="flex"
+        listStyleType="none"
+        padding="8px"
+        margin="0"
+        width="72px"
+        backgroundColor={this.context.theme.backgroundColor.primary}
+        borderRadius="4px"
+        alignItems="center"
+        justifyContent="flex-end"
+        position="absolute"
+        right="16px"
+        height="100%"
         className="list__item__actions"
       >
         {deleteConversation}
-      </ul>
+      </List>
     );
   }
 }

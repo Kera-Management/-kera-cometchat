@@ -1,5 +1,5 @@
 import React from 'react';
-import { CometChatContextProvider } from '../src/lib/util/CometChatContext';
+import { ChakraProvider, Box } from '@chakra-ui/react';
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {
@@ -15,11 +15,11 @@ const preview = {
   },
   decorators: [
     (Story) => (
-      <CometChatContextProvider>
-        <div style={{ padding: '20px' }}>
+      <ChakraProvider>
+        <Box p={5}>
           <Story />
-        </div>
-      </CometChatContextProvider>
+        </Box>
+      </ChakraProvider>
     ),
   ],
 };

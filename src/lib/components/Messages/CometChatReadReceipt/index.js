@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -11,8 +9,6 @@ import { Check } from "phosphor-react";
 
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
-
-import { msgTimestampStyle, iconStyle } from "./style";
 
 import blueDoubleTick from "./resources/message-read.svg";
 import greyDoubleTick from "./resources/message-delivered.svg";
@@ -133,12 +129,18 @@ class CometChatReadReceipt extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <span
-          css={msgTimestampStyle(this.context, this.props, this.loggedInUser)}
+        <Box
+          as="span"
           className="message__timestamp"
+          display="flex"
+          fontSize="11px"
+          fontWeight="500"
+          lineHeight="12px"
+          textTransform="uppercase"
+          color={this.context.theme.color.search}
         >
           {timestamp}
-        </span>
+        </Box>
         {receipt}
       </React.Fragment>
     );

@@ -9,7 +9,7 @@ import { Box } from "@chakra-ui/react";
 import { CometChatGroupList } from "../../Groups";
 import { CometChatConversationList } from "../../Chats";
 import { CometChatUserProfile } from "../../UserProfile";
-import { Chats, UsersThree } from "phosphor-react";
+import { Chats, UsersThree, Users, DotsThreeOutline } from "phosphor-react";
 
 import * as enums from "../../../util/enums.js";
 import { CometChatContext } from "../../../util/CometChatContext";
@@ -26,10 +26,6 @@ import {
   itemLinkTextStyle,
 } from "./style";
 
-import chatGreyIcon from "./resources/chats.svg";
-import contactGreyIcon from "./resources/users.svg";
-import groupGreyIcon from "./resources/groups.svg";
-import moreGreyIcon from "./resources/more.svg";
 
 export class CometChatNavBar extends React.Component {
   static contextType = CometChatContext;
@@ -219,6 +215,44 @@ export class CometChatNavBar extends React.Component {
 
               <Box color={userTabActive ? "#086972" : "gray"}>
                 {Translator.translate("USERS", this.context.language)}
+              </Box>
+            </div>
+          );
+        case "SIDEBAR_GROUPS":
+          return (
+            <div
+              key={tab}
+              css={itemStyle(this.props)}
+              className="navbar__item"
+              onClick={() => this.tabChanged("SIDEBAR_GROUPS")}
+            >
+              <Users
+                color={groupsTabActive ? "#086972" : "gray"}
+                size={24}
+                weight="duotone"
+              />
+
+              <Box color={groupsTabActive ? "#086972" : "gray"}>
+                {Translator.translate("GROUPS", this.context.language)}
+              </Box>
+            </div>
+          );
+        case "SIDEBAR_MOREINFO":
+          return (
+            <div
+              key={tab}
+              css={itemStyle(this.props)}
+              className="navbar__item"
+              onClick={() => this.tabChanged("SIDEBAR_MOREINFO")}
+            >
+              <DotsThreeOutline
+                color={moreTabActive ? "#086972" : "gray"}
+                size={24}
+                weight="duotone"
+              />
+
+              <Box color={moreTabActive ? "#086972" : "gray"}>
+                {Translator.translate("MORE", this.context.language)}
               </Box>
             </div>
           );

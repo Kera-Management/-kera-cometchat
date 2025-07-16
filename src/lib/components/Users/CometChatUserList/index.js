@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Heading, Input, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -18,19 +16,6 @@ import * as enums from "../../../util/enums.js";
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  contactWrapperStyle,
-  contactHeaderStyle,
-  contactHeaderCloseStyle,
-  contactHeaderTitleStyle,
-  contactSearchStyle,
-  contactSearchButtonStyle,
-  contactSearchInputStyle,
-  contactMsgStyle,
-  contactMsgTxtStyle,
-  contactListStyle,
-  contactAlphabetStyle,
-} from "./style";
 
 import searchIcon from "./resources/search.svg";
 import navigateIcon from "./resources/back.svg";
@@ -253,11 +238,30 @@ class CometChatUserList extends React.PureComponent {
     let messageContainer = null;
     if (this.state.decoratorMessage.length !== 0) {
       messageContainer = (
-        <div css={contactMsgStyle()} className="contacts__decorator-message">
-          <p css={contactMsgTxtStyle(theme)} className="decorator-message">
+        <Box
+          className="contacts__decorator-message"
+          overflow="hidden"
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          position="absolute"
+          top="50%"
+        >
+          <Text
+            className="decorator-message"
+            m={0}
+            minHeight="36px"
+            color={theme.color.secondary}
+            fontSize="20px"
+            fontWeight="600"
+            lineHeight="30px"
+            wordWrap="break-word"
+            px={4}
+          >
             {this.state.decoratorMessage}
-          </p>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -270,12 +274,18 @@ class CometChatUserList extends React.PureComponent {
       if (chr !== currentLetter) {
         currentLetter = chr;
         firstChar = (
-          <div
-            css={contactAlphabetStyle(this.props)}
+          <Box
             className="contacts__list__alphabet-filter"
+            px={4}
+            my={1}
+            width="100%"
+            fontSize="12px"
+            fontWeight="500"
+            lineHeight="20px"
+            color={this.props.theme.color.tertiary}
           >
             {currentLetter}
-          </div>
+          </Box>
         );
       } else {
         firstChar = null;
@@ -300,11 +310,21 @@ class CometChatUserList extends React.PureComponent {
     });
 
     let closeBtn = (
-      <div
-        css={contactHeaderCloseStyle(navigateIcon, theme)}
+      <Box
         className="header__close"
+        cursor="pointer"
+        display="none"
+        sx={{
+          mask: `url(${navigateIcon}) left center no-repeat`,
+          backgroundColor: theme.secondaryTextColor,
+          [theme.breakPoints[1]]: {
+            display: "block !important",
+          },
+        }}
+        height="24px"
+        width="33%"
         onClick={this.handleMenuClose}
-      ></div>
+      />
     );
     if (this.getContext() && Object.keys(this.getContext().item).length === 0) {
       closeBtn = null;
@@ -313,43 +333,119 @@ class CometChatUserList extends React.PureComponent {
     let searchUser = null;
     if (this.state.enableSearchUser) {
       searchUser = (
-        <div css={contactSearchStyle()} className="contacts__search">
-          <input
+        <Box
+          className="contacts__search"
+          m={4}
+          position="relative"
+          borderRadius="8px"
+          boxShadow="rgba(20, 20, 20, 0.04) 0 0 0 1px inset"
+          backgroundColor="rgba(20, 20, 20, 0.04)"
+          height="35px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Input
             type="text"
             autoComplete="off"
-            css={contactSearchInputStyle(this.props)}
             className="search__input"
             placeholder={Translator.translate("SEARCH", this.props.lang)}
             onChange={this.searchUsers}
+            width="calc(100% - 30px)"
+            p={2}
+            fontSize="15px"
+            fontWeight="400"
+            lineHeight="20px"
+            outline="none"
+            border="none"
+            height="100%"
+            color={this.props.theme.color.search}
+            backgroundColor="transparent"
           />
-        </div>
+        </Box>
       );
     }
 
     const userListTemplate = (
-      <div css={contactWrapperStyle(this.props, theme)} className="contacts">
-        <div css={contactHeaderStyle(theme)} className="contacts__header">
+      <Box
+        className="contacts"
+        display="flex"
+        flexDirection="column"
+        height="100%"
+        boxSizing="border-box"
+        sx={{
+          ...(this.props._parent === ""
+            ? { border: `1px solid ${theme.borderColor.primary}` }
+            : {}),
+          "*": {
+            boxSizing: "border-box",
+            "::-webkit-scrollbar": {
+              width: "8px",
+              height: "4px",
+            },
+            "::-webkit-scrollbar-track": {
+              background: "#ffffff00",
+            },
+            "::-webkit-scrollbar-thumb": {
+              background: "#ccc",
+              "&:hover": {
+                background: "#aaa",
+              },
+            },
+          },
+        }}
+      >
+        <Flex
+          className="contacts__header"
+          p={4}
+          position="relative"
+          alignItems="center"
+          borderBottom={`1px solid ${theme.borderColor.primary}`}
+          height="70px"
+        >
           {closeBtn}
-          <h4
-            css={contactHeaderTitleStyle(this.props)}
+          <Heading
             className="header__title"
+            as="h4"
+            m={0}
+            fontWeight="700"
+            display="inline-block"
+            width="100%"
+            textAlign="left"
+            fontSize="22px"
+            lineHeight="26px"
             dir={Translator.getDirection(this.props.lang)}
+            sx={{
+              ...(this.props.hasOwnProperty("enableCloseMenu") &&
+              this.props.enableCloseMenu.length > 0
+                ? {
+                    width: "33%",
+                    textAlign: "center",
+                  }
+                : {}),
+              "&[dir=rtl]": {
+                textAlign: "right",
+              },
+            }}
           >
             {Translator.translate("USERS", this.props.lang)}
-          </h4>
-          <div></div>
-        </div>
+          </Heading>
+          <Box />
+        </Flex>
         {searchUser}
         {messageContainer}
-        <div
-          css={contactListStyle()}
+        <Box
           className="contacts__list"
+          height="calc(100% - 125px)"
+          overflowY="auto"
+          m={0}
+          p={0}
           onScroll={this.handleScroll}
           ref={(el) => (this.userListRef = el)}
         >
           {users}
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
 
     let userListWrapper = userListTemplate;

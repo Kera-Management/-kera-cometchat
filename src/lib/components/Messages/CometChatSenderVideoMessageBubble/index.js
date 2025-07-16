@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import {
@@ -17,13 +15,6 @@ import {
 } from "../../../util/common";
 import * as enums from "../../../util/enums.js";
 
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageVideoWrapperStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-} from "./style";
 
 class CometChatSenderVideoMessageBubble extends React.Component {
   constructor(props) {
@@ -114,15 +105,20 @@ class CometChatSenderVideoMessageBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
             className="message__reaction__wrapper"
+            display="flex"
+            alignSelf="flex-end"
+            width="100%"
+            flexWrap="wrap"
+            justifyContent="flex-end"
+            minHeight="36px"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -138,33 +134,64 @@ class CometChatSenderVideoMessageBubble extends React.Component {
     }
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
         className="sender__message__container message__video"
+        alignSelf="flex-end"
+        marginBottom="16px"
+        paddingLeft="16px"
+        paddingRight="16px"
+        maxWidth="65%"
+        clear="both"
+        position="relative"
+        display="flex"
+        flexDirection="column"
+        flexShrink="0"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
         {toolTipView}
 
-        <div css={messageWrapperStyle()} className="message__wrapper">
-          <div
-            css={messageVideoWrapperStyle()}
+        <Flex 
+          className="message__wrapper"
+          width="auto"
+          flex="1 1"
+          alignSelf="flex-end"
+          display="flex"
+        >
+          <Box
             className="message__video__wrapper"
+            display="inline-block"
+            alignSelf="flex-end"
+            sx={{
+              "video": {
+                maxWidth: "250px",
+                borderRadius: "12px",
+                display: "inherit",
+              }
+            }}
           >
             <video controls src={this.state.fileData?.fileUrl}></video>
-          </div>
-        </div>
+          </Box>
+        </Flex>
 
         {messageReactions}
 
-        <div css={messageInfoWrapperStyle()} className="message__info__wrapper">
+        <Flex 
+          className="message__info__wrapper"
+          alignSelf="flex-end"
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          height="25px"
+          padding="4px 8px"
+        >
           <CometChatThreadedMessageReplyCount
             message={this.props.message}
             actionGenerated={this.props.actionGenerated}
           />
           <CometChatReadReceipt message={this.props.message} />
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   }
 }

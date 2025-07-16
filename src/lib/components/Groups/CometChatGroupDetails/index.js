@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -26,18 +24,6 @@ import * as enums from "../../../util/enums.js";
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
 
-import {
-  detailStyle,
-  headerStyle,
-  headerCloseStyle,
-  headerTitleStyle,
-  detailPaneStyle,
-  sectionStyle,
-  sectionHeaderStyle,
-  sectionContentStyle,
-  contentItemStyle,
-  itemLinkStyle,
-} from "./style";
 
 import navigateIcon from "./resources/back.svg";
 
@@ -648,15 +634,35 @@ class CometChatGroupDetails extends React.Component {
     }
 
     let viewMembersBtn = (
-      <div css={contentItemStyle()} className="content__item">
-        <div
-          css={itemLinkStyle(this.context, 0)}
+      <Box
+        className="content__item"
+        position="relative"
+        display="flex"
+        clear="both"
+        width="100%"
+        py="6px"
+        sx={{
+          "&:first-of-type": {
+            paddingTop: "0",
+          },
+          "&:last-of-type": {
+            paddingBottom: "0",
+          },
+        }}
+      >
+        <Text
           className="item__link"
           onClick={() => this.clickHandler("viewmember", true)}
+          fontSize="15px"
+          lineHeight="20px"
+          display="inline-block"
+          cursor="pointer"
+          fontWeight="600"
+          color={this.context.theme.color.primary}
         >
           {Translator.translate("VIEW_MEMBERS", this.context.language)}
-        </div>
-      </div>
+        </Text>
+      </Box>
     );
 
     let addMembersBtn = null,
@@ -664,54 +670,134 @@ class CometChatGroupDetails extends React.Component {
       bannedMembersBtn = null;
     if (this.context.item.scope === CometChat.GROUP_MEMBER_SCOPE.ADMIN) {
       addMembersBtn = (
-        <div css={contentItemStyle()} className="content__item">
-          <div
-            css={itemLinkStyle(this.context, 0)}
+        <Box
+          className="content__item"
+          position="relative"
+          display="flex"
+          clear="both"
+          width="100%"
+          py="6px"
+          sx={{
+            "&:first-of-type": {
+              paddingTop: "0",
+            },
+            "&:last-of-type": {
+              paddingBottom: "0",
+            },
+          }}
+        >
+          <Text
             className="item__link"
             onClick={() => this.clickHandler("addmember", true)}
+            fontSize="15px"
+            lineHeight="20px"
+            display="inline-block"
+            cursor="pointer"
+            fontWeight="600"
+            color={this.context.theme.color.primary}
           >
             {Translator.translate("ADD_MEMBERS", this.context.language)}
-          </div>
-        </div>
+          </Text>
+        </Box>
       );
 
       deleteGroupBtn = (
-        <div css={contentItemStyle()} className="content__item">
-          <span
-            css={itemLinkStyle(this.context, 1)}
+        <Box
+          className="content__item"
+          position="relative"
+          display="flex"
+          clear="both"
+          width="100%"
+          py="6px"
+          sx={{
+            "&:first-of-type": {
+              paddingTop: "0",
+            },
+            "&:last-of-type": {
+              paddingBottom: "0",
+            },
+          }}
+        >
+          <Text
             className="item__link"
             onClick={this.deleteGroup}
+            fontSize="15px"
+            lineHeight="20px"
+            display="inline-block"
+            cursor="pointer"
+            fontWeight="600"
+            color={this.context.theme.color.red}
           >
             {Translator.translate("DELETE_AND_EXIT", this.context.language)}
-          </span>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
     if (this.context.item.scope !== CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT) {
       bannedMembersBtn = (
-        <div css={contentItemStyle()} className="content__item">
-          <div
-            css={itemLinkStyle(this.context, 0)}
+        <Box
+          className="content__item"
+          position="relative"
+          display="flex"
+          clear="both"
+          width="100%"
+          py="6px"
+          sx={{
+            "&:first-of-type": {
+              paddingTop: "0",
+            },
+            "&:last-of-type": {
+              paddingBottom: "0",
+            },
+          }}
+        >
+          <Text
             className="item__link"
             onClick={() => this.clickHandler("banmember", true)}
+            fontSize="15px"
+            lineHeight="20px"
+            display="inline-block"
+            cursor="pointer"
+            fontWeight="600"
+            color={this.context.theme.color.primary}
           >
             {Translator.translate("BANNED_MEMBERS", this.context.language)}
-          </div>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
     let leaveGroupBtn = (
-      <div css={contentItemStyle()} className="content__item">
-        <span
-          css={itemLinkStyle(this.context, 0)}
+      <Box
+        className="content__item"
+        position="relative"
+        display="flex"
+        clear="both"
+        width="100%"
+        py="6px"
+        sx={{
+          "&:first-of-type": {
+            paddingTop: "0",
+          },
+          "&:last-of-type": {
+            paddingBottom: "0",
+          },
+        }}
+      >
+        <Text
           className="item__link"
           onClick={this.leaveGroup}
+          fontSize="15px"
+          lineHeight="20px"
+          display="inline-block"
+          cursor="pointer"
+          fontWeight="600"
+          color={this.context.theme.color.primary}
         >
           {Translator.translate("LEAVE_GROUP", this.context.language)}
-        </span>
-      </div>
+        </Text>
+      </Box>
     );
 
     let sharedmediaView = (
@@ -770,28 +856,66 @@ class CometChatGroupDetails extends React.Component {
     }
 
     let members = (
-      <div css={sectionStyle()} className="section section__members">
-        <h6 css={sectionHeaderStyle(this.context)} className="section__header">
+      <Box className="section section__members" width="100%">
+        <Heading
+          className="section__header"
+          as="h6"
+          m={0}
+          width="100%"
+          fontSize="12px"
+          fontWeight="500"
+          lineHeight="20px"
+          color={this.context.theme.color.secondary}
+          textTransform="uppercase"
+        >
           {Translator.translate("MEMBERS", this.context.language)}
-        </h6>
-        <div css={sectionContentStyle()} className="section__content">
+        </Heading>
+        <Box
+          className="section__content"
+          width="100%"
+          margin="6px 0"
+          sx={{
+            "&:not(:last-of-type)": {
+              marginBottom: "16px",
+            },
+          }}
+        >
           {viewMembersBtn}
           {addMembersBtn}
           {bannedMembersBtn}
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
 
     let options = (
-      <div css={sectionStyle()} className="section section__options">
-        <h6 css={sectionHeaderStyle(this.context)} className="section__header">
+      <Box className="section section__options" width="100%">
+        <Heading
+          className="section__header"
+          as="h6"
+          m={0}
+          width="100%"
+          fontSize="12px"
+          fontWeight="500"
+          lineHeight="20px"
+          color={this.context.theme.color.secondary}
+          textTransform="uppercase"
+        >
           {Translator.translate("OPTIONS", this.context.language)}
-        </h6>
-        <div css={sectionContentStyle()} className="section__content">
+        </Heading>
+        <Box
+          className="section__content"
+          width="100%"
+          margin="6px 0"
+          sx={{
+            "&:not(:last-of-type)": {
+              marginBottom: "16px",
+            },
+          }}
+        >
           {leaveGroupBtn}
           {deleteGroupBtn}
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
 
     if (
@@ -918,22 +1042,68 @@ class CometChatGroupDetails extends React.Component {
     }
 
     return (
-      <div css={detailStyle(this.context)} className="detailpane">
-        <div css={headerStyle(this.context)} className="detailpane__header">
-          <div
-            css={headerCloseStyle(navigateIcon, this.context)}
+      <Box
+        className="detailpane"
+        height="100%"
+        position="relative"
+        boxSizing="border-box"
+        fontFamily={this.context.theme.fontFamily}
+        sx={{
+          "*": {
+            boxSizing: "border-box",
+            fontFamily: this.context.theme.fontFamily,
+          },
+        }}
+      >
+        <Flex
+          className="detailpane__header"
+          p={4}
+          position="relative"
+          borderBottom={`1px solid ${this.context.theme.borderColor.primary}`}
+          justifyContent="flex-start"
+          alignItems="center"
+          height="69px"
+        >
+          <Box
             className="header__close"
+            cursor="pointer"
+            display="none"
+            sx={{
+              mask: `url(${navigateIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.primaryColor,
+              [this.context.theme.breakPoints[1]]: {
+                display: "block",
+              },
+            }}
+            width="24px"
+            height="24px"
             onClick={this.closeGroupDetail}
-          ></div>
-          <h4 css={headerTitleStyle()} className="header__title">
+          />
+          <Heading
+            className="header__title"
+            as="h4"
+            m={0}
+            fontWeight="700"
+            fontSize="22px"
+            lineHeight="26px"
+          >
             {Translator.translate("DETAILS", this.context.language)}
-          </h4>
-        </div>
-        <div css={detailPaneStyle()} className="detailpane__section">
+          </Heading>
+        </Flex>
+        <Box
+          className="detailpane__section"
+          m={0}
+          p={4}
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
+          alignItems="flex-start"
+          height="calc(100% - 70px)"
+        >
           {members}
           {options}
           {sharedmediaView}
-        </div>
+        </Box>
         {viewMembers}
         {addMembers}
         {bannedMembers}

@@ -1,13 +1,9 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box } from "@chakra-ui/react";
 import { CometChat } from "@cometchat-pro/chat";
 
 import { CometChatContext } from "../../../util/CometChatContext";
 import * as enums from "../../../util/enums.js";
-
-import { reactionContainerStyle, reactionEmojiStyle } from "./style";
 
 import heartIcon from "./resources/heart.png";
 
@@ -131,17 +127,38 @@ class CometChatLiveReactions extends React.PureComponent {
 
   render() {
     const emojis = this.emojis.map((emoji, index) => (
-      <span className="emoji" css={reactionEmojiStyle()} key={index}>
+      <Box
+        as="span"
+        className="emoji"
+        key={index}
+        position="absolute"
+        color="#DD4144"
+        visibility="hidden"
+        width="20px"
+        height="20px"
+        opacity="1"
+        transition="opacity 3s"
+        sx={{
+          "&.fade": {
+            opacity: "0"
+          }
+        }}
+      >
         {emoji}
-      </span>
+      </Box>
     ));
     return (
-      <div
+      <Box
         ref={(el) => (this.parentElement = el)}
-        css={reactionContainerStyle()}
+        width="100px"
+        height="calc(100% - 120px)"
+        overflow="hidden"
+        position="absolute"
+        top="70px"
+        right="0"
       >
         {emojis}
-      </div>
+      </Box>
     );
   }
 }

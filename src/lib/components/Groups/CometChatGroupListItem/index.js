@@ -1,29 +1,14 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Icon } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
+import { ShieldCheck, Lock } from "phosphor-react";
 
 import { CometChatAvatar } from "../../Shared";
 import { CometChatContext } from "../../../util/CometChatContext";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import {
-  listItem,
-  listItemIcon,
-  itemIconStyle,
-  itemThumbnailStyle,
-  itemDetailStyle,
-  itemNameWrapperStyle,
-  itemDescStyle,
-  listItemName,
-} from "./style";
-
-import shieldIcon from "./resources/password-protected-group.svg";
-import lockIcon from "./resources/private-group.svg";
 
 class CometChatGroupListItem extends React.PureComponent {
   static contextType = CometChatContext;
@@ -53,52 +38,102 @@ class CometChatGroupListItem extends React.PureComponent {
     let groupTypeIcon = null;
     if (this.props.group.type === CometChat.GROUP_TYPE.PRIVATE) {
       groupTypeIcon = (
-        <i
-          css={itemIconStyle(shieldIcon, this.context)}
+        <Icon
+          as={ShieldCheck}
+          boxSize="24px"
+          color={this.context.theme.secondaryTextColor}
           title={Translator.translate("PRIVATE_GROUP", this.context.language)}
-        ></i>
+        />
       );
     } else if (this.props.group.type === CometChat.GROUP_TYPE.PASSWORD) {
       groupTypeIcon = (
-        <i
-          css={itemIconStyle(lockIcon, this.context)}
+        <Icon
+          as={Lock}
+          boxSize="24px"
+          color={this.context.theme.secondaryTextColor}
           title={Translator.translate("PROTECTED_GROUP", this.context.language)}
-        ></i>
+        />
       );
     }
 
+    const isSelected = this.props.selectedGroup && this.props.selectedGroup.guid === this.props.group.guid;
+
     return (
-      <div
-        css={listItem(this.props, this.context)}
+      <Flex
+        direction="row"
+        justify="left"
+        align="center"
+        cursor="pointer"
+        width="100%"
+        padding="8px 16px"
+        bg={isSelected ? this.context.theme.backgroundColor.primary : "transparent"}
+        _hover={{ bg: this.context.theme.backgroundColor.primary }}
         className="list__item"
         onClick={this.clickHandler}
       >
-        <div css={itemThumbnailStyle()} className="list__item__thumbnail">
+        <Box
+          display="inline-block"
+          width="36px"
+          height="36px"
+          flexShrink={0}
+          className="list__item__thumbnail"
+        >
           <CometChatAvatar group={this.props.group} />
-        </div>
-        <div
-          css={itemDetailStyle()}
+        </Box>
+        <Box
+          width="calc(100% - 70px)"
+          flexGrow={1}
+          paddingLeft="16px"
+          sx={{
+            "&[dir=rtl]": {
+              paddingRight: "16px",
+              paddingLeft: "0",
+            },
+          }}
           className="list__item__details"
           dir={Translator.getDirection(this.context.language)}
         >
-          <div
-            css={itemNameWrapperStyle()}
+          <Flex
+            align="center"
+            width="100%"
+            margin="0"
             className="item__details__name"
             onMouseEnter={(event) => this.toggleTooltip(event, true)}
             onMouseLeave={(event) => this.toggleTooltip(event, false)}
           >
-            <p css={listItemName(this.context)}>{this.props.group.name}</p>
-            <div css={listItemIcon()}>{groupTypeIcon}</div>
-          </div>
-          <div
-            css={itemDescStyle(this.context)}
+            <Text
+              fontSize="15px"
+              fontWeight="600"
+              maxWidth="calc(100% - 30px)"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              margin="0"
+              lineHeight="22px"
+              color={this.context.theme.color.primary}
+            >
+              {this.props.group.name}
+            </Text>
+            <Box width="24px" height="auto" margin="0 8px">
+              {groupTypeIcon}
+            </Box>
+          </Flex>
+          <Text
+            borderBottom={`1px solid ${this.context.theme.borderColor.primary}`}
+            padding="0 0 5px 0"
+            fontSize="13px"
+            fontWeight="400"
+            lineHeight="20px"
+            color={this.context.theme.color.helpText}
             className="item__details__desc"
-          >{`${this.props.group.membersCount} ${Translator.translate(
-            "MEMBERS",
-            this.context.language
-          )}`}</div>
-        </div>
-      </div>
+          >
+            {`${this.props.group.membersCount} ${Translator.translate(
+              "MEMBERS",
+              this.context.language
+            )}`}
+          </Text>
+        </Box>
+      </Flex>
     );
   }
 }

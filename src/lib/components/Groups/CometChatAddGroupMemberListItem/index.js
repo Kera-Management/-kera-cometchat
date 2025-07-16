@@ -1,7 +1,5 @@
 import { useState, useContext } from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Checkbox } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { CometChatAvatar, CometChatUserPresence } from "../../Shared";
@@ -9,15 +7,6 @@ import { CometChatAvatar, CometChatUserPresence } from "../../Shared";
 import { CometChatContext } from "../../../util/CometChatContext";
 
 import { theme } from "../../../resources/theme";
-
-import {
-  modalRowStyle,
-  modalColumnStyle,
-  avatarStyle,
-  nameStyle,
-  selectionColumnStyle,
-  selectionBoxStyle,
-} from "./style";
 
 import inactiveIcon from "./resources/group-member-unselect.svg";
 import activeIcon from "./resources/group-member-select.svg";
@@ -57,32 +46,84 @@ const CometChatAddGroupMemberListItem = (props) => {
   };
 
   return (
-    <div css={modalRowStyle(theme)}>
-      <div
-        css={modalColumnStyle()}
+    <Flex
+      border={`1px solid ${theme.borderColor.primary}`}
+      width="100%"
+      fontSize="14px"
+      direction="row"
+      justify="flex-start"
+      align="center"
+      sx={{
+        "&:not(:last-child)": {
+          borderBottom: "none"
+        }
+      }}
+    >
+      <Flex
         className="userinfo"
+        padding="8px"
+        width="calc(100% - 50px)"
         onMouseEnter={(event) => toggleTooltip(event, true)}
         onMouseLeave={(event) => toggleTooltip(event, false)}
       >
-        <div css={avatarStyle()} className="avatar">
+        <Box
+          className="avatar"
+          display="inline-block"
+          float="left"
+          width="36px"
+          height="36px"
+          marginRight="8px"
+        >
           <CometChatAvatar user={props.user} />
           <CometChatUserPresence status={props.user.status} />
-        </div>
-        <div css={nameStyle()} className="name">
+        </Box>
+        <Text
+          className="name"
+          margin="10px"
+          width="calc(100% - 50px)"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          whiteSpace="nowrap"
+        >
           {props.user.name}
-        </div>
-      </div>
-      <div css={selectionColumnStyle()} className="selection">
-        <input
-          css={selectionBoxStyle(inactiveIcon, activeIcon, theme)}
-          type="checkbox"
-          checked={checked}
-          id={props.user.uid + "sel"}
-          onChange={handleCheck}
-        />
-        <label htmlFor={props.user.uid + "sel"}>&nbsp;</label>
-      </div>
-    </div>
+        </Text>
+      </Flex>
+      <Flex
+        className="selection"
+        padding="8px"
+        width="50px"
+        justify="center"
+        align="center"
+      >
+        <Box position="relative">
+          <Checkbox
+            isChecked={checked}
+            id={props.user.uid + "sel"}
+            onChange={handleCheck}
+            display="none"
+            sx={{
+              " + label": {
+                display: "block",
+                cursor: "pointer",
+                userSelect: "none",
+                padding: "8px",
+                width: "100%",
+                mask: `url(${inactiveIcon}) center center no-repeat`,
+                backgroundColor: theme.secondaryTextColor,
+              },
+              "&:checked + label": {
+                width: "100%",
+                mask: `url(${activeIcon}) center center no-repeat`,
+                backgroundColor: theme.secondaryTextColor,
+              }
+            }}
+          />
+          <Box as="label" htmlFor={props.user.uid + "sel"}>
+            &nbsp;
+          </Box>
+        </Box>
+      </Flex>
+    </Flex>
   );
 };
 

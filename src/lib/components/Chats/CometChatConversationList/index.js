@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -25,15 +23,6 @@ import { CometChatEvent } from "../../../util/CometChatEvent";
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
 
-import {
-  chatsWrapperStyle,
-  chatsHeaderStyle,
-  chatsHeaderCloseStyle,
-  chatsHeaderTitleStyle,
-  chatsMsgStyle,
-  chatsMsgTxtStyle,
-  chatsListStyle,
-} from "./style";
 
 import navigateIcon from "./resources/back.svg";
 
@@ -1035,20 +1024,49 @@ class CometChatConversationList extends React.Component {
     let messageContainer = null;
     if (this.state.decoratorMessage.length !== 0) {
       messageContainer = (
-        <div css={chatsMsgStyle()} className="chats__decorator-message">
-          <p css={chatsMsgTxtStyle(theme)} className="decorator-message">
+        <Box
+          className="chats__decorator-message"
+          overflow="hidden"
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          position="absolute"
+          top="50%"
+        >
+          <Text
+            className="decorator-message"
+            m={0}
+            minHeight="36px"
+            color={theme.color.secondary}
+            fontSize="20px"
+            fontWeight="600"
+            lineHeight="30px"
+            wordWrap="break-word"
+            px={4}
+          >
             {this.state.decoratorMessage}
-          </p>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
     let closeBtn = (
-      <div
-        css={chatsHeaderCloseStyle(navigateIcon, theme)}
+      <Box
         className="header__close"
+        cursor="pointer"
+        display="none"
+        sx={{
+          mask: `url(${navigateIcon}) no-repeat left center`,
+          backgroundColor: theme.primaryColor,
+          [theme.breakPoints[0]]: {
+            display: "block !important",
+          },
+        }}
+        height="24px"
+        width="33%"
         onClick={this.handleMenuClose}
-      ></div>
+      />
     );
     if (this.getContext() && Object.keys(this.getContext().item).length === 0) {
       closeBtn = null;
@@ -1077,32 +1095,88 @@ class CometChatConversationList extends React.Component {
     }
 
     const chatList = (
-      <div css={chatsWrapperStyle(this.props, theme)} className="chats">
-        <div css={chatsHeaderStyle(theme)} className="chats__header">
+      <Box
+        className="chats"
+        display="flex"
+        flexDirection="column"
+        height="100%"
+        boxSizing="border-box"
+        sx={{
+          ...(this.props._parent === ""
+            ? { border: `1px solid ${theme.borderColor.primary}` }
+            : {}),
+          "*": {
+            boxSizing: "border-box",
+            "::-webkit-scrollbar": {
+              width: "8px",
+              height: "4px",
+            },
+            "::-webkit-scrollbar-track": {
+              background: "#ffffff00",
+            },
+            "::-webkit-scrollbar-thumb": {
+              background: "#ccc",
+              "&:hover": {
+                background: "#aaa",
+              },
+            },
+          },
+        }}
+      >
+        <Flex
+          className="chats__header"
+          p={4}
+          alignItems="center"
+          borderBottom={`1px solid ${theme.borderColor.primary}`}
+          height="69px"
+        >
           {closeBtn}
-          <h4
-            css={chatsHeaderTitleStyle(this.props)}
+          <Heading
             className="header__title"
+            as="h4"
+            m={0}
+            display="inline-block"
+            width="100%"
+            textAlign="left"
+            fontSize="22px"
+            fontWeight="700"
+            lineHeight="26px"
             dir={Translator.getDirection(this.props.lang)}
+            sx={{
+              ...(this.props.hasOwnProperty("enableCloseMenu") &&
+              this.props.enableCloseMenu.length > 0
+                ? {
+                    width: "33%",
+                    textAlign: "center",
+                  }
+                : {}),
+              "&[dir=rtl]": {
+                textAlign: "right",
+              },
+            }}
           >
             {Translator.translate("CHATS", this.props.lang)}
-          </h4>
-        </div>
+          </Heading>
+        </Flex>
         {messageContainer}
-        <div
-          css={chatsListStyle()}
+        <Box
           className="chats__list"
+          height="calc(100% - 75px)"
+          width="100%"
+          overflowY="auto"
+          m={0}
+          p={0}
           onScroll={this.handleScroll}
           ref={(el) => (this.chatListRef = el)}
         >
           {conversationList}
-        </div>
+        </Box>
         {showConfirmDialog}
         <CometChatToastNotification
           ref={(el) => (this.toastRef = el)}
           lang={this.props.lang}
         />
-      </div>
+      </Box>
     );
 
     let chatListWrapper = chatList;

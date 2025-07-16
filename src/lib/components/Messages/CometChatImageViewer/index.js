@@ -1,13 +1,9 @@
 import React, { useContext } from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Image } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { CometChatBackdrop } from "../../Shared";
 import { CometChatContext } from "../../../util/CometChatContext";
-
-import { imageWrapperStyle, imgStyle } from "./style";
 
 import loadingIcon from "./resources/ring.svg";
 import closeIcon from "./resources/close.svg";
@@ -33,13 +29,39 @@ const CometChatImageViewer = (props) => {
   return (
     <React.Fragment>
       <CometChatBackdrop show={true} clicked={props.close} />
-      <div
-        css={imageWrapperStyle(context, closeIcon, image)}
+      <Box
         onClick={props.close}
         className="image__wrapper"
+        position="absolute"
+        top="0"
+        left="0"
+        bottom="0"
+        right="0"
+        width="100%"
+        height={image ? "auto" : "100%"}
+        padding="1.8% 2.3%"
+        zIndex="9999"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        bg="white"
+        cursor="pointer"
+        sx={{
+          background: `url(${closeIcon}) no-repeat 99% 0.8% #fff`,
+          [`@media ${context.theme.breakPoints[1]}, ${context.theme.breakPoints[2]}`]: {
+            height: "100%",
+          },
+        }}
       >
-        <img src={imageIcon} css={imgStyle(image)} alt={imageIcon} />
-      </div>
+        <Image
+          src={imageIcon}
+          alt={imageIcon}
+          objectFit="contain"
+          width={!image ? "24px" : undefined}
+          height={!image ? "24px" : undefined}
+          maxHeight={image ? "100%" : undefined}
+        />
+      </Box>
     </React.Fragment>
   );
 };

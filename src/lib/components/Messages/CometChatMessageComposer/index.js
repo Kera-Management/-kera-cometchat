@@ -1,7 +1,4 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, keyframes } from "@emotion/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 import {
@@ -14,6 +11,7 @@ import {
   SmileySticker,
   PaperPlaneRight,
 } from "phosphor-react";
+import { Box, Flex, Input, Button, keyframes } from "@chakra-ui/react";
 
 import {
   CometChatSmartReplyPreview,
@@ -33,28 +31,6 @@ import { SoundManager } from "../../../util/SoundManager";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import {
-  chatComposerStyle,
-  editPreviewContainerStyle,
-  previewHeadingStyle,
-  previewCloseStyle,
-  previewTextStyle,
-  composerInputStyle,
-  inputInnerStyle,
-  messageInputStyle,
-  inputStickyStyle,
-  stickyAttachmentStyle,
-  filePickerStyle,
-  fileListStyle,
-  fileItemStyle,
-  stickyAttachButtonStyle,
-  stickyButtonStyle,
-  emojiButtonStyle,
-  sendButtonStyle,
-  reactionBtnStyle,
-  stickerBtnStyle,
-} from "./style";
 
 import roundedPlus from "./resources/add-circle-filled.svg";
 import videoIcon from "./resources/video.svg";
@@ -1174,14 +1150,19 @@ class CometChatMessageComposer extends React.PureComponent {
     if (enums.CONSTANTS["LIVE_REACTIONS"].hasOwnProperty(this.props.reaction)) {
       const reactionName = this.props.reaction;
       liveReactionBtn = (
-        <div
+        <Box
           title={liveReactionText}
-          css={reactionBtnStyle()}
           className="button__reactions"
+          w="40px"
+          h="40px"
+          cursor="pointer"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           onClick={this.startLiveReaction}
         >
           <Heart color="red" size={24} weight="duotone" />
-        </div>
+        </Box>
       );
     }
 
@@ -1192,10 +1173,16 @@ class CometChatMessageComposer extends React.PureComponent {
 
     const docText = Translator.translate("ATTACH_FILE", this.context.language);
     let docs = (
-      <div
+      <Box
         title={docText}
-        css={fileItemStyle(docIcon, this.context)}
         className="filelist__item item__file"
+        w="40px"
+        h="40px"
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        color={this.context.theme.primaryColor}
         onClick={() => {
           this.openFileDialogue("file");
         }}
@@ -1206,8 +1193,9 @@ class CometChatMessageComposer extends React.PureComponent {
           type="file"
           id="file"
           ref={this.fileUploaderRef}
+          style={{ display: "none" }}
         />
-      </div>
+      </Box>
     );
 
     const videoText = Translator.translate(
@@ -1224,10 +1212,16 @@ class CometChatMessageComposer extends React.PureComponent {
     );
     let avp = (
       <React.Fragment>
-        <div
+        <Box
           title={videoText}
-          css={fileItemStyle(videoIcon, this.context)}
           className="filelist__item item__video"
+          w="40px"
+          h="40px"
+          cursor="pointer"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          color={this.context.theme.primaryColor}
           onClick={() => {
             this.openFileDialogue("video");
           }}
@@ -1238,12 +1232,19 @@ class CometChatMessageComposer extends React.PureComponent {
             accept="video/*"
             type="file"
             ref={this.videoUploaderRef}
+            style={{ display: "none" }}
           />
-        </div>
-        <div
+        </Box>
+        <Box
           title={audioText}
-          css={fileItemStyle(audioIcon, this.context)}
           className="filelist__item item__audio"
+          w="40px"
+          h="40px"
+          cursor="pointer"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          color={this.context.theme.primaryColor}
           onClick={() => {
             this.openFileDialogue("audio");
           }}
@@ -1254,12 +1255,19 @@ class CometChatMessageComposer extends React.PureComponent {
             accept="audio/*"
             type="file"
             ref={this.audioUploaderRef}
+            style={{ display: "none" }}
           />
-        </div>
-        <div
+        </Box>
+        <Box
           title={imageText}
-          css={fileItemStyle(imageIcon, this.context)}
           className="filelist__item item__image"
+          w="40px"
+          h="40px"
+          cursor="pointer"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          color={this.context.theme.primaryColor}
           onClick={() => {
             this.openFileDialogue("image");
           }}
@@ -1270,21 +1278,30 @@ class CometChatMessageComposer extends React.PureComponent {
             accept="image/*"
             type="file"
             ref={this.imageUploaderRef}
+            style={{ display: "none" }}
           />
-        </div>
+        </Box>
       </React.Fragment>
     );
 
     const pollText = Translator.translate("CREATE_POLL", this.context.language);
     let createPollBtn = (
-      <div
+      <Box
         title={pollText}
-        css={fileItemStyle(pollIcon, this.context)}
         className="filelist__item item__poll"
+        w="40px"
+        h="40px"
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        color={this.context.theme.primaryColor}
         onClick={this.toggleCreatePoll}
-      >
-        <i></i>
-      </div>
+        sx={{
+          mask: `url(${pollIcon}) center center no-repeat`,
+          backgroundColor: this.context.theme.primaryColor,
+        }}
+      />
     );
 
     const collaborativeDocText = Translator.translate(
@@ -1292,14 +1309,22 @@ class CometChatMessageComposer extends React.PureComponent {
       this.context.language
     );
     let collaborativeDocBtn = (
-      <div
+      <Box
         title={collaborativeDocText}
-        css={fileItemStyle(documentIcon, this.context)}
         className="filelist__item item__document"
+        w="40px"
+        h="40px"
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        color={this.context.theme.primaryColor}
         onClick={this.toggleCollaborativeDocument}
-      >
-        <i></i>
-      </div>
+        sx={{
+          mask: `url(${documentIcon}) center center no-repeat`,
+          backgroundColor: this.context.theme.primaryColor,
+        }}
+      />
     );
 
     const collaborativeBoardText = Translator.translate(
@@ -1307,41 +1332,61 @@ class CometChatMessageComposer extends React.PureComponent {
       this.context.language
     );
     let collaborativeBoardBtn = (
-      <div
+      <Box
         title={collaborativeBoardText}
-        css={fileItemStyle(whiteboardIcon, this.context)}
         className="filelist__item item__whiteboard"
+        w="40px"
+        h="40px"
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        color={this.context.theme.primaryColor}
         onClick={this.toggleCollaborativeBoard}
-      >
-        <i></i>
-      </div>
+        sx={{
+          mask: `url(${whiteboardIcon}) center center no-repeat`,
+          backgroundColor: this.context.theme.primaryColor,
+        }}
+      />
     );
 
     const emojiText = Translator.translate("EMOJI", this.context.language);
     let emojiBtn = (
-      <div
+      <Box
         title={emojiText}
-        css={emojiButtonStyle(insertEmoticon, this.context)}
         className="button__emoji"
+        w="40px"
+        h="40px"
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         onClick={() => {
           this.toggleEmojiPicker();
           this.setState({ messageToReact: "" });
         }}
       >
         <SmileySticker color="#fcba03" size={24} weight="duotone" />
-      </div>
+      </Box>
     );
 
     const StickerText = Translator.translate("STICKER", this.context.language);
     let stickerBtn = (
-      <div
+      <Box
         title={StickerText}
-        css={stickerBtnStyle(stickerIcon, this.context)}
         className="button__sticker"
+        w="40px"
+        h="40px"
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         onClick={this.toggleStickerPicker}
-      >
-        <i></i>
-      </div>
+        sx={{
+          mask: `url(${stickerIcon}) center center no-repeat`,
+          backgroundColor: this.context.theme.primaryColor,
+        }}
+      />
     );
 
     const sendMessageText = Translator.translate(
@@ -1349,14 +1394,19 @@ class CometChatMessageComposer extends React.PureComponent {
       this.context.language
     );
     let sendBtn = (
-      <div
+      <Box
         title={sendMessageText}
-        css={sendButtonStyle(sendBlue, this.context)}
         className="button__send"
+        w="40px"
+        h="40px"
+        cursor="pointer"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         onClick={this.sendTextMessage}
       >
         <PaperPlaneRight color="#3182CE" size={24} weight="duotone" />
-      </div>
+      </Box>
     );
 
     //if uploading photos, videos feature is disabled
@@ -1415,29 +1465,42 @@ class CometChatMessageComposer extends React.PureComponent {
 
     const attachText = Translator.translate("ATTACH", this.context.language);
     let attach = (
-      <div css={stickyAttachmentStyle()} className="input__sticky__attachment">
-        <div
-          css={stickyAttachButtonStyle(roundedPlus, this.context)}
+      <Box className="input__sticky__attachment" position="relative">
+        <Box
           className="attachment__icon"
+          w="40px"
+          h="40px"
+          cursor="pointer"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           onClick={this.toggleFilePicker}
           title={attachText}
         >
           <Plus size={24} weight="duotone" />
-        </div>
-        <div
-          css={filePickerStyle(this.state)}
+        </Box>
+        <Box
           className="attachment__filepicker"
+          display={this.state.showFilePicker ? "block" : "none"}
+          position="absolute"
+          bottom="50px"
+          left="0"
+          bg={this.context.theme.backgroundColor.white}
+          border={`1px solid ${this.context.theme.borderColor.primary}`}
+          borderRadius="8px"
+          p="8px"
+          zIndex="100"
           dir={Translator.getDirection(this.context.language)}
         >
-          <div css={fileListStyle()} className="filepicker__filelist">
+          <Flex className="filepicker__filelist" gap="8px">
             {avp}
             {docs}
             {createPollBtn}
             {collaborativeDocBtn}
             {collaborativeBoardBtn}
-          </div>
-        </div>
-      </div>
+          </Flex>
+        </Box>
+      </Box>
     );
 
     if (
@@ -1507,19 +1570,42 @@ class CometChatMessageComposer extends React.PureComponent {
         messageText = profaneData.message_clean;
       }
 
+      const slideAnimation = keyframes`
+        from { bottom: -60px }
+        to { bottom: 0px }
+      `;
+      
       editPreview = (
-        <div css={editPreviewContainerStyle(this.context, keyframes)}>
-          <div css={previewHeadingStyle()}>
-            <div css={previewTextStyle()}>
+        <Box
+          p="7px"
+          bg={this.context.theme.backgroundColor.white}
+          borderColor={this.context.theme.borderColor.primary}
+          borderWidth="1px 1px 1px 5px"
+          borderStyle="solid"
+          color={this.context.theme.color.helpText}
+          fontSize="13px"
+          position="relative"
+          sx={{
+            animation: `${slideAnimation} 0.5s ease-out`,
+          }}
+        >
+          <Flex alignItems="center" justifyContent="space-between">
+            <Box py="5px">
               {Translator.translate("EDIT_MESSAGE", this.context.language)}
-            </div>
-            <span
-              css={previewCloseStyle(closeIcon, this.context)}
+            </Box>
+            <Box
+              cursor="pointer"
+              w="20px"
+              h="20px"
               onClick={this.closeEditPreview}
-            ></span>
-          </div>
-          <div>{messageText}</div>
-        </div>
+              sx={{
+                mask: `url(${closeIcon}) center center no-repeat`,
+                backgroundColor: this.context.theme.primaryColor,
+              }}
+            />
+          </Flex>
+          <Box>{messageText}</Box>
+        </Box>
       );
     }
 
@@ -1560,19 +1646,31 @@ class CometChatMessageComposer extends React.PureComponent {
     }
 
     return (
-      <div css={chatComposerStyle(this.context)} className="chat__composer">
+      <Box
+        className="chat__composer"
+        p="16px"
+        bg={this.context.theme.backgroundColor.white}
+        zIndex="1"
+        order="3"
+        position="relative"
+        flex="none"
+        minH="105px"
+      >
         {editPreview}
         {smartReplyPreview}
         {stickerViewer}
         {emojiViewer}
-        <div css={composerInputStyle()} className="composer__input">
-          <div
-            tabIndex="-1"
-            css={inputInnerStyle(this.props, this.state, this.context)}
+        <Box className="composer__input" position="relative">
+          <Box
             className="input__inner"
+            tabIndex="-1"
+            border={`1px solid ${this.context.theme.borderColor.primary}`}
+            borderRadius="8px"
+            bg={this.context.theme.backgroundColor.white}
+            position="relative"
+            overflow="hidden"
           >
-            <div
-              css={messageInputStyle(disabledState)}
+            <Box
               className="input__message-input"
               contentEditable="true"
               placeholder={Translator.translate(
@@ -1584,26 +1682,52 @@ class CometChatMessageComposer extends React.PureComponent {
               onBlur={(event) => this.endTyping(event)}
               onKeyDown={this.sendMessageOnEnter}
               ref={this.messageInputRef}
-            ></div>
-            <div
-              css={inputStickyStyle(disabledState, attach, this.context)}
+              minH="40px"
+              maxH="120px"
+              overflow="auto"
+              p="8px 60px 8px 16px"
+              outline="none"
+              color={this.context.theme.color.primary}
+              opacity={disabledState ? 0.5 : 1}
+              pointerEvents={disabledState ? "none" : "auto"}
+              sx={{
+                "&::before": {
+                  content: `"${Translator.translate(
+                    "ENTER_YOUR_MESSAGE_HERE",
+                    this.context.language
+                  )}"`,
+                  position: "absolute",
+                  color: this.context.theme.color.helpText,
+                  pointerEvents: "none",
+                  display: this.state.messageInput ? "none" : "block",
+                }
+              }}
+            />
+            <Flex
               className="input__sticky"
+              position="absolute"
+              right="8px"
+              top="50%"
+              transform="translateY(-50%)"
+              alignItems="center"
+              gap="4px"
             >
               {attach}
-              <div
-                css={stickyButtonStyle(this.state)}
+              <Flex
                 className="input__sticky__buttons"
+                alignItems="center"
+                gap="4px"
               >
                 {stickerBtn}
                 {emojiBtn}
                 {sendBtn}
                 {liveReactionBtn}
-              </div>
-            </div>
-          </div>
-        </div>
+              </Flex>
+            </Flex>
+          </Box>
+        </Box>
         {createPoll}
-      </div>
+      </Box>
     );
   }
 }

@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Button, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -38,17 +36,6 @@ import { CometChatEvent } from "../../../util/CometChatEvent";
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  chatWrapperStyle,
-  chatSecondaryStyle,
-  reactionsWrapperStyle,
-  messagePaneTopStyle,
-  messagePaneBannerStyle,
-  messagePaneUnreadBannerStyle,
-  messagePaneUnreadBannerMessageStyle,
-  iconArrowDownStyle,
-  chatContainerStyle,
-} from "./style";
 
 class CometChatMessages extends React.PureComponent {
   static contextType = CometChatContext;
@@ -1131,30 +1118,69 @@ class CometChatMessages extends React.PureComponent {
               this.props.lang
             )}`;
       newMessageIndicator = (
-        <div css={messagePaneTopStyle()} className="message_pane__top">
-          <div
-            css={messagePaneBannerStyle(this.props)}
+        <Box
+          className="message_pane__top"
+          top="75px"
+          position="absolute"
+          width="auto"
+          right="auto"
+          left="50%"
+          fontWeight="700"
+          zIndex={200}
+          transform="translateX(-50%)"
+        >
+          <Box
             className="message_pane__banner"
+            marginBottom={0}
+            display="block"
+            fontSize="13px"
+            flex="1"
+            background={this.props.theme.color.blue}
+            borderRadius="6px"
+            zIndex={200}
           >
-            <div
-              css={messagePaneUnreadBannerStyle()}
+            <Box
               className="message_pane__unread_banner__banner"
+              height="28px"
+              borderRadius="14px"
+              display="flex"
+              flex="1"
+              alignItems="center"
               title={Translator.translate("JUMP", this.props.lang)}
             >
-              <button
+              <Button
                 type="button"
-                css={messagePaneUnreadBannerMessageStyle(this.props)}
                 className="message_pane__unread_banner__msg"
+                p="0 16px"
+                flex="1"
+                textAlign="center"
+                textShadow="0 1px rgba(0, 0, 0, .15)"
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                color={this.props.theme.color.white}
                 onClick={this.jumpToMessages}
+                bg="transparent"
+                border="none"
+                cursor="pointer"
+                _hover={{ bg: "transparent" }}
               >
-                <span css={iconArrowDownStyle()} className="icon--arrow-down">
+                <Text
+                  className="icon--arrow-down"
+                  position="relative"
+                  display="inline-flex"
+                  height="20px"
+                  alignItems="center"
+                  justifyContent="center"
+                  paddingRight="8px"
+                >
                   &#x2193;{" "}
-                </span>
+                </Text>
                 {messageText}
-              </button>
-            </div>
-          </div>
-        </div>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
       );
     }
 
@@ -1181,13 +1207,23 @@ class CometChatMessages extends React.PureComponent {
     let liveReactionView = null;
     if (this.state.liveReaction) {
       liveReactionView = (
-        <div css={reactionsWrapperStyle()}>
+        <Box
+          position="absolute"
+          width="100%"
+          height="100%"
+          top={0}
+          right={0}
+          zIndex={2}
+          display="flex"
+          justifyContent="left"
+          alignItems="center"
+        >
           <CometChatLiveReactions
             reaction={this.reactionName}
             theme={this.props.theme}
             lang={this.props.lang}
           />
-        </div>
+        </Box>
       );
     }
 
@@ -1230,27 +1266,73 @@ class CometChatMessages extends React.PureComponent {
     if (this.state.viewdetailscreen) {
       if (this.getContext().type === CometChat.ACTION_TYPE.TYPE_USER) {
         detailScreen = (
-          <div
-            css={chatSecondaryStyle(this.props)}
+          <Box
             className="chat__secondary-view"
+            float="right"
+            borderLeft={`1px solid ${this.props.theme.borderColor.primary}`}
+            height="100%"
+            width="400px"
+            display="flex"
+            flexDirection="column"
+            order={3}
+            sx={{
+              ...(this.props._parent.trim().length === 0
+                ? {
+                    borderRight: `1px solid ${this.props.theme.borderColor.primary}`,
+                    borderBottom: `1px solid ${this.props.theme.borderColor.primary}`,
+                  }
+                : {}),
+              [this.props.theme.breakPoints[1]]: {
+                position: "absolute !important",
+                right: "0 !important",
+                top: "0",
+                bottom: "0",
+                width: "100% !important",
+                zIndex: "2",
+                backgroundColor: this.props.theme.backgroundColor.white,
+              },
+            }}
           >
             <CometChatUserDetails
               lang={this.props.lang}
               actionGenerated={this.actionHandler}
             />
-          </div>
+          </Box>
         );
       } else if (this.getContext().type === CometChat.ACTION_TYPE.TYPE_GROUP) {
         detailScreen = (
-          <div
-            css={chatSecondaryStyle(this.props)}
+          <Box
             className="chat__secondary-view"
+            float="right"
+            borderLeft={`1px solid ${this.props.theme.borderColor.primary}`}
+            height="100%"
+            width="400px"
+            display="flex"
+            flexDirection="column"
+            order={3}
+            sx={{
+              ...(this.props._parent.trim().length === 0
+                ? {
+                    borderRight: `1px solid ${this.props.theme.borderColor.primary}`,
+                    borderBottom: `1px solid ${this.props.theme.borderColor.primary}`,
+                  }
+                : {}),
+              [this.props.theme.breakPoints[1]]: {
+                position: "absolute !important",
+                right: "0 !important",
+                top: "0",
+                bottom: "0",
+                width: "100% !important",
+                zIndex: "2",
+                backgroundColor: this.props.theme.backgroundColor.white,
+              },
+            }}
           >
             <CometChatGroupDetails
               lang={this.props.lang}
               actionGenerated={this.actionHandler}
             />
-          </div>
+          </Box>
         );
       }
     }
@@ -1258,9 +1340,32 @@ class CometChatMessages extends React.PureComponent {
     let threadMessageView = null;
     if (this.state.threadmessageview) {
       threadMessageView = (
-        <div
-          css={chatSecondaryStyle(this.props)}
+        <Box
           className="chat__secondary-view"
+          float="right"
+          borderLeft={`1px solid ${this.props.theme.borderColor.primary}`}
+          height="100%"
+          width="400px"
+          display="flex"
+          flexDirection="column"
+          order={3}
+          sx={{
+            ...(this.props._parent.trim().length === 0
+              ? {
+                  borderRight: `1px solid ${this.props.theme.borderColor.primary}`,
+                  borderBottom: `1px solid ${this.props.theme.borderColor.primary}`,
+                }
+              : {}),
+            [this.props.theme.breakPoints[1]]: {
+              position: "absolute !important",
+              right: "0 !important",
+              top: "0",
+              bottom: "0",
+              width: "100% !important",
+              zIndex: "2",
+              backgroundColor: this.props.theme.backgroundColor.white,
+            },
+          }}
         >
           <CometChatMessageThread
             activeTab={this.state.activeTab}
@@ -1270,7 +1375,7 @@ class CometChatMessages extends React.PureComponent {
             loggedInUser={this.loggedInUser}
             actionGenerated={this.actionHandler}
           />
-        </div>
+        </Box>
       );
     }
 
@@ -1286,10 +1391,57 @@ class CometChatMessages extends React.PureComponent {
 
     let messageComponent = (
       <React.Fragment>
-        <div
-          css={chatWrapperStyle(this.props, this.state)}
+        <Box
           className="main__chat"
           dir={Translator.getDirection(this.props.lang)}
+          display="flex"
+          flexDirection="column"
+          height="100%"
+          boxSizing="border-box"
+          position="relative"
+          fontFamily={this.props.theme.fontFamily}
+          sx={{
+            ...(this.props._parent.trim().length === 0
+              ? this.state.viewdetailscreen || this.state.threadmessageview
+                ? {
+                    borderLeft: `1px solid ${this.props.theme.borderColor.primary}`,
+                    borderBottom: `1px solid ${this.props.theme.borderColor.primary}`,
+                  }
+                : {
+                    borderLeft: `1px solid ${this.props.theme.borderColor.primary}`,
+                    borderRight: `1px solid ${this.props.theme.borderColor.primary}`,
+                    borderBottom: `1px solid ${this.props.theme.borderColor.primary}`,
+                  }
+              : {}),
+            width:
+              this.state.threadmessageview || this.state.viewdetailscreen
+                ? "calc(100% - 400px)"
+                : "100%",
+            [this.props.theme.breakPoints[1]]: {
+              width: this.state.threadmessageview || this.state.viewdetailscreen ? "100%" : "100%",
+            },
+            [this.props.theme.breakPoints[3]]: {
+              width: this.state.threadmessageview || this.state.viewdetailscreen ? "0" : "100%",
+              display: this.state.threadmessageview || this.state.viewdetailscreen ? "none" : "flex",
+            },
+            "*": {
+              boxSizing: "border-box",
+              fontFamily: this.props.theme.fontFamily,
+              "::-webkit-scrollbar": {
+                width: "8px",
+                height: "4px",
+              },
+              "::-webkit-scrollbar-track": {
+                background: "#ffffff00",
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: "#ccc",
+                "&:hover": {
+                  background: "#aaa",
+                },
+              },
+            },
+          }}
         >
           <CometChatMessageHeader
             lang={this.props.lang}
@@ -1302,7 +1454,7 @@ class CometChatMessages extends React.PureComponent {
           {messageComposer}
           {blockedUser}
           {newMessageIndicator}
-        </div>
+        </Box>
         <CometChatToastNotification
           ref={(el) => (this.toastRef = el)}
           lang={this.props.lang}
@@ -1329,7 +1481,9 @@ class CometChatMessages extends React.PureComponent {
           group={this.props.chatWithGroup}
           language={this.props.lang}
         >
-          <div css={chatContainerStyle()}>{messageComponent}</div>
+          <Box display="flex" width="100%" height="100%">
+            {messageComponent}
+          </Box>
         </CometChatContextProvider>
       );
     }

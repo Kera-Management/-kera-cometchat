@@ -1,17 +1,24 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import React from "react";
+import { Box } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-
-import { backdropStyle } from "./style";
 
 const CometChatBackdrop = (props) =>
   props.show ? (
-    <div
-      css={backdropStyle(props)}
+    <Box
+      zIndex="3"
+      backgroundColor="#000"
+      opacity=".3"
+      position="fixed"
+      width="100%"
+      height="100%"
+      top="0"
+      left="0"
+      cursor="pointer"
+      transition="background .3s ease-out 0"
       className="modal__backdrop"
       onClick={props.clicked}
-    ></div>
+      sx={props.style}
+    />
   ) : null;
 
 // Specifies the default values for props:

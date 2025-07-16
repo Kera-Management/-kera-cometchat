@@ -1,15 +1,10 @@
 import { useContext } from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box } from "@chakra-ui/react";
 
 import { CometChatContext } from "../../../../util/CometChatContext";
 
-import { iconWrapperStyle } from "../CometChatCreatePoll/style";
-
 import Translator from "../../../../resources/localization/translator";
 
-import { removeOptionIconStyle } from "./style";
 import removeIcon from "./resources/remove.svg";
 
 const CometChatCreatePollOptions = (props) => {
@@ -32,12 +27,20 @@ const CometChatCreatePollOptions = (props) => {
           onChange={(event) => props.optionChangeHandler(event, props.option)}
         />
       </td>
-      <td css={iconWrapperStyle()} className="option__remove">
-        <span
-          css={removeOptionIconStyle(removeIcon, context)}
+      <Box as="td" width="50px" className="option__remove">
+        <Box
+          as="span"
+          cursor="pointer"
+          display="block"
+          height="24px"
+          width="24px"
+          sx={{
+            mask: `url(${removeIcon}) center center no-repeat`,
+            backgroundColor: context.theme.color.red,
+          }}
           onClick={() => props.removePollOption(props.option)}
-        ></span>
-      </td>
+        ></Box>
+      </Box>
     </tr>
   );
 };

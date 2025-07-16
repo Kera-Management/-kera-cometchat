@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Heading } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -42,19 +40,6 @@ import { CometChatEvent } from "../../../util/CometChatEvent";
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  wrapperStyle,
-  headerStyle,
-  headerWrapperStyle,
-  headerDetailStyle,
-  headerTitleStyle,
-  headerNameStyle,
-  headerCloseStyle,
-  messageContainerStyle,
-  parentMessageStyle,
-  messageSeparatorStyle,
-  messageReplyStyle,
-} from "./style";
 
 import clearIcon from "./resources/close.svg";
 
@@ -647,9 +632,14 @@ class CometChatMessageThread extends React.PureComponent {
     );
 
     let seperator = (
-      <div css={messageSeparatorStyle(this.props)}>
-        <hr />
-      </div>
+      <Flex alignItems="center" position="relative" m="7px 16px" height="15px">
+        <Box
+          as="hr"
+          flex="1"
+          margin="1px 0 0 0"
+          borderTop={`1px solid ${this.context.theme.borderColor.primary}`}
+        />
+      </Flex>
     );
     if (this.state.parentMessage.hasOwnProperty("replyCount")) {
       const replyCount = this.state.parentMessage.replyCount;
@@ -665,15 +655,27 @@ class CometChatMessageThread extends React.PureComponent {
             )}`;
 
       seperator = (
-        <div
-          css={messageSeparatorStyle(this.context)}
+        <Flex
           className="message__separator"
+          alignItems="center"
+          position="relative"
+          m="7px 16px"
+          height="15px"
         >
-          <span css={messageReplyStyle()} className="message__replies">
+          <Text
+            className="message__replies"
+            mr={3}
+            fontSize="12px"
+          >
             {replyText}
-          </span>
-          <hr />
-        </div>
+          </Text>
+          <Box
+            as="hr"
+            flex="1"
+            margin="1px 0 0 0"
+            borderTop={`1px solid ${this.context.theme.borderColor.primary}`}
+          />
+        </Flex>
       );
     }
 
@@ -714,38 +716,131 @@ class CometChatMessageThread extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <div css={wrapperStyle(this.context)} className="thread__chat">
-          <div css={headerStyle(this.context)} className="chat__header">
-            <div css={headerWrapperStyle()} className="header__wrapper">
-              <div css={headerDetailStyle()} className="header__details">
-                <h6 css={headerTitleStyle()} className="header__title">
+        <Box
+          className="thread__chat"
+          display="flex"
+          flexDirection="column"
+          height="100%"
+          boxSizing="border-box"
+          fontFamily={this.context.theme.fontFamily}
+          sx={{
+            "*": {
+              boxSizing: "border-box",
+              fontFamily: this.context.theme.fontFamily,
+            },
+          }}
+        >
+          <Box
+            className="chat__header"
+            p={4}
+            width="100%"
+            backgroundColor={this.context.theme.backgroundColor.white}
+            zIndex={1}
+            borderBottom={`1px solid ${this.context.theme.borderColor.primary}`}
+            height="69px"
+            display="flex"
+          >
+            <Flex
+              className="header__wrapper"
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              width="100%"
+            >
+              <Flex
+                className="header__details"
+                direction="column"
+                width="calc(100% - 40px)"
+              >
+                <Heading
+                  className="header__title"
+                  as="h6"
+                  m={0}
+                  fontSize="15px"
+                  fontWeight="600"
+                  lineHeight="22px"
+                  width="100%"
+                >
                   {Translator.translate("THREAD", this.context.language)}
-                </h6>
-                <span css={headerNameStyle()} className="header__username">
+                </Heading>
+                <Text
+                  className="header__username"
+                  fontSize="13px"
+                  lineHeight="20px"
+                  width="100%"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                >
                   {this.props.threadItem.name}
-                </span>
-              </div>
-              <div
-                css={headerCloseStyle(clearIcon, this.context)}
+                </Text>
+              </Flex>
+              <Box
                 className="header__close"
+                cursor="pointer"
+                width="24px"
+                height="24px"
+                sx={{
+                  mask: `url(${clearIcon}) center center no-repeat`,
+                  backgroundColor: this.context.theme.primaryColor,
+                }}
                 onClick={() =>
                   this.props.actionGenerated(
                     enums.ACTIONS["CLOSE_THREADED_MESSAGE"]
                   )
                 }
-              ></div>
-            </div>
-          </div>
-          <div
-            css={messageContainerStyle()}
+              />
+            </Flex>
+          </Box>
+          <Box
             className="chat__message__container"
+            display="flex"
+            flexDirection="column"
+            height="100%"
+            overflowX="hidden"
+            overflowY="auto"
+            transition="background .3s ease-out .1s"
+            width="100%"
+            zIndex={100}
+            minHeight="calc(100% - 68px)"
+            order={2}
+            sx={{
+              ".chat__list": {
+                minHeight: "250px",
+                ".list__wrapper": {
+                  "::-webkit-scrollbar": {
+                    display: "none",
+                  },
+                  scrollbarWidth: "none",
+                },
+              },
+            }}
           >
-            <div
-              css={parentMessageStyle(this.props.parentMessage)}
+            <Flex
               className="parent__message"
+              p="14px 16px"
+              alignItems="center"
+              justifyContent={
+                this.props.parentMessage.messageFrom === "sender"
+                  ? "flex-end"
+                  : "flex-start"
+              }
+              sx={{
+                ".sender__message__container, .receiver__message__container": {
+                  maxWidth: "100%",
+                  "&:hover": {
+                    ".message__actions": {
+                      display: "none",
+                    },
+                  },
+                },
+                ".replycount": {
+                  display: "none",
+                },
+              }}
             >
               {parentMessage}
-            </div>
+            </Flex>
             {seperator}
             <CometChatMessageList
               messages={this.state.messageList}
@@ -756,8 +851,8 @@ class CometChatMessageThread extends React.PureComponent {
               actionGenerated={this.actionHandler}
             />
             {messageComposer}
-          </div>
-        </div>
+          </Box>
+        </Box>
         {originalImageView}
       </React.Fragment>
     );

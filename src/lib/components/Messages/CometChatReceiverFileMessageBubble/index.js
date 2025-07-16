@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Link } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -17,20 +15,6 @@ import { CometChatContext } from "../../../util/CometChatContext";
 import { checkMessageForExtensionsData } from "../../../util/common";
 
 import { theme } from "../../../resources/theme";
-
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageThumbnailStyle,
-  messageDetailStyle,
-  nameWrapperStyle,
-  nameStyle,
-  messageFileContainerStyle,
-  messageFileWrapperStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-  iconStyle,
-} from "./style";
 
 import fileIcon from "./resources/file-upload.svg";
 
@@ -73,17 +57,33 @@ class CometChatReceiverFileMessageBubble extends React.Component {
       name = null;
     if (this.props.message.receiverType === CometChat.RECEIVER_TYPE.GROUP) {
       avatar = (
-        <div css={messageThumbnailStyle()} className="message__thumbnail">
+        <Box 
+          className="message__thumbnail"
+          width="36px"
+          height="36px"
+          margin="10px 5px"
+          float="left"
+          flexShrink="0"
+        >
           <CometChatAvatar user={this.props.message.sender} />
-        </div>
+        </Box>
       );
 
       name = (
-        <div css={nameWrapperStyle(avatar)} className="message__name__wrapper">
-          <span css={nameStyle(this.context)} className="message__name">
+        <Box 
+          className="message__name__wrapper"
+          alignSelf="flex-start"
+          padding={avatar ? "3px 5px" : "0"}
+        >
+          <Text 
+            as="span"
+            className="message__name"
+            fontSize="11px"
+            color={this.context.theme.color.search}
+          >
             {this.props.message.sender.name}
-          </span>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -95,15 +95,20 @@ class CometChatReceiverFileMessageBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
             className="message__reaction__wrapper"
+            display="flex"
+            alignSelf="flex-start"
+            width="100%"
+            flexWrap="wrap"
+            justifyContent="flex-start"
+            minHeight="36px"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -119,51 +124,109 @@ class CometChatReceiverFileMessageBubble extends React.Component {
     }
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
         className="receiver__message__container message__file"
+        alignSelf="flex-start"
+        marginBottom="16px"
+        paddingLeft="16px"
+        paddingRight="16px"
+        maxWidth="65%"
+        clear="both"
+        position="relative"
+        display="flex"
+        flexDirection="column"
+        flexShrink="0"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
-        <div css={messageWrapperStyle()} className="message__wrapper">
+        <Flex 
+          className="message__wrapper"
+          width="auto"
+          flex="1 1"
+          alignSelf="flex-start"
+          display="flex"
+        >
           {avatar}
-          <div css={messageDetailStyle()} className="message__details">
+          <Flex 
+            className="message__details"
+            flex="1 1"
+            display="flex"
+            flexDirection="column"
+          >
             {name}
             {toolTipView}
-            <div
-              css={messageFileContainerStyle()}
+            <Flex
               className="message__file__container"
+              width="auto"
+              flex="1 1"
+              alignSelf="flex-start"
+              display="flex"
             >
-              <div
-                css={messageFileWrapperStyle(this.context)}
+              <Box
                 className="message__file__wrapper"
+                display="inline-block"
+                borderRadius="12px"
+                color={this.context.theme.color.secondary}
+                backgroundColor={this.context.theme.backgroundColor.secondary}
+                padding="8px 16px"
+                alignSelf="flex-start"
+                width="auto"
               >
-                <a
+                <Link
                   href={this.props.message.data.attachments[0].url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  background="0 0"
+                  textDecoration="none"
+                  backgroundColor="transparent"
+                  color={this.context.theme.color.primary}
+                  width="auto"
+                  fontSize="14px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  _visited={{ color: this.context.theme.color.primary, textDecoration: "none" }}
+                  _active={{ color: this.context.theme.color.primary, textDecoration: "none" }}
+                  _hover={{ color: this.context.theme.color.primary, textDecoration: "none" }}
                 >
-                  <i css={iconStyle(fileIcon, this.context)}></i>
-                  <label>{this.props.message.data.attachments[0].name}</label>
-                </a>
-              </div>
-            </div>
+                  <Box
+                    as="i"
+                    width="24px"
+                    height="24px"
+                    display="inline-block"
+                    marginRight="8px"
+                    sx={{
+                      mask: `url(${fileIcon}) center center no-repeat`,
+                      backgroundColor: this.context.theme.secondaryTextColor,
+                    }}
+                  />
+                  <Box as="label" cursor="pointer">
+                    {this.props.message.data.attachments[0].name}
+                  </Box>
+                </Link>
+              </Box>
+            </Flex>
 
             {messageReactions}
 
-            <div
-              css={messageInfoWrapperStyle()}
+            <Flex
               className="message__info__wrapper"
+              alignSelf="flex-start"
+              padding="4px 8px"
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-start"
+              height="25px"
             >
               <CometChatReadReceipt message={this.props.message} />
               <CometChatThreadedMessageReplyCount
                 message={this.props.message}
                 actionGenerated={this.props.actionGenerated}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
     );
   }
 }

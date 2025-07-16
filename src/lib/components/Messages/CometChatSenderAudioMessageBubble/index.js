@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import {
@@ -18,14 +16,6 @@ import {
 import * as enums from "../../../util/enums.js";
 
 import { theme } from "../../../resources/theme";
-
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageAudioWrapperStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-} from "./style";
 
 class CometChatSenderAudioMessageBubble extends React.Component {
   constructor(props) {
@@ -115,15 +105,20 @@ class CometChatSenderAudioMessageBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
             className="message__reaction__wrapper"
+            display="flex"
+            alignSelf="flex-end"
+            width="100%"
+            flexWrap="wrap"
+            justifyContent="flex-end"
+            minHeight="36px"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -139,32 +134,64 @@ class CometChatSenderAudioMessageBubble extends React.Component {
     }
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
         className="sender__message__container message__audio"
+        alignSelf="flex-end"
+        marginBottom="16px"
+        paddingLeft="16px"
+        paddingRight="16px"
+        maxWidth="65%"
+        clear="both"
+        position="relative"
+        display="flex"
+        flexDirection="column"
+        flexShrink="0"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
         {toolTipView}
-        <div css={messageWrapperStyle()} className="message__wrapper">
-          <div
-            css={messageAudioWrapperStyle()}
+        <Flex 
+          className="message__wrapper"
+          width="auto"
+          flex="1 1"
+          alignSelf="flex-end"
+          display="flex"
+        >
+          <Box
             className="message__audio__wrapper"
+            display="inline-block"
+            borderRadius="12px"
+            alignSelf="flex-end"
+            sx={{
+              "> audio": {
+                maxWidth: "250px",
+                display: "inherit",
+                outline: "none",
+              }
+            }}
           >
             <audio controls src={this.state.fileData?.fileUrl}></audio>
-          </div>
-        </div>
+          </Box>
+        </Flex>
 
         {messageReactions}
 
-        <div css={messageInfoWrapperStyle()} className="message__info__wrapper">
+        <Flex 
+          className="message__info__wrapper"
+          alignSelf="flex-end"
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          height="25px"
+          padding="4px 8px"
+        >
           <CometChatThreadedMessageReplyCount
             message={this.props.message}
             actionGenerated={this.props.actionGenerated}
           />
           <CometChatReadReceipt message={this.props.message} />
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   }
 }

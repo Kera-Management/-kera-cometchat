@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Link } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { checkMessageForExtensionsData } from "../../../util/common";
@@ -11,16 +9,6 @@ import { CometChatContext } from "../../../util/CometChatContext";
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  messagePreviewContainerStyle,
-  messagePreviewWrapperStyle,
-  previewImageStyle,
-  previewDataStyle,
-  previewTitleStyle,
-  previewDescStyle,
-  previewLinkStyle,
-  previewTextStyle,
-} from "./style";
 
 class CometChatLinkPreview extends React.PureComponent {
   static contextType = CometChatContext;
@@ -38,37 +26,93 @@ class CometChatLinkPreview extends React.PureComponent {
       : Translator.translate("VISIT", this.context.language);
 
     return (
-      <div
-        css={messagePreviewContainerStyle(this.context)}
+      <Box
         className="message__preview"
+        display="inline-block"
+        borderRadius="12px"
+        backgroundColor={this.context.theme.backgroundColor.white}
+        boxShadow="0px 1px 2px 1px rgba(0,0,0,0.18)"
+        alignSelf="flex-start"
+        width="auto"
       >
-        <div css={messagePreviewWrapperStyle()} className="preview__card">
-          <div
-            css={previewImageStyle(linkObject["image"])}
+        <Flex className="preview__card" direction="column">
+          <Box
             className="card__image"
-          ></div>
-          <div css={previewDataStyle(this.context)} className="card__info">
-            <div css={previewTitleStyle(this.context)} className="card__title">
-              <span>{linkObject["title"]}</span>
-            </div>
-            <div css={previewDescStyle(this.context)} className="card__desc">
-              <span>{linkObject["description"]}</span>
-            </div>
-            <div css={previewTextStyle(this.context)} className="card__text">
+            sx={{
+              background: `url(${linkObject["image"]}) no-repeat center center`,
+              backgroundSize: "contain",
+            }}
+            height="150px"
+            margin="12px 0"
+          />
+          <Box
+            className="card__info"
+            borderTop={`1px solid ${this.context.theme.borderColor.primary}`}
+            borderBottom={`1px solid ${this.context.theme.borderColor.primary}`}
+            padding={4}
+          >
+            <Box className="card__title" mb={2}>
+              <Text
+                whiteSpace="pre-wrap"
+                wordBreak="break-word"
+                textAlign="left"
+                width="auto"
+                color={this.context.theme.color.helpText}
+                fontWeight="700"
+              >
+                {linkObject["title"]}
+              </Text>
+            </Box>
+            <Box className="card__desc">
+              <Text
+                whiteSpace="pre-wrap"
+                wordBreak="break-word"
+                textAlign="left"
+                width="auto"
+                color={this.context.theme.color.helpText}
+                fontStyle="italic"
+                fontSize="13px"
+              >
+                {linkObject["description"]}
+              </Text>
+            </Box>
+            <Box
+              className="card__text"
+              whiteSpace="pre-wrap"
+              wordBreak="break-word"
+              textAlign="left"
+              width="auto"
+              sx={{
+                ".message__txt__wrapper": {
+                  backgroundColor: "transparent",
+                  color: this.context.theme.color.helpText,
+                  fontStyle: "normal",
+                  padding: "8px 0",
+                },
+              }}
+            >
               {this.props.messageText}
-            </div>
-          </div>
-          <div css={previewLinkStyle(this.context)} className="card__link">
-            <a
+            </Box>
+          </Box>
+          <Flex
+            className="card__link"
+            alignItems="center"
+            justifyContent="center"
+            padding={3}
+          >
+            <Link
               href={linkObject["url"]}
               target="_blank"
               rel="noopener noreferrer"
+              display="inline-block"
+              color={this.context.theme.color.blue}
+              fontWeight="700"
             >
               {linkText}
-            </a>
-          </div>
-        </div>
-      </div>
+            </Link>
+          </Flex>
+        </Flex>
+      </Box>
     );
   }
 }

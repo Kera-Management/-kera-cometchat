@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { CometChatContext } from "../../../util/CometChatContext";
@@ -9,8 +7,6 @@ import * as enums from "../../../util/enums.js";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import { replyCountStyle } from "./style";
 
 const CometChatThreadedMessageReplyCount = (props) => {
   const context = React.useContext(CometChatContext);
@@ -46,13 +42,24 @@ const CometChatThreadedMessageReplyCount = (props) => {
       : `${replyCount} ${Translator.translate("REPLIES", context.language)}`;
 
   let replies = (
-    <span
-      css={replyCountStyle(context)}
+    <Text
+      as="span"
+      display="inline-block"
+      fontSize="11px"
+      fontWeight="500"
+      lineHeight="12px"
+      textTransform="lowercase"
+      padding="0 10px"
+      cursor="pointer"
+      color={context.theme.color.blue}
+      _hover={{
+        textDecoration: "underline",
+      }}
       className="replycount"
       onClick={viewThread}
     >
       {replyText}
-    </span>
+    </Text>
   );
 
   if (props.message.hasOwnProperty("replyCount") === false) {

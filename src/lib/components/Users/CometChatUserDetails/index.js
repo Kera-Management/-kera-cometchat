@@ -1,8 +1,6 @@
 import React from "react";
 import dateFormat from "dateformat";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Heading, VStack, HStack } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { CometChat } from "@cometchat-pro/chat";
@@ -17,26 +15,6 @@ import * as enums from "../../../util/enums.js";
 
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
-
-import {
-  userDetailStyle,
-  headerStyle,
-  headerCloseStyle,
-  headerTitleStyle,
-  sectionStyle,
-  actionSectionStyle,
-  mediaSectionStyle,
-  privacySectionStyle,
-  sectionHeaderStyle,
-  sectionContentStyle,
-  contentItemStyle,
-  itemLinkStyle,
-  userInfoSectionStyle,
-  userThumbnailStyle,
-  userNameStyle,
-  userStatusStyle,
-  userPresenceStyle,
-} from "./style";
 
 import navigateIcon from "./resources/back.svg";
 
@@ -277,63 +255,120 @@ class CometChatUserDetails extends React.Component {
       this.context.item.link.trim().length
     ) {
       viewProfile = (
-        <div css={sectionStyle()} className="detailpane__section">
-          <div
-            css={actionSectionStyle(this.context)}
+        <VStack
+          margin="0"
+          padding="16px 16px 0 16px"
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
+          alignItems="flex-start"
+          className="detailpane__section"
+        >
+          <Box
+            width="100%"
             className="section section__viewprofile"
+            sx={{
+              "> div": {
+                fontWeight: "600",
+                cursor: "pointer",
+                fontSize: "12px",
+              },
+              ".item__link": {
+                color: this.context.theme.color.blue,
+              },
+            }}
           >
-            <h6
-              css={sectionHeaderStyle(this.props)}
+            <Heading
+              as="h6"
+              margin="0"
+              width="100%"
+              fontSize="12px"
+              fontWeight="500"
+              lineHeight="20px"
+              color={this.context.theme.color.secondary}
+              textTransform="uppercase"
               className="section__header"
             >
               {Translator.translate("ACTIONS", this.context.language)}
-            </h6>
-            <div css={sectionContentStyle()} className="section__content">
-              <div css={contentItemStyle()} className="content__item">
-                <div
-                  css={itemLinkStyle(this.context)}
+            </Heading>
+            <Box
+              width="100%"
+              margin="6px 0"
+              className="section__content"
+            >
+              <Box
+                width="100%"
+                className="content__item"
+              >
+                <Text
+                  fontSize="15px"
+                  lineHeight="20px"
+                  fontWeight="600"
+                  display="inline-block"
+                  color={this.context.theme.color.red}
+                  cursor="pointer"
                   className="item__link"
                   onClick={this.viewProfile}
                 >
                   {Translator.translate("VIEW_PROFILE", this.context.language)}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                </Text>
+              </Box>
+            </Box>
+          </Box>
+        </VStack>
       );
     }
 
     let blockUserText;
     if (this.context.item.blockedByMe) {
       blockUserText = (
-        <div
-          css={itemLinkStyle(this.context)}
+        <Text
+          fontSize="15px"
+          lineHeight="20px"
+          fontWeight="600"
+          display="inline-block"
+          color={this.context.theme.color.red}
+          cursor="pointer"
           className="item__link"
           onClick={this.unblockUser}
         >
           {Translator.translate("UNBLOCK_USER", this.context.language)}
-        </div>
+        </Text>
       );
     } else {
       blockUserText = (
-        <div
-          css={itemLinkStyle(this.context)}
+        <Text
+          fontSize="15px"
+          lineHeight="20px"
+          fontWeight="600"
+          display="inline-block"
+          color={this.context.theme.color.red}
+          cursor="pointer"
           className="item__link"
           onClick={this.blockUser}
         >
           {Translator.translate("BLOCK_USER", this.context.language)}
-        </div>
+        </Text>
       );
     }
 
     let sharedmediaView = (
-      <div css={mediaSectionStyle()} className="detailpane__section">
+      <VStack
+        height="calc(100% - 255px)"
+        width="100%"
+        margin="0"
+        padding="16px 16px 0 16px"
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+        alignItems="flex-start"
+        className="detailpane__section"
+      >
         <CometChatSharedMediaView
           theme={this.props.theme}
           lang={this.context.language}
         />
-      </div>
+      </VStack>
     );
 
     //if shared media feature is disabled
@@ -341,44 +376,123 @@ class CometChatUserDetails extends React.Component {
       sharedmediaView = null;
     }
 
+    const isOnline = this.state.status ? this.state.status.toLowerCase() : "";
+    const compareToOnline = Translator.translate(CometChat.USER_STATUS.ONLINE.toUpperCase(), this.context.language).toLowerCase();
+    const statusColor = isOnline === compareToOnline ? this.context.theme.color.blue : this.context.theme.color.helpText;
+
     return (
-      <div
-        css={userDetailStyle(this.context)}
+      <VStack
+        display="flex"
+        flexDirection="column"
+        height="100%"
+        position="relative"
+        boxSizing="border-box"
+        fontFamily={this.context.theme.fontFamily}
         className="detailpane detailpane--user"
+        sx={{
+          "*": {
+            boxSizing: "border-box",
+            fontFamily: this.context.theme.fontFamily,
+          },
+        }}
       >
-        <div css={headerStyle(this.context)} className="detailpane__header">
-          <div
-            css={headerCloseStyle(navigateIcon, this.context)}
+        <HStack
+          padding="16px"
+          position="relative"
+          borderBottom={`1px solid ${this.context.theme.borderColor.primary}`}
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+          height="69px"
+          className="detailpane__header"
+        >
+          <Box
+            cursor="pointer"
+            display={{ base: "block", sm: "block", md: "block", lg: "none" }}
+            width="24px"
+            height="24px"
             className="header__close"
             onClick={this.closeDetailView}
-          ></div>
-          <h4 css={headerTitleStyle()} className="header__title">
+            sx={{
+              mask: `url(${navigateIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.primaryColor,
+            }}
+          ></Box>
+          <Heading
+            as="h4"
+            margin="0"
+            fontWeight="700"
+            fontSize="20px"
+            className="header__title"
+          >
             {Translator.translate("DETAILS", this.context.language)}
-          </h4>
-        </div>
-        <div css={sectionStyle()} className="detailpane__section">
-          <div
-            css={userInfoSectionStyle()}
+          </Heading>
+        </HStack>
+        <VStack
+          margin="0"
+          padding="16px 16px 0 16px"
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
+          alignItems="flex-start"
+          className="detailpane__section"
+        >
+          <HStack
+            display="flex"
+            alignItems="center"
+            justifyContent="flex-start"
             className="section section__userinfo"
           >
-            <div css={userThumbnailStyle()} className="user__thumbnail">
+            <Box
+              width="35px"
+              height="35px"
+              display="inline-block"
+              flexShrink="0"
+              margin="0 16px 0 0"
+              className="user__thumbnail"
+            >
               <CometChatAvatar user={this.context.item} />
-            </div>
-            <div css={userStatusStyle()} className="user__status">
-              <h6 css={userNameStyle()}>{this.context.item.name}</h6>
-              <span css={userPresenceStyle(this.context, this.state)}>
+            </Box>
+            <VStack
+              width="calc(100% - 50px)"
+              className="user__status"
+              spacing={0}
+              alignItems="flex-start"
+            >
+              <Heading
+                as="h6"
+                margin="0"
+                fontSize="15px"
+                fontWeight="600"
+                lineHeight="22px"
+                width="100%"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+              >
+                {this.context.item.name}
+              </Heading>
+              <Text
+                as="span"
+                width="calc(100% - 50px)"
+                textTransform="capitalize"
+                fontSize="13px"
+                fontWeight="400"
+                lineHeight="20px"
+                color={statusColor}
+              >
                 {this.state.status}
-              </span>
-            </div>
-          </div>
-        </div>
+              </Text>
+            </VStack>
+          </HStack>
+        </VStack>
         <CometChatToastNotification
           ref={(el) => (this.toastRef = el)}
           lang={this.props.lang}
         />
         {viewProfile}
         {sharedmediaView}
-      </div>
+      </VStack>
     );
   }
 }

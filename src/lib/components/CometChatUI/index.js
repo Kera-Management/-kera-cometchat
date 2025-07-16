@@ -1,8 +1,6 @@
 import React from "react";
 import { CometChat } from "@cometchat-pro/chat";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import Translator from "../../resources/localization/translator";
@@ -13,7 +11,6 @@ import { CometChatIncomingCall, CometChatIncomingDirectCall } from "../Calls";
 import { CometChatMessages } from "../Messages";
 
 import { CometChatNavBar } from "./CometChatNavBar";
-import { unifiedMainStyle, unifiedSidebarStyle, unifiedStyle } from "./style";
 
 class CometChatUI extends React.Component {
   loggedInUser = null;
@@ -132,27 +129,83 @@ class CometChatUI extends React.Component {
         group={this.props.chatWithGroup}
         language={this.props.lang}
       >
-        <div
-          css={unifiedStyle(this.props)}
+        <Box
           className="cometchat cometchat--unified"
           dir={Translator.getDirection(this.props.lang)}
+          display="flex"
+          height="100%"
+          width="100%"
+          boxSizing="border-box"
+          fontFamily={this.props.theme.fontFamily}
+          border="1px solid #E2E8F0"
+          position="relative"
+          sx={{
+            "*": {
+              boxSizing: "border-box",
+              fontFamily: this.props.theme.fontFamily,
+              "::-webkit-scrollbar": {
+                width: "8px",
+                height: "4px",
+              },
+              "::-webkit-scrollbar-track": {
+                background: "#ffffff00",
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: "#ccc",
+                "&:hover": {
+                  background: "#aaa",
+                },
+              },
+            },
+          }}
         >
-          <div
-            css={unifiedSidebarStyle(this.state, this.props)}
+          <Box
             className="unified__sidebar"
+            backgroundColor="white"
+            width="280px"
+            borderRight="1px solid #E2E8F0"
+            height="100%"
+            position="relative"
+            display="flex"
+            flexDirection="column"
+            sx={{
+              "> .contacts, .chats, .groups, .userinfo": {
+                height: "calc(100% - 64px)",
+              },
+              [`@media ${this.props.theme.breakPoints[0]}`]: {
+                position: "absolute!important",
+                left: this.state.sidebarview ? "0" : "-100%",
+                top: "0",
+                bottom: "0",
+                width: "100%!important",
+                zIndex: "2",
+                backgroundColor: this.props.theme.backgroundColor.white,
+                transition: "all .3s ease-out",
+              },
+            }}
           >
             <CometChatNavBar
               ref={(el) => (this.navBarRef = el)}
               theme={this.props.theme}
               actionGenerated={this.navBarAction}
             />
-          </div>
-          <div
-            css={unifiedMainStyle(this.state, this.props)}
+          </Box>
+          <Box
             className="unified__main"
+            width="calc(100% - 280px)"
+            height="100%"
+            order="2"
+            backgroundColor="white"
+            display="flex"
+            flexDirection="row"
+            sx={{
+              [`@media ${this.props.theme.breakPoints[1]}, ${this.props.theme.breakPoints[2]}`]: {
+                width: "100%",
+              },
+            }}
           >
             {messageScreen}
-          </div>
+          </Box>
           <CometChatIncomingCall
             theme={this.props.theme}
             lang={this.props.lang}
@@ -163,7 +216,7 @@ class CometChatUI extends React.Component {
             lang={this.props.lang}
             actionGenerated={this.actionHandler}
           />
-        </div>
+        </Box>
       </CometChatContextProvider>
     );
   }

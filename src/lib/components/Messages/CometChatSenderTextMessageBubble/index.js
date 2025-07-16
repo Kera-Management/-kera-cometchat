@@ -1,9 +1,7 @@
 import React from "react";
 import twemoji from "twemoji";
 import parse from "html-react-parser";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -26,14 +24,6 @@ import * as enums from "../../../util/enums.js";
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
 
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageTxtWrapperStyle,
-  messageTxtStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-} from "./style";
 
 class CometChatSenderTextMessageBubble extends React.Component {
   static contextType = CometChatContext;
@@ -142,18 +132,62 @@ class CometChatSenderTextMessageBubble extends React.Component {
     }
 
     messageText = (
-      <div
-        css={messageTxtWrapperStyle(this.context)}
+      <Box
         className="message__txt__wrapper"
+        display="inline-block"
+        borderRadius="12px"
+        backgroundColor={this.context.theme.primaryColor}
+        color={this.context.theme.color.white}
+        padding="8px 16px"
+        width="auto"
       >
-        <p
-          css={messageTxtStyle(this.props, showVariation, count)}
+        <Text
           className="message__txt"
+          as="p"
+          margin="0"
+          fontSize="14px"
+          whiteSpace="pre-wrap"
+          wordBreak="break-word"
+          textAlign="left"
+          width="auto"
+          sx={{
+            height: count === 1 ? "48px" : count === 2 ? "36px" : "auto",
+            "a": {
+              color: "#0432FF",
+              "&:hover": {
+                color: "#04009D"
+              }
+            },
+            "a[href^='mailto:']": {
+              color: "#F38C00",
+              "&:hover": {
+                color: "#F36800"
+              }
+            },
+            "a[href^='tel:']": {
+              color: "#3802DA",
+              "&:hover": {
+                color: "#2D038F"
+              }
+            },
+            "> img": {
+              width: showVariation === false ? "24px" : 
+                     count === 1 ? "48px" : 
+                     count === 2 ? "36px" : "24px",
+              height: showVariation === false ? "24px" : 
+                      count === 1 ? "48px" : 
+                      count === 2 ? "36px" : "24px",
+              display: "inline-block",
+              verticalAlign: "top",
+              zoom: "1",
+              margin: "0 2px"
+            }
+          }}
         >
           {parsedMessage}
           {this.state.translatedMessage}
-        </p>
-      </div>
+        </Text>
+      </Box>
     );
 
     return messageText;
@@ -291,15 +325,20 @@ class CometChatSenderTextMessageBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
             className="message__reaction__wrapper"
+            display="flex"
+            alignSelf="flex-end"
+            width="100%"
+            flexWrap="wrap"
+            justifyContent="flex-end"
+            minHeight="36px"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -315,31 +354,51 @@ class CometChatSenderTextMessageBubble extends React.Component {
     }
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
         className="sender__message__container message__text"
+        alignSelf="flex-end"
+        marginBottom="16px"
+        paddingLeft="16px"
+        paddingRight="16px"
+        maxWidth="65%"
+        clear="both"
+        position="relative"
+        display="flex"
+        flexDirection="column"
+        flexShrink="0"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
         {toolTipView}
-        <div
-          css={messageWrapperStyle()}
+        <Flex
           className="message__wrapper"
+          width="auto"
+          alignSelf="flex-end"
+          display="flex"
+          flex="1 1"
           ref={this.messageTextRef}
         >
           {messageText}
-        </div>
+        </Flex>
 
         {messageReactions}
 
-        <div css={messageInfoWrapperStyle()} className="message__info__wrapper">
+        <Flex 
+          className="message__info__wrapper"
+          alignSelf="flex-end"
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          height="25px"
+          padding="4px 8px"
+        >
           <CometChatThreadedMessageReplyCount
             message={this.props.message}
             actionGenerated={this.props.actionGenerated}
           />
           <CometChatReadReceipt message={this.props.message} />
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   }
 }

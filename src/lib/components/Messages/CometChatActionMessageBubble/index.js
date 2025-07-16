@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -9,8 +7,6 @@ import { CometChatContext } from "../../../util/CometChatContext";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import { actionMessageStyle, actionMessageTxtStyle } from "./style";
 
 class CometChatActionMessageBubble extends React.Component {
   static contextType = CometChatContext;
@@ -289,11 +285,21 @@ class CometChatActionMessageBubble extends React.Component {
 
   render() {
     return (
-      <div css={actionMessageStyle()} className="action__message">
-        <p css={actionMessageTxtStyle()}>
+      <Box
+        padding="8px 16px"
+        marginBottom="16px"
+        textAlign="center"
+        height="36px"
+        className="action__message"
+      >
+        <Text
+          fontSize="13.5px"
+          margin="0"
+          lineHeight="20px"
+        >
           {this.getMessage(this.props.message)}
-        </p>
-      </div>
+        </Text>
+      </Box>
     );
   }
 }

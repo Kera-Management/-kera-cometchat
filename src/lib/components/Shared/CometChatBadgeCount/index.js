@@ -1,19 +1,35 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import React from "react";
+import { Box } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { theme } from "../../../resources/theme";
-import { badgeStyle } from "./style";
 
 const CometChatBadgeCount = (props) => {
   let badgeCount = null;
 
   if (props.count) {
     badgeCount = (
-      <span css={badgeStyle(props)} className="unread-count">
+      <Box
+        as="span"
+        display="block"
+        fontSize="12px"
+        width="auto"
+        height="18px"
+        borderRadius="16px"
+        backgroundColor={props.theme.primaryColor}
+        color={props.theme.color.white}
+        textAlign="center"
+        fontWeight="700"
+        lineHeight="18px"
+        marginLeft="4px"
+        padding="0 9px"
+        marginRight="2px"
+        opacity="1"
+        transition="opacity .1s"
+        className="unread-count"
+      >
         {props.count}
-      </span>
+      </Box>
     );
   }
 

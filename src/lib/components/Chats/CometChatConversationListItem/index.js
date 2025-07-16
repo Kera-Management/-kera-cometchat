@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -22,15 +20,6 @@ import { CometChatContext } from "../../../util/CometChatContext";
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
 
-import {
-  listItem,
-  itemThumbnailStyle,
-  itemDetailStyle,
-  itemRowStyle,
-  itemNameStyle,
-  itemLastMsgStyle,
-  itemLastMsgTimeStyle,
-} from "./style";
 
 class CometChatConversationListItem extends React.PureComponent {
   static contextType = CometChatContext;
@@ -563,12 +552,15 @@ class CometChatConversationListItem extends React.PureComponent {
     let lastMessageTimeStamp = null;
     if (this.state.lastMessage) {
       lastMessageTimeStamp = (
-        <span
-          css={itemLastMsgTimeStyle(this.props)}
+        <Text
+          fontSize="11px"
+          width="70px"
+          textAlign="right"
+          color={this.props.theme.color.helpText}
           className="item__details__timestamp"
         >
           {this.state.lastMessageTimestamp}
-        </span>
+        </Text>
       );
     }
 
@@ -619,48 +611,96 @@ class CometChatConversationListItem extends React.PureComponent {
       );
     }
 
+    const isSelected = this.props.selectedConversation && this.props.selectedConversation.conversationId === this.props.conversation.conversationId;
+    
     return (
-      <div
-        css={listItem(this.props)}
+      <Flex
+        direction="row"
+        justify="left"
+        align="center"
+        cursor="pointer"
+        width="100%"
+        padding="8px 16px"
+        position="relative"
+        bg={isSelected ? this.props.theme.backgroundColor.primary : "transparent"}
+        _hover={{ bg: this.props.theme.backgroundColor.primary }}
         className="list__item"
         onMouseEnter={() => this.handleMouseHover(true)}
         onMouseLeave={() => this.handleMouseHover(false)}
         onClick={() => this.props.handleClick(this.props.conversation)}
       >
-        <div css={itemThumbnailStyle()} className="list__item__thumbnail">
+        <Box
+          display="inline-block"
+          width="36px"
+          height="36px"
+          flexShrink={0}
+          className="list__item__thumbnail"
+        >
           {avatar}
           {presence}
-        </div>
-        <div
-          css={itemDetailStyle()}
+        </Box>
+        <Box
+          width="calc(100% - 45px)"
+          flexGrow={1}
+          paddingLeft="16px"
+          sx={{
+            "&[dir=rtl]": {
+              paddingRight: "16px",
+              paddingLeft: "0",
+            },
+          }}
           className="list__item__details"
           dir={Translator.getDirection(this.context.language)}
         >
-          <div css={itemRowStyle()} className="item__details_block_one">
-            <div
-              css={itemNameStyle(this.props)}
+          <Flex
+            justify="space-between"
+            align="baseline"
+            className="item__details_block_one"
+          >
+            <Text
+              fontSize="15px"
+              fontWeight="600"
+              display="block"
+              width="calc(100% - 70px)"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              lineHeight="22px"
+              color={this.props.theme.color.primary}
               className="item__details__name"
               onMouseEnter={(event) => this.toggleTooltip(event, true)}
               onMouseLeave={(event) => this.toggleTooltip(event, false)}
             >
               {this.props.conversation.conversationWith.name}
-            </div>
+            </Text>
             {lastMessageTimeStamp}
-          </div>
-          <div css={itemRowStyle()} className="item__details_block_two">
-            <div
-              css={itemLastMsgStyle(this.props)}
+          </Flex>
+          <Flex
+            justify="space-between"
+            align="baseline"
+            className="item__details_block_two"
+          >
+            <Text
+              margin="0"
+              fontSize="13px"
+              fontWeight="400"
+              width="calc(100% - 50px)"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              lineHeight="20px"
+              color={this.props.theme.color.helpText}
               className="item__details__last-message"
               onMouseEnter={(event) => this.toggleTooltip(event, true)}
               onMouseLeave={(event) => this.toggleTooltip(event, false)}
             >
               {this.state.lastMessage}
-            </div>
+            </Text>
             {unreadCount}
-          </div>
-        </div>
+          </Flex>
+        </Box>
         {toolTipView}
-      </div>
+      </Flex>
     );
   }
 }

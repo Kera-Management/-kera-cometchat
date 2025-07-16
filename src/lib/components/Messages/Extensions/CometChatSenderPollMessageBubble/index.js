@@ -1,8 +1,6 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import PropTypes from "prop-types";
+import { Box, Flex, Text, UnorderedList, ListItem } from "@chakra-ui/react";
 
 import {
   CometChatMessageActions,
@@ -16,19 +14,6 @@ import { checkMessageForExtensionsData } from "../../../../util/common";
 
 import { theme } from "../../../../resources/theme";
 import Translator from "../../../../resources/localization/translator";
-
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageTxtWrapperStyle,
-  pollQuestionStyle,
-  pollAnswerStyle,
-  pollTotalStyle,
-  pollPercentStyle,
-  answerWrapperStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-} from "./style";
 
 class CometChatSenderPollMessageBubble extends React.Component {
   pollId;
@@ -103,13 +88,54 @@ class CometChatSenderPollMessageBubble extends React.Component {
       }
 
       const template = (
-        <li key={option}>
-          <div css={pollPercentStyle(this.context, width)}> </div>
-          <div css={answerWrapperStyle(this.context, width)}>
-            <span>{width}</span>
-            <p>{optionData.text}</p>
-          </div>
-        </li>
+        <ListItem
+          key={option}
+          backgroundColor={this.context.theme.backgroundColor.white}
+          m="10px 0"
+          borderRadius="8px"
+          display="flex"
+          w="100%"
+          position="relative"
+        >
+          <Box
+            maxW="100%"
+            w={width}
+            borderRadius={width === "100%" ? "8px" : "8px 0 0 8px"}
+            backgroundColor={this.context.theme.backgroundColor.primary}
+            minH="35px"
+            h="100%"
+            position="absolute"
+            zIndex="1"
+          />
+          <Flex
+            w="100%"
+            color={this.context.theme.color.white}
+            alignItems="center"
+            minH="35px"
+            p="0 16px"
+            h="100%"
+            zIndex="2"
+          >
+            <Text
+              w="40px"
+              pr="16px"
+              fontWeight="bold"
+              display="inline-block"
+              fontSize="13px"
+            >
+              {width}
+            </Text>
+            <Text
+              m="0"
+              w="calc(100% - 40px)"
+              whiteSpace="pre-wrap"
+              wordWrap="break-word"
+              fontSize="14px"
+            >
+              {optionData.text}
+            </Text>
+          </Flex>
+        </ListItem>
       );
       pollOptions.push(template);
     }
@@ -122,15 +148,19 @@ class CometChatSenderPollMessageBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
+            alignSelf="flex-end"
+            w="100%"
+            flexWrap="wrap"
+            justifyContent="flex-end"
+            minH="36px"
             className="message__reaction__wrapper"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -146,41 +176,84 @@ class CometChatSenderPollMessageBubble extends React.Component {
     }
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
+        alignSelf="flex-end"
+        mb="16px"
+        pl="16px"
+        pr="16px"
+        maxW="65%"
+        clear="both"
+        position="relative"
+        flexDirection="column"
+        flexShrink="0"
         className="sender__message__container message__poll"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
         {toolTipView}
 
-        <div css={messageWrapperStyle()} className="message__wrapper">
-          <div
-            css={messageTxtWrapperStyle(this.context)}
+        <Flex
+          w="auto"
+          flex="1 1"
+          alignSelf="flex-end"
+          className="message__wrapper"
+        >
+          <Box
+            display="inline-block"
+            borderRadius="12px"
+            backgroundColor={this.context.theme.primaryColor}
+            color={this.context.theme.color.white}
+            p="8px 16px"
+            alignSelf="flex-end"
+            w="auto"
             className="message__poll__wrapper"
           >
-            <p css={pollQuestionStyle()} className="poll__question">
+            <Text
+              m="0"
+              whiteSpace="pre-wrap"
+              wordWrap="break-word"
+              textAlign="left"
+              w="100%"
+              fontSize="14px"
+              className="poll__question"
+            >
               {pollExtensionData.question}
-            </p>
-            <ul css={pollAnswerStyle(this.context)} className="poll__options">
+            </Text>
+            <UnorderedList
+              listStyleType="none"
+              p="0"
+              m="0"
+              className="poll__options"
+            >
               {pollOptions}
-            </ul>
-            <p css={pollTotalStyle()} className="poll__votes">
+            </UnorderedList>
+            <Text
+              fontSize="13px"
+              m="0"
+              alignSelf="flex-end"
+              className="poll__votes"
+            >
               {totalText}
-            </p>
-          </div>
-        </div>
+            </Text>
+          </Box>
+        </Flex>
 
         {messageReactions}
 
-        <div css={messageInfoWrapperStyle()} className="message__info__wrapper">
+        <Flex
+          alignSelf="flex-end"
+          justifyContent="flex-end"
+          alignItems="center"
+          h="25px"
+          className="message__info__wrapper"
+        >
           <CometChatThreadedMessageReplyCount
             message={this.props.message}
             actionGenerated={this.props.actionGenerated}
           />
           <CometChatReadReceipt message={this.props.message} />
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   }
 }
