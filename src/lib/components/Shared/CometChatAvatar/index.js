@@ -1,5 +1,4 @@
 import React from "react";
-import { Image } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -113,17 +112,19 @@ class CometChatAvatar extends React.Component {
     const cornerRadius = this.props.cornerRadius;
 
     return (
-      <Image
+      <img
         src={this.state.avatarImage}
         alt={this.state.avatarImage}
-        overflow="hidden"
-        display="inherit"
-        width="100%"
-        height="100%"
-        borderWidth={borderWidth}
-        borderStyle={borderStyle}
-        borderColor={borderColor}
-        borderRadius={cornerRadius}
+        style={{
+          overflow: "hidden",
+          display: "inherit",
+          width: "100%",
+          height: "100%",
+          borderWidth: borderWidth,
+          borderStyle: borderStyle,
+          borderColor: borderColor,
+          borderRadius: cornerRadius,
+        }}
         ref={this.imgRef}
       />
     );

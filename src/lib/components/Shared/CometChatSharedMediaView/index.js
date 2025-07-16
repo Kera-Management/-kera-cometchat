@@ -1,8 +1,6 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import PropTypes from "prop-types";
+import { Box, Flex, Text, Heading, Button, Image, Link, VStack, HStack } from "@chakra-ui/react";
 import { CometChat } from "@cometchat-pro/chat";
 
 import { CometChatContext } from "../../../util/CometChatContext";
@@ -12,16 +10,6 @@ import * as enums from "../../../util/enums.js";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import {
-  sectionStyle,
-  sectionHeaderStyle,
-  sectionContentStyle,
-  mediaBtnStyle,
-  buttonStyle,
-  mediaItemStyle,
-  itemStyle,
-} from "./style";
 
 import fileIcon from "./resources/file-upload.svg";
 
@@ -159,49 +147,114 @@ class CometChatSharedMediaView extends React.Component {
     const template = (message, key) => {
       if (this.state.messagetype === "image" && message.data.url) {
         return (
-          <div
+          <Box
             id={message.id}
             key={key}
-            css={itemStyle(this.state, this.props, fileIcon, this.context)}
             className="item item__image"
+            margin="0.5rem"
+            textAlign="center"
+            flex="1 0 auto"
+            height="120px"
+            width="120px"
+            backgroundColor={this.props.theme.backgroundColor.lightGrey}
+            sx={{
+              "@for $i from 1 through 36": {
+                "&:nth-of-type(#{$i})": {
+                  maxWidth: "100%",
+                },
+              },
+            }}
           >
-            <img
+            <Image
               src={message.data.url}
               alt={Translator.translate("SHARED_MEDIA", this.props.lang)}
+              display="block"
+              width="100%"
+              height="100%"
+              objectFit="contain"
             />
-          </div>
+          </Box>
         );
       } else if (this.state.messagetype === "video" && message.data.url) {
         return (
-          <div
+          <Box
             id={message.id}
             key={key}
-            css={itemStyle(this.state, this.props, fileIcon, this.context)}
             className="item item__video"
+            margin="0.5rem"
+            textAlign="center"
+            flex="1 0 auto"
+            sx={{
+              "@for $i from 1 through 36": {
+                "&:nth-of-type(#{$i})": {
+                  maxWidth: "100%",
+                },
+              },
+            }}
           >
-            <video src={message.data.url} />
-          </div>
+            <Box
+              as="video"
+              src={message.data.url}
+              height="120px"
+              width="120px"
+              margin="auto"
+            />
+          </Box>
         );
       } else if (
         this.state.messagetype === "file" &&
         message.data.attachments
       ) {
         return (
-          <div
+          <Box
             id={message.id}
             key={key}
-            css={itemStyle(this.state, this.props, fileIcon, this.context)}
             className="item item__file"
+            margin="0.5rem"
+            textAlign="center"
+            flex="1 0 auto"
+            backgroundColor={this.props.theme.backgroundColor.lightGrey}
+            sx={{
+              "@for $i from 1 through 36": {
+                "&:nth-of-type(#{$i})": {
+                  maxWidth: "100%",
+                },
+              },
+            }}
           >
-            <a
+            <Link
               href={message.data.attachments[0].url}
               target="_blank"
               rel="noopener noreferrer"
+              maxWidth="100%"
+              maxHeight="100%"
+              margin="auto"
+              display="flex"
+              padding="8px"
+              _hover={{ color: this.props.theme.secondaryTextColor }}
+              _visited={{ color: this.props.theme.secondaryTextColor }}
             >
-              <i></i>
-              <span>{message.data.attachments[0].name}</span>
-            </a>
-          </div>
+              <Box
+                width="30px"
+                height="24px"
+                display="inline-block"
+                sx={{
+                  mask: `url(${fileIcon}) left center no-repeat`,
+                  backgroundColor: this.context.theme.secondaryTextColor,
+                }}
+              />
+              <Text
+                fontSize="13px"
+                color={this.props.theme.secondaryTextColor}
+                whiteSpace="pre-wrap"
+                wordBreak="break-word"
+                textAlign="left"
+                width="calc(100% - 30px)"
+              >
+                {message.data.attachments[0].name}
+              </Text>
+            </Link>
+          </Box>
         );
       }
     };
@@ -212,50 +265,143 @@ class CometChatSharedMediaView extends React.Component {
     });
 
     return (
-      <div
-        css={sectionStyle(this.props)}
+      <Box
         className="section section__sharedmedia"
+        width="100%"
+        height={this.props.containerHeight ? `calc(100% - ${this.props.containerHeight})` : "calc(100% - 20px)"}
       >
-        <h6 css={sectionHeaderStyle(this.props)} className="section__header">
+        <Heading
+          as="h6"
+          className="section__header"
+          margin="0"
+          width="100%"
+          fontSize="12px"
+          fontWeight="500!important"
+          lineHeight="20px"
+          color={this.props.theme.color.secondary}
+          textTransform="uppercase"
+        >
           {Translator.translate("SHARED_MEDIA", this.props.lang)}
-        </h6>
-        <div
-          css={sectionContentStyle(this.props)}
+        </Heading>
+        <VStack
           data-id="sharedmedia"
           className="section__content"
+          width="100%"
+          margin="6px 0"
+          display="flex"
+          flexDirection="column"
+          height="calc(100% - 20px)"
+          spacing={0}
         >
-          <div css={mediaBtnStyle()} className="media__button">
-            <span
-              css={buttonStyle(this.state, "image")}
-              onClick={() => this.mediaClickHandler("image")}
-            >
-              {Translator.translate("PHOTOS", this.props.lang)}
-            </span>
-            <span
-              css={buttonStyle(this.state, "video")}
-              onClick={() => this.mediaClickHandler("video")}
-            >
-              {Translator.translate("VIDEOS", this.props.lang)}
-            </span>
-            <span
-              css={buttonStyle(this.state, "file")}
-              onClick={() => this.mediaClickHandler("file")}
-            >
-              {Translator.translate("DOCS", this.props.lang)}
-            </span>
-          </div>
-          <div
-            css={mediaItemStyle()}
+          <Box
+            className="media__button"
+            borderRadius="8px"
+            backgroundColor="rgba(20, 20, 20, 0.08)"
+            width="100%"
+            padding="2px"
+            margin="6px 0"
+            clear="both"
+          >
+            <HStack spacing={0}>
+              <Box
+                onClick={() => this.mediaClickHandler("image")}
+                display="inline-block"
+                width="33.33%"
+                fontSize="13px"
+                fontWeight="500"
+                lineHeight="18px"
+                padding="5px"
+                position="relative"
+                textAlign="center"
+                cursor="pointer"
+                backgroundColor={this.state.messagetype === "image" ? "#fff" : "transparent"}
+                boxShadow={this.state.messagetype === "image" ? "rgba(20, 20, 20, 0.04) 0 3px 1px, rgba(20, 20, 20, 0.12) 0 3px 8px" : "none"}
+                borderRadius={this.state.messagetype === "image" ? "7px" : "0"}
+                sx={{
+                  "&:before": {
+                    content: this.state.messagetype === "image" ? "none" : '""',
+                    position: "absolute",
+                    display: this.state.messagetype === "image" ? "none" : "block",
+                    width: "2px",
+                    height: "16px",
+                    backgroundColor: "rgba(20, 20, 20, 0.12)",
+                    right: "-2px",
+                    top: "6px",
+                  },
+                }}
+              >
+                {Translator.translate("PHOTOS", this.props.lang)}
+              </Box>
+              <Box
+                onClick={() => this.mediaClickHandler("video")}
+                display="inline-block"
+                width="33.33%"
+                fontSize="13px"
+                fontWeight="500"
+                lineHeight="18px"
+                padding="5px"
+                position="relative"
+                textAlign="center"
+                cursor="pointer"
+                backgroundColor={this.state.messagetype === "video" ? "#fff" : "transparent"}
+                boxShadow={this.state.messagetype === "video" ? "rgba(20, 20, 20, 0.04) 0 3px 1px, rgba(20, 20, 20, 0.12) 0 3px 8px" : "none"}
+                borderRadius={this.state.messagetype === "video" ? "7px" : "0"}
+                sx={{
+                  "&:before": {
+                    content: this.state.messagetype === "video" ? "none" : '""',
+                    position: "absolute",
+                    display: this.state.messagetype === "video" ? "none" : "block",
+                    width: "2px",
+                    height: "16px",
+                    backgroundColor: "rgba(20, 20, 20, 0.12)",
+                    right: "-2px",
+                    top: "6px",
+                  },
+                }}
+              >
+                {Translator.translate("VIDEOS", this.props.lang)}
+              </Box>
+              <Box
+                onClick={() => this.mediaClickHandler("file")}
+                display="inline-block"
+                width="33.33%"
+                fontSize="13px"
+                fontWeight="500"
+                lineHeight="18px"
+                padding="5px"
+                position="relative"
+                textAlign="center"
+                cursor="pointer"
+                backgroundColor={this.state.messagetype === "file" ? "#fff" : "transparent"}
+                boxShadow={this.state.messagetype === "file" ? "rgba(20, 20, 20, 0.04) 0 3px 1px, rgba(20, 20, 20, 0.12) 0 3px 8px" : "none"}
+                borderRadius={this.state.messagetype === "file" ? "7px" : "0"}
+                sx={{
+                  "&:last-of-type::before": {
+                    display: "none",
+                  },
+                }}
+              >
+                {Translator.translate("DOCS", this.props.lang)}
+              </Box>
+            </HStack>
+          </Box>
+          <Flex
             className="media_items"
+            height="calc(100% - 45px)"
+            overflowY="auto"
+            overflowX="hidden"
+            display="flex"
+            flexWrap="wrap"
+            fontSize="14px"
             ref={(el) => (this.messageContainer = el)}
             onScroll={this.handleScroll}
           >
             {messageList.length
               ? messageList
               : Translator.translate("NO_RECORDS_FOUND", this.props.lang)}
-          </div>
-        </div>
-      </div>
+          </Flex>
+        </VStack>
+      </Box>
     );
   }
 }

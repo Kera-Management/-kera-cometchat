@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Input, Button } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -15,21 +13,6 @@ import * as enums from "../../../util/enums.js";
 
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
-
-import {
-  modalWrapperStyle,
-  modalCloseStyle,
-  modalBodyStyle,
-  modalCaptionStyle,
-  modalSearchStyle,
-  searchButtonStyle,
-  searchInputStyle,
-  modalListStyle,
-  modalFootStyle,
-  contactMsgStyle,
-  contactMsgTxtStyle,
-  modalErrorStyle,
-} from "./style";
 
 import addingIcon from "./resources/adding.svg";
 import searchIcon from "./resources/search.svg";
@@ -233,27 +216,56 @@ class CometChatAddGroupMemberList extends React.Component {
       ? Translator.translate("ADDING", this.context.language)
       : Translator.translate("ADD", this.context.language);
     let addGroupMemberBtn = (
-      <div
-        css={modalFootStyle(this.props, this.state, addingIcon, this.context)}
+      <Box
+        m="24px auto 0 auto"
         className="modal__addmembers"
       >
-        <button type="button" onClick={this.updateMembers}>
-          <span>{createText}</span>
-        </button>
-      </div>
+        <Button
+          cursor="pointer"
+          p="8px 16px"
+          bg={this.context.theme.primaryColor}
+          borderRadius="5px"
+          color="white"
+          fontSize="14px"
+          outline="0"
+          border="0"
+          isDisabled={this.state.addingMembers}
+          onClick={this.updateMembers}
+          sx={{
+            background: this.state.addingMembers
+              ? `url(${addingIcon}) ${this.context.theme.primaryColor} no-repeat right 10px center`
+              : this.context.theme.primaryColor,
+          }}
+        >
+          <Text mr={this.state.addingMembers ? "24px" : "0"}>
+            {createText}
+          </Text>
+        </Button>
+      </Box>
     );
 
     let messageContainer = null;
     if (this.state.filteredlist.length === 0) {
       messageContainer = (
-        <div css={contactMsgStyle()} className="members__decorator-message">
-          <p
-            css={contactMsgTxtStyle(this.context)}
+        <Flex
+          overflow="hidden"
+          w="100%"
+          justifyContent="center"
+          alignItems="center"
+          h="55%"
+          className="members__decorator-message"
+        >
+          <Text
+            m="0"
+            h="30px"
+            color={this.context.theme.color.secondary}
+            fontSize="20px"
+            fontWeight="600"
             className="decorator-message"
           >
             {this.state.decoratorMessage}
-          </p>
-        </div>
+          </Text>
+        </Flex>
       );
       addGroupMemberBtn = null;
     }
@@ -283,33 +295,107 @@ class CometChatAddGroupMemberList extends React.Component {
     return (
       <React.Fragment>
         <CometChatBackdrop show={true} clicked={this.props.close} />
-        <div
-          css={modalWrapperStyle(this.context)}
+        <Box
+          minW="350px"
+          minH="450px"
+          w="40%"
+          h="40%"
+          overflow="hidden"
+          bg={this.context.theme.backgroundColor.white}
+          position="fixed"
+          left="50%"
+          top="50%"
+          transform="translate(-50%, -50%)"
+          zIndex="1002"
+          m="0 auto"
+          boxShadow="rgba(20, 20, 20, 0.2) 0 16px 32px, rgba(20, 20, 20, 0.04) 0 0 0 1px"
+          borderRadius="12px"
+          display="block"
           className="modal__addmembers"
+          sx={{
+            [`@media ${this.context.theme.breakPoints[0]}`]: {
+              w: "100%",
+              h: "100%",
+            },
+            [`@media ${this.context.theme.breakPoints[1]}`]: {
+              w: "100%",
+              h: "100%",
+            },
+            [`@media ${this.context.theme.breakPoints[2]}`]: {
+              w: "100%",
+              h: "100%",
+            },
+          }}
         >
-          <span
-            css={modalCloseStyle(clearIcon, this.context)}
+          <Box
+            position="absolute"
+            w="32px"
+            h="32px"
+            borderRadius="50%"
+            top="16px"
+            right="16px"
+            bg={this.context.theme.primaryColor}
+            cursor="pointer"
             className="modal__close"
             onClick={this.props.close}
             title={Translator.translate("CLOSE", this.context.language)}
-          ></span>
-          <div css={modalBodyStyle()} className="modal__body">
-            <div
-              css={modalCaptionStyle(
-                Translator.getDirection(this.context.language)
-              )}
+            sx={{
+              mask: `url(${clearIcon}) center center no-repeat`,
+            }}
+          />
+          <Flex
+            p="24px"
+            h="100%"
+            w="100%"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="flex-start"
+            className="modal__body"
+          >
+            <Text
+              fontSize="20px"
+              mb="16px"
+              fontWeight="bold"
+              w="100%"
+              textAlign={Translator.getDirection(this.context.language) === "rtl" ? "right" : "left"}
+              pr={Translator.getDirection(this.context.language) === "rtl" ? "32px" : "0"}
               className="modal__title"
             >
               {Translator.translate("USERS", this.context.language)}
-            </div>
-            <div css={modalErrorStyle(this.context)} className="modal__error">
+            </Text>
+            <Text
+              fontSize="12px"
+              color={this.context.theme.color.red}
+              textAlign="center"
+              m="8px 0"
+              w="100%"
+              className="modal__error"
+            >
               {this.state.errorMessage}
-            </div>
-            <div css={modalSearchStyle()} className="modal__search">
-              <input
+            </Text>
+            <Box
+              fontWeight="normal"
+              mb="16px"
+              w="100%"
+              h="35px"
+              borderRadius="8px"
+              boxShadow="rgba(20, 20, 20, 0.04) 0 0 0 1px inset"
+              bg="rgba(20, 20, 20, 0.04)"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              className="modal__search"
+            >
+              <Input
                 type="text"
                 autoComplete="off"
-                css={searchInputStyle()}
+                w="calc(100% - 30px)"
+                h="100%"
+                p="8px"
+                fontSize="15px"
+                outline="none"
+                border="none"
+                bg="transparent"
                 className="search__input"
                 placeholder={Translator.translate(
                   "SEARCH",
@@ -317,18 +403,28 @@ class CometChatAddGroupMemberList extends React.Component {
                 )}
                 onChange={this.searchUsers}
               />
-            </div>
+            </Box>
             {messageContainer}
-            <div
-              css={modalListStyle(this.context)}
-              onScroll={this.handleScroll}
+            <Flex
+              h="calc(100% - 125px)"
+              overflowY="auto"
+              w="100%"
+              flexDirection="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
               className="modal__content"
+              onScroll={this.handleScroll}
+              sx={{
+                [`@media ${this.context.theme.breakPoints[1]}, ${this.context.theme.breakPoints[2]}`]: {
+                  h: "100%",
+                },
+              }}
             >
               {users}
-            </div>
+            </Flex>
             {addGroupMemberBtn}
-          </div>
-        </div>
+          </Flex>
+        </Box>
       </React.Fragment>
     );
   }

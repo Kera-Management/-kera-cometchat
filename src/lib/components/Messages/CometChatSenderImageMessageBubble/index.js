@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Box, Flex, Image as ChakraImage } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import {
@@ -293,7 +293,7 @@ class CometChatSenderImageMessageBubble extends React.Component {
               },
             }}
           >
-            <Image
+            <ChakraImage
               src={this.state.imageUrl}
               alt={this.state.imageName}
               borderRadius="8px"

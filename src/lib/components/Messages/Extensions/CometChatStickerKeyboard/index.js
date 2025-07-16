@@ -1,8 +1,6 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, keyframes } from "@emotion/react";
 import PropTypes from "prop-types";
+import { Box, Flex, Text, Image } from "@chakra-ui/react";
 import { CometChat } from "@cometchat-pro/chat";
 
 import { CometChatContext } from "../../../../util/CometChatContext";
@@ -10,17 +8,6 @@ import * as enums from "../../../../util/enums.js";
 
 import { theme } from "../../../../resources/theme";
 import Translator from "../../../../resources/localization/translator";
-
-import {
-  stickerWrapperStyle,
-  stickerSectionListStyle,
-  stickerListStyle,
-  sectionListItemStyle,
-  stickerItemStyle,
-  stickerMsgStyle,
-  stickerMsgTxtStyle,
-  stickerCloseStyle,
-} from "./style";
 
 import closeIcon from "./resources/close.svg";
 
@@ -134,14 +121,27 @@ class CometChatStickerKeyboard extends React.PureComponent {
     let messageContainer = null;
     if (this.state.activestickerlist.length === 0) {
       messageContainer = (
-        <div css={stickerMsgStyle()} className="stickers__decorator-message">
-          <p
-            css={stickerMsgTxtStyle(this.context)}
+        <Box 
+          className="stickers__decorator-message"
+          overflow="hidden"
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          position="absolute"
+          top="35%"
+        >
+          <Text
             className="decorator-message"
+            margin="0"
+            height="30px"
+            color={this.context.theme.color.secondary}
+            fontSize="24px!important"
+            fontWeight="600"
           >
             {this.decoratorMessage}
-          </p>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -152,14 +152,22 @@ class CometChatStickerKeyboard extends React.PureComponent {
           const stickerSetThumbnail =
             this.state.stickerset[sectionItem][0]["stickerUrl"];
           return (
-            <div
+            <Box
               key={key}
               className="stickers__sectionitem"
-              css={sectionListItemStyle()}
+              height="35px"
+              width="35px"
+              cursor="pointer"
+              flexShrink="0"
+              sx={{
+                ":not(:first-of-type)": {
+                  marginLeft: "16px",
+                },
+              }}
               onClick={() => this.onStickerSetClicked(sectionItem)}
             >
-              <img src={stickerSetThumbnail} alt={sectionItem} />
-            </div>
+              <Image src={stickerSetThumbnail} alt={sectionItem} />
+            </Box>
           );
         }
       );
@@ -169,46 +177,110 @@ class CometChatStickerKeyboard extends React.PureComponent {
         const stickerList = [...this.state.activestickerlist];
         activeStickerList = stickerList.map((stickerItem, key) => {
           return (
-            <div
+            <Box
               key={key}
-              css={stickerItemStyle(this.context)}
-              onClick={() => this.sendStickerMessage(stickerItem)}
               className="stickers__listitem"
+              minWidth="50px"
+              minHeight="50px"
+              maxWidth="70px"
+              maxHeight="70px"
+              cursor="pointer"
+              flexShrink="0"
+              marginRight="20px"
+              sx={{
+                [`@media ${this.context.theme.breakPoints[1]}, ${this.context.theme.breakPoints[2]}, ${this.context.theme.breakPoints[3]}`]: {
+                  maxWidth: "70px",
+                  maxHeight: "70px",
+                },
+              }}
+              onClick={() => this.sendStickerMessage(stickerItem)}
             >
-              <img src={stickerItem.stickerUrl} alt={stickerItem.stickerName} />
-            </div>
+              <Image src={stickerItem.stickerUrl} alt={stickerItem.stickerName} />
+            </Box>
           );
         });
       }
 
       stickers = (
         <React.Fragment>
-          <div
-            css={stickerCloseStyle(closeIcon, this.context)}
+          <Box
             className="stickers__close"
+            width="20px"
+            height="20px"
+            borderRadius="50%"
+            alignSelf="flex-end"
+            cursor="pointer"
+            margin="8px 8px 0 0"
+            sx={{
+              mask: `url(${closeIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.primaryColor,
+            }}
             onClick={this.closeStickerKeyboard}
-          ></div>
-          <div css={stickerListStyle(this.props)} className="stickers__list">
+          />
+          <Flex 
+            className="stickers__list"
+            height="calc(100% - 50px)"
+            display="flex"
+            overflowX="hidden"
+            overflowY="auto"
+            flexWrap="wrap"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             {activeStickerList}
-          </div>
-          <div
-            css={stickerSectionListStyle(this.context)}
+          </Flex>
+          <Flex
             className="stickers__sections"
+            borderTop={`1px solid ${this.context.theme.borderColor.primary}`}
+            backgroundColor={this.context.theme.backgroundColor.silver}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            textTransform="uppercase"
+            overflowX="auto"
+            overflowY="hidden"
+            padding="10px"
+            sx={{
+              "::-webkit-scrollbar": {
+                background: this.context.theme.backgroundColor.primary,
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: this.context.theme.backgroundColor.silver,
+              },
+            }}
           >
             {sectionItems}
-          </div>
+          </Flex>
         </React.Fragment>
       );
     }
 
     return (
-      <div
-        css={stickerWrapperStyle(this.context, keyframes)}
+      <Box
         className="stickers"
+        backgroundColor={this.context.theme.backgroundColor.grey}
+        border={`1px solid ${this.context.theme.borderColor.primary}`}
+        borderBottom="none"
+        borderRadius="10px 10px 0 0"
+        height="215px"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        sx={{
+          animation: "slideIn 0.5s ease-out",
+          "@keyframes slideIn": {
+            from: {
+              bottom: "-55px"
+            },
+            to: {
+              bottom: "0px"
+            }
+          }
+        }}
       >
         {messageContainer}
         {stickers}
-      </div>
+      </Box>
     );
   }
 }

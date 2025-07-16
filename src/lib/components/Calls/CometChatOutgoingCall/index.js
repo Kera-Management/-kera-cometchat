@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, keyframes } from "@emotion/react";
+import { Box, Flex, Text, Heading } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -16,20 +14,6 @@ import { SoundManager } from "../../../util/SoundManager";
 
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
-
-import {
-  callScreenWrapperStyle,
-  callScreenContainerStyle,
-  headerStyle,
-  headerDurationStyle,
-  headerNameStyle,
-  thumbnailWrapperStyle,
-  thumbnailStyle,
-  headerIconStyle,
-  iconWrapperStyle,
-  iconStyle,
-  errorContainerStyle,
-} from "./style";
 
 import callIcon from "./resources/end-call.svg";
 
@@ -193,58 +177,144 @@ class CometChatOutgoingCall extends React.PureComponent {
       );
       if (this.state.errorScreen) {
         errorScreen = (
-          <div
-            css={errorContainerStyle()}
+          <Box
+            color="#fff"
+            textAlign="center"
+            borderRadius="2px"
+            p="13px 10px"
+            fontSize="13px"
+            w="100%"
+            h="10%"
+            bg="#333"
             className="callscreen__error__wrapper"
           >
-            <div>{this.state.errorMessage}</div>
-          </div>
+            <Box>{this.state.errorMessage}</Box>
+          </Box>
         );
       }
 
       if (this.state.outgoingCallScreen) {
+        const wrapperStyles = this.props.widgetsettings
+          ? {
+              w: "100%",
+              h: "100%",
+              position: "fixed",
+              top: "0",
+              right: "0",
+              bottom: "0",
+              left: "0",
+              zIndex: "2147483000",
+            }
+          : {
+              w: "100%",
+              h: "100%",
+              position: "absolute",
+              top: "0",
+              right: "0",
+              bottom: "0",
+              left: "0",
+              zIndex: "999",
+            };
+
         callScreen = (
-          <div
-            css={callScreenWrapperStyle(this.props, keyframes)}
+          <Box
+            {...wrapperStyles}
+            bg={this.props.theme.backgroundColor.darkGrey}
+            color={this.props.theme.color.white}
+            textAlign="center"
+            boxSizing="border-box"
+            fontFamily={this.props.theme.fontFamily}
             className="callscreen__wrapper"
             ref={(el) => {
               this.callScreenFrame = el;
             }}
+            sx={{
+              animation: "fadeIn 250ms ease",
+              "@keyframes fadeIn": {
+                from: { opacity: 0 },
+                to: { opacity: 1 },
+              },
+              "*": {
+                boxSizing: "border-box",
+                fontFamily: this.props.theme.fontFamily,
+              },
+            }}
           >
-            <div
-              css={callScreenContainerStyle()}
+            <Flex
+              flexDirection="column"
+              h="100%"
+              w="100%"
               className="callscreen__container"
             >
-              <div css={headerStyle()} className="callscreen__header">
-                <span css={headerDurationStyle()} className="header__calling">
+              <Box p="20px 10px" w="100%" h="20%" className="callscreen__header">
+                <Text
+                  fontSize="13px"
+                  display="inline-block"
+                  p="5px"
+                  className="header__calling"
+                >
                   {Translator.translate("CALLING", this.props.lang)}
-                </span>
-                <h6 css={headerNameStyle()} className="header__name">
+                </Text>
+                <Heading
+                  as="h6"
+                  m="0"
+                  fontWeight="700"
+                  textTransform="capitalize"
+                  fontSize="16px"
+                  className="header__name"
+                >
                   {this.state.callInProgress.receiver.name}
-                </h6>
-              </div>
-              <div
-                css={thumbnailWrapperStyle()}
+                </Heading>
+              </Box>
+              <Flex
+                w="100%"
+                h="50%"
+                justifyContent="center"
+                alignItems="center"
                 className="callscreen__thumbnail__wrapper"
               >
-                <div css={thumbnailStyle()} className="callscreen__thumbnail">
-                  {avatar}
-                </div>
-              </div>
-              {errorScreen}
-              <div css={headerIconStyle()} className="callscreen__icons">
-                <div
-                  css={iconWrapperStyle()}
-                  className="icon__block"
-                  onClick={this.cancelCall}
+                <Box
+                  w="200px"
+                  flexShrink="0"
+                  className="callscreen__thumbnail"
                 >
-                  <div css={iconStyle(callIcon)} className="icon icon__end">
-                    <i></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                  {avatar}
+                </Box>
+              </Flex>
+              {errorScreen}
+              <Flex
+                w="100%"
+                h="15%"
+                p="10px"
+                justifyContent="center"
+                className="callscreen__icons"
+              >
+                <Flex className="icon__block" onClick={this.cancelCall}>
+                  <Flex
+                    w="50px"
+                    h="50px"
+                    borderRadius="27px"
+                    bg="red"
+                    m="auto 10px"
+                    cursor="pointer"
+                    justifyContent="center"
+                    alignItems="center"
+                    className="icon icon__end"
+                  >
+                    <Box
+                      display="inline-block"
+                      w="24px"
+                      h="24px"
+                      bg="white"
+                      sx={{
+                        mask: `url(${callIcon}) center center no-repeat`,
+                      }}
+                    />
+                  </Flex>
+                </Flex>
+              </Flex>
+            </Flex>
+          </Box>
         );
       } else {
         callScreen = (

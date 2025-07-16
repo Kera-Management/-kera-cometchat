@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Image } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -18,19 +16,6 @@ import { checkMessageForExtensionsData } from "../../../../util/common";
 
 import { theme } from "../../../../resources/theme";
 import Translator from "../../../../resources/localization/translator";
-
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageThumbnailStyle,
-  messageDetailStyle,
-  nameWrapperStyle,
-  nameStyle,
-  messageImgContainerStyle,
-  messageImgWrapperStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-} from "./style";
 
 class CometChatReceiverStickerMessageBubble extends React.Component {
   static contextType = CometChatContext;
@@ -71,17 +56,32 @@ class CometChatReceiverStickerMessageBubble extends React.Component {
       name = null;
     if (this.props.message.receiverType === CometChat.RECEIVER_TYPE.GROUP) {
       avatar = (
-        <div css={messageThumbnailStyle()} className="message__thumbnail">
+        <Box
+          w="36px"
+          h="36px"
+          m="10px 5px"
+          float="left"
+          flexShrink="0"
+          className="message__thumbnail"
+        >
           <CometChatAvatar user={this.props.message.sender} />
-        </div>
+        </Box>
       );
 
       name = (
-        <div css={nameWrapperStyle(avatar)} className="message__name__wrapper">
-          <span css={nameStyle(this.context)} className="message__name">
+        <Box
+          alignSelf="flex-start"
+          p={avatar ? "3px 5px" : "0"}
+          className="message__name__wrapper"
+        >
+          <Text
+            fontSize="11px"
+            color={this.context.theme.color.search}
+            className="message__name"
+          >
             {this.props.message.sender.name}
-          </span>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -109,15 +109,19 @@ class CometChatReceiverStickerMessageBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
+            alignSelf="flex-start"
+            w="100%"
+            flexWrap="wrap"
+            justifyContent="flex-start"
+            minH="36px"
             className="message__reaction__wrapper"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -133,33 +137,67 @@ class CometChatReceiverStickerMessageBubble extends React.Component {
     }
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
+        alignSelf="flex-start"
+        mb="16px"
+        pl="16px"
+        pr="16px"
+        maxW="65%"
+        clear="both"
+        position="relative"
+        flexDirection="column"
+        flexShrink="0"
         className="receiver__message__container message__sticker"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
-        <div css={messageWrapperStyle()} className="message__wrapper">
+        <Flex
+          w="auto"
+          flex="1 1"
+          alignSelf="flex-start"
+          className="message__wrapper"
+        >
           {avatar}
-          <div css={messageDetailStyle(name)} className="message__details">
+          <Flex
+            flex="1 1"
+            flexDirection="column"
+            className="message__details"
+          >
             {name}
             {toolTipView}
-            <div
-              css={messageImgContainerStyle()}
+            <Flex
+              w="auto"
+              flex="1 1"
+              alignSelf="flex-start"
               className="message__image__container"
             >
-              <div
-                css={messageImgWrapperStyle(this.context)}
+              <Box
+                display="inline-block"
+                alignSelf="flex-start"
+                maxW="128px"
+                h="128px"
+                cursor="pointer"
                 className="message__image__wrapper"
+                sx={{
+                  [`@media ${this.context.theme.breakPoints[1]}, ${this.context.theme.breakPoints[2]}`]: {
+                    maxW: "128px",
+                    h: "128px",
+                    p: "2px 2px",
+                  },
+                }}
               >
                 {stickerImg}
-              </div>
-            </div>
+              </Box>
+            </Flex>
 
             {messageReactions}
 
-            <div
-              css={messageInfoWrapperStyle()}
+            <Flex
+              alignSelf="flex-start"
+              p="4px 8px"
+              alignItems="center"
+              justifyContent="flex-start"
+              h="25px"
               className="message__info__wrapper"
             >
               <CometChatReadReceipt message={this.props.message} />
@@ -167,10 +205,10 @@ class CometChatReceiverStickerMessageBubble extends React.Component {
                 message={this.props.message}
                 actionGenerated={this.props.actionGenerated}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
     );
   }
 }

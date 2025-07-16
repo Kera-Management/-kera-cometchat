@@ -1,8 +1,6 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import PropTypes from "prop-types";
+import { Box, Flex, Text, Button } from "@chakra-ui/react";
 import { CometChat } from "@cometchat-pro/chat";
 
 import {
@@ -19,22 +17,7 @@ import { checkMessageForExtensionsData } from "../../../../util/common";
 import { theme } from "../../../../resources/theme";
 import Translator from "../../../../resources/localization/translator";
 
-import {
-  messageContainerStyle,
-  messageWrapperStyle,
-  messageThumbnailStyle,
-  messageDetailStyle,
-  nameWrapperStyle,
-  nameStyle,
-  messageTxtContainerStyle,
-  messageTxtWrapperStyle,
-  messageTxtTitleStyle,
-  messageTxtStyle,
-  messageBtnStyle,
-  messageInfoWrapperStyle,
-  messageReactionsWrapperStyle,
-  iconStyle,
-} from "./style";
+// Removed emotion styles - now using Chakra UI
 
 import whiteboardIcon from "./resources/collaborative-whiteboard.svg";
 
@@ -100,17 +83,32 @@ class CometChatReceiverWhiteboardBubble extends React.Component {
       name = null;
     if (this.props.message.receiverType === CometChat.RECEIVER_TYPE.GROUP) {
       avatar = (
-        <div css={messageThumbnailStyle} className="message__thumbnail">
+        <Box 
+          className="message__thumbnail"
+          width="36px"
+          height="36px"
+          margin="10px 5px"
+          float="left"
+          flexShrink="0"
+        >
           <CometChatAvatar user={this.props.message.sender} />
-        </div>
+        </Box>
       );
 
       name = (
-        <div css={nameWrapperStyle(avatar)} className="message__name__wrapper">
-          <span css={nameStyle(this.context)} className="message__name">
+        <Box 
+          className="message__name__wrapper"
+          alignSelf="flex-start"
+          padding={avatar ? "3px 5px" : "0"}
+        >
+          <Text 
+            className="message__name"
+            fontSize="11px"
+            color={this.context.theme.color.search}
+          >
             {this.props.message.sender.name}
-          </span>
-        </div>
+          </Text>
+        </Box>
       );
     }
 
@@ -122,15 +120,20 @@ class CometChatReceiverWhiteboardBubble extends React.Component {
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
         messageReactions = (
-          <div
-            css={messageReactionsWrapperStyle()}
+          <Flex
             className="message__reaction__wrapper"
+            display="flex"
+            alignSelf="flex-start"
+            width="100%"
+            flexWrap="wrap"
+            justifyContent="flex-start"
+            minHeight="36px"
           >
             <CometChatMessageReactions
               message={this.props.message}
               actionGenerated={this.props.actionGenerated}
             />
-          </div>
+          </Flex>
         );
       }
     }
@@ -153,67 +156,146 @@ class CometChatReceiverWhiteboardBubble extends React.Component {
     )}`;
 
     return (
-      <div
-        css={messageContainerStyle()}
+      <Flex
         className="receiver__message__container message__whiteboard"
+        alignSelf="flex-start"
+        marginBottom="16px"
+        paddingLeft="16px"
+        paddingRight="16px"
+        maxWidth="305px"
+        clear="both"
+        position="relative"
+        display="flex"
+        flexDirection="column"
+        flexShrink="0"
         onMouseEnter={this.handleMouseHover}
         onMouseLeave={this.handleMouseHover}
       >
-        <div css={messageWrapperStyle()} className="message__wrapper">
+        <Flex 
+          className="message__wrapper"
+          width="auto"
+          flex="1 1"
+          alignSelf="flex-start"
+          display="flex"
+        >
           {avatar}
-          <div css={messageDetailStyle()} className="message__details">
+          <Flex 
+            className="message__details"
+            flex="1 1"
+            display="flex"
+            flexDirection="column"
+          >
             {name}
             {toolTipView}
-            <div
-              css={messageTxtContainerStyle()}
+            <Flex
               className="message__whiteboard__container"
+              width="auto"
+              flex="1 1"
+              alignSelf="flex-start"
+              display="flex"
             >
-              <div
-                css={messageTxtWrapperStyle(this.context)}
+              <Box
                 className="message__whiteboard__wrapper"
+                display="flex"
+                flexDirection="column"
+                borderRadius="12px"
+                backgroundColor={this.context.theme.backgroundColor.secondary}
+                padding="16px"
+                alignSelf="flex-start"
+                width="100%"
               >
-                <div
-                  css={messageTxtTitleStyle(this.context)}
+                <Flex
                   className="message__whiteboard__title"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  color={this.context.theme.color.primary}
                 >
-                  <i
-                    css={iconStyle(whiteboardIcon, this.context)}
+                  <Box
+                    width="24px"
+                    height="24px"
+                    display="inline-block"
                     title={Translator.translate(
                       "COLLABORATIVE_WHITEBOARD",
                       this.context.language
                     )}
-                  ></i>
-                  <p css={messageTxtStyle()} className="whiteboard__title">
+                    sx={{
+                      mask: `url(${whiteboardIcon}) center center no-repeat`,
+                      backgroundColor: this.context.theme.primaryColor,
+                    }}
+                  />
+                  <Text 
+                    className="whiteboard__title"
+                    margin="0"
+                    whiteSpace="pre-wrap"
+                    wordBreak="break-word"
+                    textAlign="left"
+                    width="calc(100% - 24px)"
+                    fontSize="14px"
+                    marginLeft="8px"
+                  >
                     {documentTitle}
-                  </p>
-                </div>
+                  </Text>
+                </Flex>
 
-                <ul
-                  css={messageBtnStyle(this.context)}
+                <Box
+                  as="ul"
                   className="whiteboard__button"
+                  listStyleType="none"
+                  padding="0"
+                  margin="0"
+                  sx={{
+                    li: {
+                      backgroundColor: this.context.theme.backgroundColor.white,
+                      borderRadius: "8px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                      cursor: "pointer",
+                      position: "relative",
+                      margin: "16px 0 0 0",
+                      padding: "8px",
+                      "> p": {
+                        background: "0 0",
+                        textAlign: "center",
+                        color: this.context.theme.primaryColor,
+                        width: "100%",
+                        display: "inline-block",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        margin: "0",
+                      },
+                    },
+                  }}
                 >
-                  <li onClick={this.launchCollaborativeWhiteboard}>
-                    <p>{Translator.translate("JOIN", this.context.language)}</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
+                  <Box as="li" onClick={this.launchCollaborativeWhiteboard}>
+                    <Text as="p">{Translator.translate("JOIN", this.context.language)}</Text>
+                  </Box>
+                </Box>
+              </Box>
+            </Flex>
 
             {messageReactions}
 
-            <div
-              css={messageInfoWrapperStyle()}
+            <Flex
               className="message__info__wrapper"
+              alignSelf="flex-start"
+              padding="4px 8px"
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-start"
+              height="25px"
             >
               <CometChatReadReceipt message={this.props.message} />
               <CometChatThreadedMessageReplyCount
                 message={this.props.message}
                 actionGenerated={this.props.actionGenerated}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
     );
   }
 }

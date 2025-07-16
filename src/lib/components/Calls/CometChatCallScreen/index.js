@@ -1,8 +1,6 @@
 import React from "react";
 import { CometChat } from "@cometchat-pro/chat";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, keyframes } from "@emotion/react";
+import { Box, Flex, Button } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import Translator from "../../../resources/localization/translator";
@@ -14,17 +12,7 @@ import { Storage } from "../../../util/Storage";
 import maximizeIcon from "./resources/increase-size.svg";
 import minimizeIcon from "./resources/reduce-size.svg";
 import { LocalizedString } from "./strings";
-import {
-  callScreenBackgroundStyle,
-  callScreenContainerStyle,
-  callScreenHeaderStyle,
-  callScreenInnerBackgroundStyle,
-  callScreenResizerStyle,
-  callScreenWrapperStyle,
-  headerButtonStyle,
-  headerTitleStyle,
-  iconStyle,
-} from "./style";
+// Removed emotion styles - now using Chakra UI
 
 class CometChatCallScreen extends React.PureComponent {
   static contextType = CometChatContext;
@@ -440,57 +428,191 @@ class CometChatCallScreen extends React.PureComponent {
 
   render() {
     const resizeText = Translator.translate("RESIZE", this.props.lang);
-    let iconView = <i css={iconStyle(minimizeIcon)} title={resizeText}></i>;
+    let iconView = (
+      <Box
+        width="24px"
+        height="24px"
+        display="inline-block"
+        cursor="pointer"
+        title={resizeText}
+        sx={{
+          mask: `url(${minimizeIcon}) center center no-repeat`,
+          backgroundColor: "white",
+        }}
+      />
+    );
     if (this.state.maximized === false) {
-      iconView = <i css={iconStyle(maximizeIcon)} title={resizeText}></i>;
+      iconView = (
+        <Box
+          width="24px"
+          height="24px"
+          display="inline-block"
+          cursor="pointer"
+          title={resizeText}
+          sx={{
+            mask: `url(${maximizeIcon}) center center no-repeat`,
+            backgroundColor: "white",
+          }}
+        />
+      );
     }
 
     return (
       <React.Fragment>
-        <div
-          css={callScreenBackgroundStyle(this.state)}
+        <Box
           ref={this.callScreenBackgroundEl}
-        ></div>
-        <div
+          display="none"
+          width="100vw"
+          height="100vh"
+          position="fixed"
+          top="0"
+          left="0"
+          bottom="0"
+          right="0"
+          zIndex="2147483001"
+        />
+        <Box
           ref={this.callScreenEl}
           className="callscreen__container"
-          css={callScreenContainerStyle(this.props)}
-          style={{ top: this.state.y + "px", left: this.state.x + "px" }}
+          width={this.props.maxWidth}
+          height={this.props.maxHeight}
+          position="fixed"
+          top={this.state.y + "px"}
+          left={this.state.x + "px"}
+          overflow="hidden"
+          zIndex="2147483002"
+          sx={{
+            "*": {
+              boxSizing: "border-box",
+              fontFamily: this.props.theme.fontFamily,
+            },
+          }}
         >
-          <div
-            css={callScreenInnerBackgroundStyle()}
+          <Box
             ref={this.callScreenInnerBackgroundEl}
-          ></div>
-          <div
-            css={callScreenHeaderStyle(this.state)}
+            display="none"
+            position="absolute"
+            top="0"
+            left="0"
+            bottom="0"
+            right="0"
+            zIndex="2147483003"
+          />
+          <Flex
             className="callscreen__header"
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            backgroundColor="#282c34"
+            width="100%"
+            height="50px"
+            position="absolute"
+            top="0"
+            right="0"
+            bottom="0"
+            left="0"
+            zIndex="2147483004"
+            cursor={this.state.maximized ? "default" : "grabbing"}
             onMouseDown={this.enableDragging}
           >
-            <div css={headerTitleStyle()}>&nbsp;</div>
-            <div
+            <Box
+              width="calc(100% - 55px)"
+              padding="16px"
+            >
+              &nbsp;
+            </Box>
+            <Flex
               className="callscreen__resize"
-              css={headerButtonStyle()}
+              width="55px"
+              padding="16px"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
               onClick={this.toggle}
               onMouseDown={(e) => e.stopPropagation()}
             >
-              <button type="button" title={resizeText}>
+              <Button
+                type="button"
+                title={resizeText}
+                border="none"
+                background="transparent"
+                cursor="pointer"
+                outline="none"
+                display="flex"
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                padding="0px"
+                sx={{
+                  userSelect: "none",
+                  "img": {
+                    maxWidth: "100%",
+                    flexShrink: "0",
+                  },
+                }}
+              >
                 {iconView}
-              </button>
-            </div>
-          </div>
-          <div
-            css={callScreenWrapperStyle(this.props, keyframes)}
+              </Button>
+            </Flex>
+          </Flex>
+          <Box
             className="callscreen__wrapper"
             ref={(el) => {
               this.callScreenFrame = el;
             }}
-          ></div>
-          <div
-            css={callScreenResizerStyle(this.state)}
+            width="100%"
+            height="calc(100% - 50px)"
+            position="absolute"
+            top="50px"
+            right="0"
+            bottom="0"
+            left="0"
+            backgroundColor={this.props.theme.backgroundColor.darkGrey}
+            zIndex="999"
+            color={this.props.theme.color.white}
+            textAlign="center"
+            boxSizing="border-box"
+            fontFamily={this.props.theme.fontFamily}
+            sx={{
+              animation: "fadeIn 250ms ease",
+              "@keyframes fadeIn": {
+                from: {
+                  opacity: 0,
+                },
+                to: {
+                  opacity: 1,
+                },
+              },
+              "*": {
+                boxSizing: "border-box",
+                fontFamily: this.props.theme.fontFamily,
+              },
+              iframe: {
+                border: "none",
+              },
+            }}
+          />
+          <Box
             className="callscreen__resizer-both"
             onMouseDown={this.initResize}
-          ></div>
-        </div>
+            width="35px"
+            height="35px"
+            position="absolute"
+            right="0"
+            bottom="0"
+            zIndex="2147483004"
+            display={this.state.maximized ? "none" : "block"}
+            cursor={this.state.maximized ? "default" : "nwse-resize"}
+            sx={{
+              clipPath: this.state.maximized ? "none" : "polygon(100% 0,100% 100%,0 100%)",
+              background: this.state.maximized
+                ? "none"
+                : "repeating-linear-gradient(135deg,hsla(0,0%,100%,.5),hsla(0,0%,100%,.5) 2px,#000 0,#000 4px)",
+            }}
+          />
+        </Box>
       </React.Fragment>
     );
   }

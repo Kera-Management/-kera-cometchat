@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image as ChakraImage } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { CometChatBackdrop } from "../../Shared";
@@ -53,7 +53,7 @@ const CometChatImageViewer = (props) => {
           },
         }}
       >
-        <Image
+        <ChakraImage
           src={imageIcon}
           alt={imageIcon}
           objectFit="contain"

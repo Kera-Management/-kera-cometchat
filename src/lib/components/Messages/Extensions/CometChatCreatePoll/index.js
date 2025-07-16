@@ -1,8 +1,6 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import PropTypes from "prop-types";
+import { Box, Flex, Text, Button, Input, Table, Thead, Tbody, Tfoot, Tr, Td, Th, TableCaption, Icon } from "@chakra-ui/react";
 import { CometChat } from "@cometchat-pro/chat";
 
 import { CometChatBackdrop } from "../../../Shared";
@@ -13,19 +11,6 @@ import * as enums from "../../../../util/enums.js";
 
 import { theme } from "../../../../resources/theme";
 import Translator from "../../../../resources/localization/translator";
-
-import {
-  modalWrapperStyle,
-  modalCloseStyle,
-  modalBodyStyle,
-  modalErrorStyle,
-  modalTableStyle,
-  tableCaptionStyle,
-  tableBodyStyle,
-  tableFootStyle,
-  iconWrapperStyle,
-  addOptionIconStyle,
-} from "./style";
 
 import creatingIcon from "./resources/creating.svg";
 import addIcon from "./resources/add-circle-filled.svg";
@@ -169,115 +154,265 @@ class CometChatCreatePoll extends React.Component {
     return (
       <React.Fragment>
         <CometChatBackdrop show={true} clicked={this.props.close} />
-        <div
-          css={modalWrapperStyle(this.context)}
+        <Box
           className="modal__createpoll"
+          minWidth="350px"
+          minHeight="450px"
+          width="50%"
+          height="40%"
+          overflow="hidden"
+          backgroundColor={this.context.theme.backgroundColor.white}
+          position="fixed"
+          left="50%"
+          top="50%"
+          transform="translate(-50%, -50%)"
+          zIndex="1002"
+          margin="0 auto"
+          boxShadow="rgba(20, 20, 20, 0.2) 0 16px 32px, rgba(20, 20, 20, 0.04) 0 0 0 1px"
+          borderRadius="12px"
+          display="block"
+          sx={{
+            [`@media ${this.context.theme.breakPoints[1]}, ${this.context.theme.breakPoints[2]}`]: {
+              width: "100%",
+              height: "100%",
+            },
+          }}
         >
-          <span
-            css={modalCloseStyle(clearIcon, this.context)}
+          <Box
             className="modal__close"
-            onClick={this.props.close}
+            position="absolute"
+            width="32px"
+            height="32px"
+            borderRadius="50%"
+            top="16px"
+            right="16px"
+            cursor="pointer"
             title={Translator.translate("CLOSE", this.context.language)}
-          ></span>
-          <div css={modalBodyStyle()} className="modal__body">
-            <table css={modalTableStyle(this.context)}>
-              <caption css={tableCaptionStyle()} className="modal__title">
+            onClick={this.props.close}
+            sx={{
+              mask: `url(${clearIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.primaryColor,
+            }}
+          />
+          <Box className="modal__body" padding="24px" height="100%" width="100%">
+            <Table
+              borderCollapse="collapse"
+              margin="0"
+              padding="0"
+              width="100%"
+              height="90%"
+              sx={{
+                tr: {
+                  borderBottom: `1px solid ${this.context.theme.borderColor.primary}`,
+                  display: "table",
+                  width: "100%",
+                  tableLayout: "fixed",
+                },
+              }}
+            >
+              <TableCaption
+                className="modal__title"
+                fontSize="20px"
+                marginBottom="15px"
+                fontWeight="bold"
+                textAlign="left"
+                placement="top"
+              >
                 {Translator.translate("CREATE_POLL", this.context.language)}
-              </caption>
-              <tbody css={tableBodyStyle()}>
-                <tr className="error">
-                  <td colSpan="3">
-                    <div css={modalErrorStyle(this.context)}>
+              </TableCaption>
+              <Tbody
+                height="calc(100% - 40px)"
+                overflowY="auto"
+                display="block"
+                sx={{
+                  "tr": {
+                    "td": {
+                      padding: "8px 16px",
+                      fontSize: "14px",
+                      "input": {
+                        width: "100%",
+                        border: "none",
+                        padding: "8px 16px",
+                        fontSize: "14px",
+                        "&:focus": {
+                          outline: "none"
+                        }
+                      },
+                      "label": {
+                        padding: "8px 16px", 
+                      },
+                      ":first-of-type": {
+                        width: "120px"
+                      }
+                    }
+                  }
+                }}
+              >
+                <Tr className="error">
+                  <Td colSpan={3}>
+                    <Box
+                      fontSize="12px"
+                      color={this.context.theme.color.red}
+                      textAlign="center"
+                      margin="8px 0"
+                      width="100%"
+                    >
                       {this.state.errorMessage}
-                    </div>
-                  </td>
-                </tr>
-                <tr className="poll__question">
-                  <td>
-                    <label>
+                    </Box>
+                  </Td>
+                </Tr>
+                <Tr className="poll__question">
+                  <Td>
+                    <Text as="label">
                       {Translator.translate("QUESTION", this.context.language)}
-                    </label>
-                  </td>
-                  <td colSpan="2">
-                    <input
+                    </Text>
+                  </Td>
+                  <Td colSpan={2}>
+                    <Input
                       type="text"
                       autoFocus
-                      tabIndex="1"
+                      tabIndex={1}
                       placeholder={Translator.translate(
                         "ENTER_YOUR_QUESTION",
                         this.context.language
                       )}
                       ref={this.questionRef}
+                      variant="unstyled"
                     />
-                  </td>
-                </tr>
-                <tr className="poll__options">
-                  <td>
-                    <label>
+                  </Td>
+                </Tr>
+                <Tr className="poll__options">
+                  <Td>
+                    <Text as="label">
                       {Translator.translate("OPTIONS", this.context.language)}
-                    </label>
-                  </td>
-                  <td colSpan="2">
-                    <input
+                    </Text>
+                  </Td>
+                  <Td colSpan={2}>
+                    <Input
                       type="text"
-                      tabIndex="2"
+                      tabIndex={2}
                       placeholder={Translator.translate(
                         "ENTER_YOUR_OPTION",
                         this.context.language
                       )}
                       ref={this.optionOneRef}
+                      variant="unstyled"
                     />
-                  </td>
-                </tr>
-                <tr ref={this.optionRef} className="poll__options">
-                  <td>&nbsp;</td>
-                  <td colSpan="2">
-                    <input
+                  </Td>
+                </Tr>
+                <Tr ref={this.optionRef} className="poll__options">
+                  <Td>&nbsp;</Td>
+                  <Td colSpan={2}>
+                    <Input
                       type="text"
-                      tabIndex="3"
+                      tabIndex={3}
                       placeholder={Translator.translate(
                         "ENTER_YOUR_OPTION",
                         this.context.language
                       )}
                       ref={this.optionTwoRef}
+                      variant="unstyled"
                     />
-                  </td>
-                </tr>
+                  </Td>
+                </Tr>
                 {pollOptionView}
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>
-                    <label>
+                <Tr>
+                  <Td>&nbsp;</Td>
+                  <Td>
+                    <Text as="label">
                       {Translator.translate(
                         "ADD_NEW_OPTION",
                         this.context.language
                       )}
-                    </label>
-                  </td>
-                  <td css={iconWrapperStyle()}>
-                    <i
-                      tabIndex="100"
-                      css={addOptionIconStyle(addIcon, this.context)}
+                    </Text>
+                  </Td>
+                  <Td width="50px">
+                    <Box
+                      tabIndex={100}
                       className="option__add"
+                      backgroundSize="28px 28px"
+                      cursor="pointer"
+                      display="block"
+                      height="24px"
+                      width="24px"
                       onClick={this.addPollOption}
-                    ></i>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot
-                css={tableFootStyle(this.context, this.state, creatingIcon)}
+                      sx={{
+                        mask: `url(${addIcon}) center center no-repeat`,
+                        backgroundColor: this.context.theme.secondaryTextColor,
+                      }}
+                    />
+                  </Td>
+                </Tr>
+              </Tbody>
+              <Tfoot
+                display="inline-block"
+                sx={{
+                  tr: {
+                    border: "none",
+                    td: {
+                      textAlign: "center",
+                      button: {
+                        cursor: "pointer",
+                        padding: "8px 16px",
+                        backgroundColor: this.context.theme.primaryColor,
+                        borderRadius: "5px",
+                        color: this.context.theme.color.white,
+                        fontSize: "14px",
+                        outline: "0",
+                        border: "0",
+                        ...(this.state.creatingPoll ? {
+                          disabled: "true",
+                          pointerEvents: "none",
+                          background: `url(${creatingIcon}) no-repeat right 10px center ${this.context.theme.primaryColor}`,
+                        } : {}),
+                        span: {
+                          ...(this.state.creatingPoll ? {
+                            marginRight: "24px",
+                          } : {}),
+                        },
+                      },
+                    },
+                  },
+                }}
               >
-                <tr className="createpoll">
-                  <td colSpan="2">
-                    <button type="button" onClick={this.createPoll}>
-                      <span>{createText}</span>
-                    </button>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
+                <Tr className="createpoll">
+                  <Td colSpan={2}>
+                    <Button 
+                      type="button" 
+                      onClick={this.createPoll}
+                      variant="unstyled"
+                      sx={{
+                        cursor: "pointer",
+                        padding: "8px 16px",
+                        backgroundColor: this.context.theme.primaryColor,
+                        borderRadius: "5px",
+                        color: this.context.theme.color.white,
+                        fontSize: "14px",
+                        outline: "0",
+                        border: "0",
+                        ...(this.state.creatingPoll ? {
+                          disabled: "true",
+                          pointerEvents: "none",
+                          background: `url(${creatingIcon}) no-repeat right 10px center ${this.context.theme.primaryColor}`,
+                        } : {}),
+                      }}
+                    >
+                      <Text
+                        sx={{
+                          ...(this.state.creatingPoll ? {
+                            marginRight: "24px",
+                          } : {}),
+                        }}
+                      >
+                        {createText}
+                      </Text>
+                    </Button>
+                  </Td>
+                </Tr>
+              </Tfoot>
+            </Table>
+          </Box>
+        </Box>
       </React.Fragment>
     );
   }

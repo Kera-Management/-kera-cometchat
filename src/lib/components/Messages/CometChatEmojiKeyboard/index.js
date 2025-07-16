@@ -1,18 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { Emojis } from "./emojis";
 import { CometChatEmojiCategory } from "./EmojiCategory";
 import { CometChatEmoji } from "./Emoji";
-
-import {
-  emojiListStyle,
-  emojiCategoryWrapper,
-  emojiCategoryTitle,
-  emojiTabLsitStyle,
-  emojiContainerStyle,
-  getListStyle,
-  listStyle,
-} from "./style";
 
 import { CometChatListItem } from "../../Shared";
 
@@ -54,24 +45,36 @@ const CometChatEmojiKeyboard = (props) => {
       });
       /**Emoji Category List */
       emojiCategoryJSX.push(
-        <div key={emojiCategory.id} className="emoji__autoscroll">
+        <Box key={emojiCategory.id} className="emoji__autoscroll">
           <CometChatListItem
             key={emojiCategory.id}
             id={emojiCategory.id}
             iconURL={emojiCategory.symbol}
-            style={getListStyle()}
+            style={{
+              width: "24px",
+              height: "24px",
+              cursor: "pointer",
+              alignItems: "center",
+              justifyContent: "center",
+              iconTint: "#3399ff",
+              iconBackground: "rgba(20, 20, 20, 0.58)",
+            }}
             onItemClick={autoScrollView.bind(this, emojiCategory.id)}
           />
-        </div>
+        </Box>
       );
 
       const title = (
-        <p
+        <Text
           className="emoji__category__title"
-          style={emojiCategoryTitle(props)}
+          textAlign="left"
+          paddingLeft="16px"
+          paddingTop="8px"
+          fontFamily={props.style?.sectionHeaderFont || "500 12px Inter, sans-serif"}
+          color={props.style?.sectionHeaderColor || "rgba(20,20,20,0.58)"}
         >
           {emojiCategory.name}
-        </p>
+        </Text>
       );
 
       /**Emojis List */
@@ -90,39 +93,70 @@ const CometChatEmojiKeyboard = (props) => {
             id={emojiId}
             key={emojiId}
             onItemClick={handleEvent.bind(this, emojiInstance)}
-            style={listStyle(props)}
+            style={{
+              padding: "10px",
+              display: "flex",
+              cursor: "pointer",
+              borderRadius: "3px",
+              alignItems: "center",
+              justifyContent: "center",
+              textFont: "700 22px Inter,sand-serif",
+              background: props.style?.background,
+            }}
             text={emojiInstance.char}
           />
         );
       });
       return (
-        <div
+        <Box
           key={emojiCategory.id}
           id={emojiCategory.id} // for auto scroll
           className="emoji__category__wrapper"
-          style={emojiCategoryWrapper(props)}
+          justifyContent="center"
+          alignItems="center"
         >
           {title}
-          <div className="emoji__list" style={emojiListStyle(props)}>
+          <Flex 
+            className="emoji__list" 
+            display="flex"
+            flexWrap="wrap"
+            justifyContent="space-evenly"
+          >
             {emojiList}
-          </div>
-        </div>
+          </Flex>
+        </Box>
       );
     });
 
     return (
-      <div
+      <Box
         className="emoji__keyboard"
-        style={emojiContainerStyle(props)}
+        padding="0px"
+        overflowY="scroll"
+        position="relative"
+        width={props.style?.width || "100%"}
+        height={props.style?.height || "300px"}
+        background={props.style?.background || "rgb(255,255,255)"}
+        boxShadow="0px 0px 10px #ddd"
+        zIndex="9"
       >
-        <div className="emoji__list__items">{emojiJSX}</div>
-        <div
+        <Box className="emoji__list__items">{emojiJSX}</Box>
+        <Flex
           className="emoji__category"
-          style={emojiTabLsitStyle(props)}
+          width="100%"
+          zIndex="9"
+          display="flex"
+          flexWrap="wrap"
+          padding="15px 8px"
+          position="sticky"
+          bottom="0px"
+          alignItems="center"
+          justifyContent="space-around"
+          background={props.style?.background || "rgb(255,255,255)"}
         >
           {emojiCategoryJSX}
-        </div>
-      </div>
+        </Flex>
+      </Box>
     );
   };
 

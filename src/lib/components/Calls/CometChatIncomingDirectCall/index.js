@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, keyframes } from "@emotion/react";
+import { Box, Flex, Button, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -18,18 +16,7 @@ import { Storage } from "../../../util/Storage";
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
 
-import {
-  incomingCallWrapperStyle,
-  callContainerStyle,
-  headerWrapperStyle,
-  callDetailStyle,
-  nameStyle,
-  callTypeStyle,
-  thumbnailStyle,
-  headerButtonStyle,
-  ButtonStyle,
-  callIconStyle,
-} from "./style";
+// Removed emotion styles - now using Chakra UI
 
 import videoCallIcon from "./resources/incoming-video-call.svg";
 
@@ -239,67 +226,197 @@ class CometChatIncomingDirectCall extends React.PureComponent {
       incomingCallAlert = null;
     if (this.state.incomingCall) {
       let avatar = (
-        <div css={thumbnailStyle()} className="header__thumbnail">
+        <Box 
+          className="header__thumbnail"
+          width="36px"
+          height="36px"
+          display="flex"
+          justifyContent="center"
+        >
           <CometChatAvatar
             cornerRadius="50%"
             image={this.state.incomingCall.sender.avatar}
           />
-        </div>
+        </Box>
       );
 
       const callType = (
         <React.Fragment>
-          <i
-            css={callIconStyle(videoCallIcon, this.context)}
+          <Box
+            width="24px"
+            height="24px"
+            display="inline-block"
+            cursor="pointer"
             title={Translator.translate("INCOMING_VIDEO_CALL", this.props.lang)}
-          ></i>
-          <span>
+            sx={{
+              mask: `url(${videoCallIcon}) center center no-repeat`,
+              backgroundColor: this.context.theme.secondaryTextColor,
+            }}
+          />
+          <Text as="span" padding="0 5px">
             {Translator.translate("INCOMING_VIDEO_CALL", this.props.lang)}
-          </span>
+          </Text>
         </React.Fragment>
       );
 
+      // Calculate positioning based on widget settings
+      let positionProps = {
+        position: "absolute",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "unset",
+        zIndex: "998",
+      };
+
+      if (this.props.hasOwnProperty("widgetsettings")) {
+        const ws = this.props.widgetsettings;
+        if (ws.hasOwnProperty("dockedview") && ws.dockedview) {
+          if (ws.hasOwnProperty("launched") && ws.launched) {
+            positionProps.zIndex = "2147483000";
+            positionProps.position = "fixed";
+            positionProps.top = "unset";
+            positionProps.bottom = "100px";
+
+            if (ws.hasOwnProperty("alignment") && ws.alignment === "left") {
+              positionProps.right = "unset";
+              positionProps.left = "20px";
+            } else {
+              positionProps.left = "unset";
+              positionProps.right = "20px";
+            }
+          } else {
+            positionProps.left = "unset";
+            positionProps.position = "fixed";
+          }
+        } else {
+          positionProps.zIndex = "2147483000";
+        }
+      }
+
       incomingCallAlert = (
-        <div
-          css={incomingCallWrapperStyle(this.props, keyframes)}
+        <Box
           className="callalert__wrapper"
+          {...positionProps}
+          borderRadius="10px"
+          margin="16px"
+          backgroundColor={this.props.theme.backgroundColor.callScreenGrey}
+          color={this.props.theme.color.white}
+          textAlign="center"
+          boxSizing="border-box"
+          fontFamily={this.props.theme.fontFamily}
+          width="248px"
+          sx={{
+            animation: "slideDown 250ms ease",
+            "@keyframes slideDown": {
+              "0%": { transform: "translateY(-50px)" },
+              "100%": { transform: "translateY(0px)" },
+            },
+            "*": {
+              boxSizing: "border-box",
+              fontFamily: this.props.theme.fontFamily,
+            },
+          }}
         >
-          <div css={callContainerStyle()} className="callalert__container">
-            <div css={headerWrapperStyle()} className="callalert__header">
-              <div css={callDetailStyle()} className="header__detail">
-                <div css={nameStyle()} className="name">
+          <Flex 
+            className="callalert__container"
+            display="flex"
+            flexDirection="column"
+            width="100%"
+            padding="16px"
+          >
+            <Flex 
+              className="callalert__header"
+              width="100%"
+              display="flex"
+            >
+              <Flex 
+                className="header__detail"
+                width="calc(100% - 36px)"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                textAlign="left"
+              >
+                <Text 
+                  className="name"
+                  fontSize="15px"
+                  fontWeight="600"
+                  display="block"
+                  width="100%"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  lineHeight="20px"
+                >
                   {this.state.incomingCall.sender.name}
-                </div>
-                <div css={callTypeStyle(this.props)} className="calltype">
+                </Text>
+                <Flex 
+                  className="calltype"
+                  fontSize="13px"
+                  width="100%"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  textTransform="capitalize"
+                  lineHeight="20px"
+                  color="#8A8A8A"
+                  display="flex"
+                  justifyContent="start"
+                  alignItems="center"
+                  padding="2px 0 0 0px"
+                >
                   {callType}
-                </div>
-              </div>
+                </Flex>
+              </Flex>
               {avatar}
-            </div>
-            <div
-              css={headerButtonStyle()}
+            </Flex>
+            <Flex
               className="callalert__buttons"
               ref={this.callButtonRef}
+              width="100%"
+              display="flex"
+              justifyContent="space-between"
+              margin="10px 0 0 0"
             >
-              <button
+              <Button
                 type="button"
-                css={ButtonStyle(this.props, 0)}
                 className="button button__ignore"
                 onClick={this.ignoreCall}
+                cursor="pointer"
+                padding="8px 16px"
+                backgroundColor={`${this.props.theme.backgroundColor.red}!important`}
+                borderRadius="5px"
+                color={this.props.theme.color.white}
+                fontSize="100%"
+                outline="0"
+                border="0"
+                width="49%"
+                overflow="hidden"
               >
                 {Translator.translate("IGNORE", this.props.lang)}
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
-                css={ButtonStyle(this.props, 1)}
                 className="button button__join"
                 onClick={this.joinCall}
+                cursor="pointer"
+                padding="8px 16px"
+                backgroundColor={`${this.props.theme.backgroundColor.blue}!important`}
+                borderRadius="5px"
+                color={this.props.theme.color.white}
+                fontSize="100%"
+                outline="0"
+                border="0"
+                width="49%"
+                overflow="hidden"
               >
                 {Translator.translate("JOIN", this.props.lang)}
-              </button>
-            </div>
-          </div>
-        </div>
+              </Button>
+            </Flex>
+          </Flex>
+        </Box>
       );
     }
 

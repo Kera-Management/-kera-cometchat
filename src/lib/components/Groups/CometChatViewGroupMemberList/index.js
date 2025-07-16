@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -13,20 +11,6 @@ import { CometChatContext } from "../../../util/CometChatContext";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import {
-  modalWrapperStyle,
-  modalCloseStyle,
-  modalBodyStyle,
-  modalCaptionStyle,
-  modalListStyle,
-  listHeaderStyle,
-  listStyle,
-  nameColumnStyle,
-  scopeColumnStyle,
-  actionColumnStyle,
-  modalErrorStyle,
-} from "./style";
 
 import clearIcon from "./resources/close.svg";
 
@@ -222,12 +206,34 @@ class CometChatViewGroupMemberList extends React.Component {
     if (this.context.item.scope !== CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT) {
       editAccess = (
         <React.Fragment>
-          <div css={actionColumnStyle(this.context)} className="ban">
+          <Box
+            w="70px"
+            className="ban"
+            sx={{
+              [`@media ${this.context.theme.breakPoints[1]}`]: {
+                w: "40px",
+              },
+              [`@media ${this.context.theme.breakPoints[2]}`]: {
+                w: "40px",
+              },
+            }}
+          >
             {Translator.translate("BAN", this.context.language)}
-          </div>
-          <div css={actionColumnStyle(this.context)} className="kick">
+          </Box>
+          <Box
+            w="70px"
+            className="kick"
+            sx={{
+              [`@media ${this.context.theme.breakPoints[1]}`]: {
+                w: "40px",
+              },
+              [`@media ${this.context.theme.breakPoints[2]}`]: {
+                w: "40px",
+              },
+            }}
+          >
             {Translator.translate("KICK", this.context.language)}
-          </div>
+          </Box>
         </React.Fragment>
       );
 
@@ -244,54 +250,147 @@ class CometChatViewGroupMemberList extends React.Component {
     return (
       <React.Fragment>
         <CometChatBackdrop show={true} clicked={this.props.close} />
-        <div
-          css={modalWrapperStyle(this.context)}
+        <Box
+          minW="350px"
+          minH="450px"
+          w="50%"
+          h="40%"
+          overflow="hidden"
+          bg={this.context.theme.backgroundColor.white}
+          position="fixed"
+          left="50%"
+          top="50%"
+          transform="translate(-50%, -50%)"
+          zIndex="1002"
+          m="0 auto"
+          boxShadow="rgba(20, 20, 20, 0.2) 0 16px 32px, rgba(20, 20, 20, 0.04) 0 0 0 1px"
+          borderRadius="12px"
+          display="block"
           className="modal__viewmembers"
+          sx={{
+            [`@media ${this.context.theme.breakPoints[1]}`]: {
+              w: "100%",
+              h: "100%",
+            },
+            [`@media ${this.context.theme.breakPoints[2]}`]: {
+              w: "100%",
+              h: "100%",
+            },
+            [`@media ${this.context.theme.breakPoints[3]}`]: {
+              w: "100%",
+              h: "100%",
+            },
+          }}
         >
-          <span
-            css={modalCloseStyle(clearIcon, this.context)}
+          <Box
+            position="absolute"
+            w="32px"
+            h="32px"
+            borderRadius="50%"
+            top="16px"
+            right="16px"
+            bg={this.context.theme.primaryColor}
+            cursor="pointer"
             className="modal__close"
             onClick={this.props.close}
             title={Translator.translate("CLOSE", this.context.language)}
-          ></span>
-          <div css={modalBodyStyle()} className="modal__body">
-            <div
-              css={modalCaptionStyle(
-                Translator.getDirection(this.context.language)
-              )}
+            sx={{
+              mask: `url(${clearIcon}) center center no-repeat`,
+            }}
+          />
+          <Box p="24px" h="100%" w="100%" className="modal__body">
+            <Text
+              fontSize="20px"
+              mb="16px"
+              fontWeight="bold"
+              w="100%"
+              textAlign={Translator.getDirection(this.context.language) === "rtl" ? "right" : "left"}
+              pr={Translator.getDirection(this.context.language) === "rtl" ? "32px" : "0"}
               className="modal__title"
             >
               {Translator.translate("GROUP_MEMBERS", this.context.language)}
-            </div>
-            <div css={modalErrorStyle(this.context)} className="modal__error">
+            </Text>
+            <Text
+              fontSize="12px"
+              color={this.context.theme.color.red}
+              textAlign="center"
+              p="8px 0"
+              w="100%"
+              h="31px"
+              className="modal__error"
+            >
               {this.state.errorMessage}
-            </div>
-            <div css={modalListStyle()} className="modal__content">
-              <div
-                css={listHeaderStyle(this.context)}
+            </Text>
+            <Flex
+              w="100%"
+              h="calc(100% - 70px)"
+              flexDirection="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+              className="modal__content"
+            >
+              <Flex
+                flexDirection="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                fontWeight="bold"
+                p="8px"
+                w="100%"
+                border={`1px solid ${this.context.theme.borderColor.primary}`}
                 className="content__header"
               >
-                <div
-                  css={nameColumnStyle(this.context, editAccess)}
+                <Box
                   className="name"
+                  sx={{
+                    w: editAccess === null ? "calc(100% - 180px)" : "calc(100% - 260px)",
+                    [`@media ${this.context.theme.breakPoints[1]}`]: {
+                      w: editAccess === null ? "calc(100% - 140px)" : "calc(100% - 220px)",
+                    },
+                    [`@media ${this.context.theme.breakPoints[2]}`]: {
+                      w: editAccess === null ? "calc(100% - 180px)" : "calc(100% - 260px)",
+                    },
+                    [`@media ${this.context.theme.breakPoints[3]}`]: {
+                      w: editAccess === null ? "calc(100% - 180px)" : "calc(100% - 240px)",
+                    },
+                  }}
                 >
                   {this.state.userColumnTitle}
-                </div>
-                <div css={scopeColumnStyle(this.context)} className="scope">
+                </Box>
+                <Box
+                  w="180px"
+                  mr="8px"
+                  className="scope"
+                  sx={{
+                    [`@media ${this.context.theme.breakPoints[1]}`]: {
+                      w: "140px",
+                    },
+                    [`@media ${this.context.theme.breakPoints[2]}`]: {
+                      w: "180px",
+                    },
+                    [`@media ${this.context.theme.breakPoints[3]}`]: {
+                      w: "120px",
+                    },
+                  }}
+                >
                   {Translator.translate("SCOPE", this.context.language)}
-                </div>
+                </Box>
                 {editAccess}
-              </div>
-              <div
-                css={listStyle()}
+              </Flex>
+              <Flex
+                flexDirection="column"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+                w="100%"
+                h="calc(100% - 33px)"
+                overflowY="auto"
                 className="content__list"
                 onScroll={this.handleScroll}
               >
                 {groupMembers}
-              </div>
-            </div>
-          </div>
-        </div>
+              </Flex>
+            </Flex>
+          </Box>
+        </Box>
       </React.Fragment>
     );
   }

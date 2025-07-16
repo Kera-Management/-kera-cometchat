@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex, Text, Button } from "@chakra-ui/react";
 import { CometChat } from "@cometchat-pro/chat";
 
 import { CometChatTransferOwnershipMemberListItem } from "..";
@@ -11,20 +9,6 @@ import * as enums from "../../../util/enums.js";
 import { CometChatContext } from "../../../util/CometChatContext";
 
 import Translator from "../../../resources/localization/translator";
-
-import {
-  modalWrapperStyle,
-  modalCloseStyle,
-  modalBodyStyle,
-  modalCaptionStyle,
-  modalListStyle,
-  listHeaderStyle,
-  listStyle,
-  nameColumnStyle,
-  scopeColumnStyle,
-  modalFootStyle,
-  modalErrorStyle,
-} from "./style";
 
 import clearIcon from "./resources/close.svg";
 import transferIcon from "./resources/transferring.svg";
@@ -145,68 +129,171 @@ class CometChatTransferOwnershipMemberList extends React.Component {
         ? Translator.translate("TRANSFERRING", this.context.language)
         : Translator.translate("TRANSFER", this.context.language);
       transferBtn = (
-        <div
-          css={modalFootStyle(this.state, this.context, transferIcon)}
+        <Box
+          pt="24px"
+          textAlign="center"
           className="modal__transferownership"
         >
-          <button type="button" onClick={this.transferOwnership}>
-            <span>{transferText}</span>
-          </button>
-        </div>
+          <Button
+            cursor="pointer"
+            p="8px 16px"
+            bg={this.context.theme.backgroundColor.blue}
+            borderRadius="5px"
+            color={this.context.theme.color.white}
+            fontSize="14px"
+            outline="0"
+            border="0"
+            isDisabled={!this.state.newGroupOwner || this.state.transferringOwnership}
+            onClick={this.transferOwnership}
+            sx={{
+              background: this.state.transferringOwnership
+                ? `url(${transferIcon}) no-repeat right 10px center ${this.context.theme.backgroundColor.blue}`
+                : this.context.theme.backgroundColor.blue,
+            }}
+          >
+            <Text mr={this.state.transferringOwnership ? "24px" : "0"}>
+              {transferText}
+            </Text>
+          </Button>
+        </Box>
       );
     }
 
     return (
       <React.Fragment>
         <CometChatBackdrop show={true} clicked={this.props.close} />
-        <div
-          css={modalWrapperStyle(this.props, this.context)}
+        <Box
+          minW="350px"
+          minH="450px"
+          w="40%"
+          h="40%"
+          overflow="hidden"
+          bg={this.context.theme.backgroundColor.white}
+          position="fixed"
+          left="50%"
+          top="50%"
+          transform="translate(-50%, -50%)"
+          zIndex="1002"
+          m="0 auto"
+          boxShadow="rgba(20, 20, 20, 0.2) 0 16px 32px, rgba(20, 20, 20, 0.04) 0 0 0 1px"
+          borderRadius="12px"
+          display="block"
           className="modal__groupmembers"
+          sx={{
+            "@media (min-width : 320px) and (max-width: 767px)": {
+              w: "100%",
+              h: "100%",
+            },
+          }}
         >
-          <span
-            css={modalCloseStyle(clearIcon, this.context)}
+          <Box
+            position="absolute"
+            w="32px"
+            h="32px"
+            borderRadius="50%"
+            top="16px"
+            right="16px"
+            bg={this.context.theme.primaryColor}
+            cursor="pointer"
             className="modal__close"
             onClick={this.props.close}
             title={Translator.translate("CLOSE", this.context.language)}
-          ></span>
-          <div css={modalBodyStyle()} className="modal__body">
-            <div
-              css={modalCaptionStyle(
-                Translator.getDirection(this.context.language)
-              )}
+            sx={{
+              mask: `url(${clearIcon}) center center no-repeat`,
+            }}
+          />
+          <Box p="24px" h="100%" w="100%" className="modal__body">
+            <Text
+              fontSize="20px"
+              mb="8px"
+              fontWeight="bold"
+              w="100%"
+              textAlign={Translator.getDirection(this.context.language) === "rtl" ? "right" : "left"}
+              pr={Translator.getDirection(this.context.language) === "rtl" ? "32px" : "0"}
               className="modal__title"
             >
               {Translator.translate("GROUP_MEMBERS", this.context.language)}
-            </div>
-            <div css={modalErrorStyle(this.context)} className="modal__error">
+            </Text>
+            <Text
+              fontSize="12px"
+              color={this.context.theme.color.red}
+              textAlign="center"
+              p="8px 0"
+              h="31px"
+              w="100%"
+              className="modal__error"
+            >
               {this.state.errorMessage}
-            </div>
-            <div css={modalListStyle(this.context)} className="modal__content">
-              <div
-                css={listHeaderStyle(this.context)}
+            </Text>
+            <Flex
+              w="100%"
+              h="calc(100% - 120px)"
+              flexDirection="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+              className="modal__content"
+            >
+              <Flex
+                flexDirection="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                fontWeight="bold"
+                p="8px"
+                w="100%"
+                border={`1px solid ${this.context.theme.borderColor.primary}`}
                 className="content__header"
               >
-                <div
-                  css={nameColumnStyle(this.props, this.context)}
+                <Box
                   className="name"
+                  sx={{
+                    w: "calc(100% - 180px)",
+                    [`@media ${this.context.theme.breakPoints[1]}`]: {
+                      w: "calc(100% - 140px)",
+                    },
+                    [`@media ${this.context.theme.breakPoints[2]}`]: {
+                      w: "calc(100% - 180px)",
+                    },
+                    [`@media ${this.context.theme.breakPoints[3]}`]: {
+                      w: "calc(100% - 120px)",
+                    },
+                  }}
                 >
                   {this.state.userColumnTitle}
-                </div>
-                <div css={scopeColumnStyle(this.context)} className="scope">
+                </Box>
+                <Box
+                  className="scope"
+                  sx={{
+                    w: "180px",
+                    [`@media ${this.context.theme.breakPoints[1]}`]: {
+                      w: "140px",
+                    },
+                    [`@media ${this.context.theme.breakPoints[2]}`]: {
+                      w: "180px",
+                    },
+                    [`@media ${this.context.theme.breakPoints[3]}`]: {
+                      w: "120px",
+                    },
+                  }}
+                >
                   {Translator.translate("SCOPE", this.context.language)}
-                </div>
-              </div>
-              <div
-                css={listStyle()}
+                </Box>
+              </Flex>
+              <Flex
+                flexDirection="column"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+                w="100%"
+                h="calc(100% - 100px)"
+                overflowY="auto"
                 className="content__list"
                 onScroll={this.handleScroll}
               >
                 {groupMembers}
-              </div>
-            </div>
+              </Flex>
+            </Flex>
             {transferBtn}
-          </div>
-        </div>
+          </Box>
+        </Box>
       </React.Fragment>
     );
   }

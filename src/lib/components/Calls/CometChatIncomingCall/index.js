@@ -1,7 +1,5 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, keyframes } from "@emotion/react";
+import { Box, Flex, Text, Button } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
 
@@ -17,19 +15,6 @@ import { Storage } from "../../../util/Storage";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import {
-  incomingCallWrapperStyle,
-  callContainerStyle,
-  headerWrapperStyle,
-  callDetailStyle,
-  nameStyle,
-  callTypeStyle,
-  thumbnailStyle,
-  headerButtonStyle,
-  ButtonStyle,
-  callIconStyle,
-} from "./style";
 
 import audioCallIcon from "./resources/incoming-call.svg";
 import videoCallIcon from "./resources/incoming-video-call.svg";
@@ -297,59 +282,200 @@ class CometChatIncomingCall extends React.PureComponent {
     if (this.state.incomingCall) {
       let callType = (
         <React.Fragment>
-          <i
-            css={callIconStyle(audioCallIcon, this.context)}
+          <Box
+            w="24px"
+            h="24px"
+            display="inline-block"
+            cursor="pointer"
+            bg={this.context.theme.secondaryTextColor}
             title={Translator.translate("INCOMING_AUDIO_CALL", this.props.lang)}
-          ></i>
-          <span>
+            sx={{
+              mask: `url(${audioCallIcon}) center center no-repeat`,
+            }}
+          />
+          <Text p="0 5px">
             {Translator.translate("INCOMING_AUDIO_CALL", this.props.lang)}
-          </span>
+          </Text>
         </React.Fragment>
       );
       if (this.state.incomingCall.type === CometChat.CALL_TYPE.VIDEO) {
         callType = (
           <React.Fragment>
-            <i
-              css={callIconStyle(videoCallIcon, this.context)}
+            <Box
+              w="24px"
+              h="24px"
+              display="inline-block"
+              cursor="pointer"
+              bg={this.context.theme.secondaryTextColor}
               title={Translator.translate(
                 "INCOMING_VIDEO_CALL",
                 this.props.lang
               )}
-            ></i>
-            <span>
+              sx={{
+                mask: `url(${videoCallIcon}) center center no-repeat`,
+              }}
+            />
+            <Text p="0 5px">
               {Translator.translate("INCOMING_VIDEO_CALL", this.props.lang)}
-            </span>
+            </Text>
           </React.Fragment>
         );
       }
 
+      // Calculate positioning based on widget settings
+      const getPositionProps = () => {
+        let positionProps = {
+          position: "absolute",
+          top: "0",
+          left: "0",
+          right: "0",
+          bottom: "unset",
+          zIndex: "998",
+        };
+        
+        if (this.props.hasOwnProperty("widgetsettings")) {
+          if (this.props.widgetsettings.hasOwnProperty("dockedview") && this.props.widgetsettings.dockedview) {
+            if (this.props.widgetsettings.hasOwnProperty("launched") && this.props.widgetsettings.launched) {
+              positionProps.zIndex = "2147483000";
+              positionProps.position = "fixed";
+              positionProps.top = "unset";
+              positionProps.bottom = "100px";
+              
+              if (this.props.widgetsettings.hasOwnProperty("alignment") && this.props.widgetsettings.alignment === "left") {
+                positionProps.right = "unset";
+                positionProps.left = "20px";
+                
+                if (this.props.widgetsettings.hasOwnProperty("width") && this.props.widgetsettings.width.includes("px")) {
+                  const widgetWidth = this.props.widgetsettings.width.replace("px", "");
+                  positionProps.right = (parseInt(widgetWidth) - 250 - 15) + "px";
+                }
+                
+                if (this.props.widgetsettings.hasOwnProperty("height") && this.props.widgetsettings.height.includes("px")) {
+                  const widgetHeight = this.props.widgetsettings.height.replace("px", "");
+                  positionProps.bottom = (parseInt(widgetHeight) - 140 + 100) + "px";
+                }
+              } else {
+                positionProps.left = "unset";
+                positionProps.right = "20px";
+                
+                if (this.props.widgetsettings.hasOwnProperty("width") && this.props.widgetsettings.width.includes("px")) {
+                  const widgetWidth = this.props.widgetsettings.width.replace("px", "");
+                  positionProps.right = (parseInt(widgetWidth) - 250 - 15) + "px";
+                }
+                
+                if (this.props.widgetsettings.hasOwnProperty("height") && this.props.widgetsettings.height.includes("px")) {
+                  const widgetHeight = this.props.widgetsettings.height.replace("px", "");
+                  positionProps.bottom = (parseInt(widgetHeight) - 140 + 100) + "px";
+                }
+              }
+            } else {
+              positionProps.left = "unset";
+              positionProps.position = "fixed";
+            }
+          } else {
+            positionProps.zIndex = "2147483000";
+          }
+        }
+        
+        return positionProps;
+      };
+
       incomingCallAlert = (
-        <div
-          css={incomingCallWrapperStyle(this.props, keyframes)}
+        <Box
+          {...getPositionProps()}
+          borderRadius="10px"
+          m="16px"
+          bg={this.props.theme.backgroundColor.callScreenGrey}
+          color={this.props.theme.color.white}
+          textAlign="center"
+          boxSizing="border-box"
+          fontFamily={this.props.theme.fontFamily}
+          w="248px"
           className="callalert__wrapper"
+          sx={{
+            animation: "slideDown 250ms ease",
+            "@keyframes slideDown": {
+              "0%": { transform: "translateY(-50px)" },
+              "100%": { transform: "translateY(0px)" },
+            },
+            "*": {
+              boxSizing: "border-box",
+              fontFamily: this.props.theme.fontFamily,
+            },
+          }}
         >
-          <div css={callContainerStyle()} className="callalert__container">
-            <div css={headerWrapperStyle()} className="callalert__header">
-              <div css={callDetailStyle()} className="header__detail">
-                <div css={nameStyle()} className="name">
+          <Flex
+            flexDirection="column"
+            w="100%"
+            p="16px"
+            className="callalert__container"
+          >
+            <Flex w="100%" className="callalert__header">
+              <Flex
+                w="calc(100% - 36px)"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                textAlign="left"
+                className="header__detail"
+              >
+                <Text
+                  fontSize="15px"
+                  fontWeight="600"
+                  display="block"
+                  w="100%"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  lineHeight="20px"
+                  className="name"
+                >
                   {this.state.incomingCall.sender.name}
-                </div>
-                <div css={callTypeStyle(this.props)} className="calltype">
+                </Text>
+                <Flex
+                  fontSize="13px"
+                  w="100%"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  textTransform="capitalize"
+                  lineHeight="20px"
+                  color="#8A8A8A"
+                  justifyContent="start"
+                  alignItems="center"
+                  p="2px 0 0 0px"
+                  className="calltype"
+                >
                   {callType}
-                </div>
-              </div>
-              <div css={thumbnailStyle()} className="header__thumbnail">
+                </Flex>
+              </Flex>
+              <Flex
+                w="36px"
+                h="36px"
+                justifyContent="center"
+                className="header__thumbnail"
+              >
                 <CometChatAvatar user={this.state.incomingCall.sender} />
-              </div>
-            </div>
-            <div
-              css={headerButtonStyle()}
+              </Flex>
+            </Flex>
+            <Flex
+              w="100%"
+              justifyContent="space-between"
+              m="10px 0 0 0"
               className="callalert__buttons"
               ref={this.callButtonRef}
             >
-              <button
-                type="button"
-                css={ButtonStyle(this.props, 0)}
+              <Button
+                cursor="pointer"
+                p="8px 16px"
+                bg={`${this.props.theme.backgroundColor.red}!important`}
+                borderRadius="5px"
+                color={this.props.theme.color.white}
+                fontSize="100%"
+                outline="0"
+                border="0"
+                w="49%"
+                overflow="hidden"
                 className="button button__decline"
                 onClick={() =>
                   this.rejectCall(
@@ -359,18 +485,26 @@ class CometChatIncomingCall extends React.PureComponent {
                 }
               >
                 {Translator.translate("DECLINE", this.props.lang)}
-              </button>
-              <button
-                type="button"
-                css={ButtonStyle(this.props, 1)}
+              </Button>
+              <Button
+                cursor="pointer"
+                p="8px 16px"
+                bg={`${this.props.theme.backgroundColor.blue}!important`}
+                borderRadius="5px"
+                color={this.props.theme.color.white}
+                fontSize="100%"
+                outline="0"
+                border="0"
+                w="49%"
+                overflow="hidden"
                 className="button button__accept"
                 onClick={this.acceptCall}
               >
                 {Translator.translate("ACCEPT", this.props.lang)}
-              </button>
-            </div>
-          </div>
-        </div>
+              </Button>
+            </Flex>
+          </Flex>
+        </Box>
       );
     }
 

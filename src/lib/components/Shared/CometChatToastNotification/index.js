@@ -1,21 +1,9 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, keyframes } from "@emotion/react";
 import PropTypes from "prop-types";
+import { Box, Flex, Text, Button, keyframes } from "@chakra-ui/react";
 
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
-
-import {
-  notificationContainerStyle,
-  notificationStyle,
-  notificationIconStyle,
-  notificationMessageContainerStyle,
-  notificationMessageStyle,
-  notificationCloseButtonStyle,
-  iconStyle,
-} from "./style";
 
 import closeIcon from "./resources/close-circle-filled.svg";
 import successIcon from "./resources/checkmark-filled.svg";
@@ -109,46 +97,127 @@ export class CometChatToastNotification extends React.Component {
     const iconClassName = `toast__icon icon-${
       CometChatToastNotification.types[this.state.type]
     }`;
+    const getBackgroundColor = () => {
+      switch (this.state.type) {
+        case "ERROR":
+          return "#d9534f";
+        case "SUCCESS":
+          return "#5cb85c";
+        case "INFO":
+          return "#5bc0de";
+        case "WARNING":
+          return "#f0ad4e";
+        default:
+          return "#000";
+      }
+    };
+
     let toastIcon = this.state.icon.trim().length ? (
-      <div css={notificationIconStyle()} className={iconClassName}>
-        <i
-          css={iconStyle(this.state.icon, this.props.theme)}
+      <Box
+        className={iconClassName}
+        marginRight="16px"
+        width="25px"
+        height="25px"
+        flexShrink="0"
+        sx={{
+          img: {
+            maxWidth: "100%",
+          }
+        }}
+      >
+        <Box
+          as="i"
           title={Translator.translate("CLOSE", this.props.lang)}
-        ></i>
-      </div>
+          width="24px"
+          height="24px"
+          display="inline-block"
+          sx={{
+            mask: `url(${this.state.icon}) center center no-repeat`,
+            backgroundColor: this.props.theme.color.white,
+          }}
+        />
+      </Box>
     ) : null;
 
     return (
-      <div
-        css={notificationContainerStyle(this.props, keyframes)}
+      <Box
         className="toast__notification"
+        fontSize="14px"
+        boxSizing="border-box"
+        position="absolute"
+        zIndex="5"
+        width="80%"
+        maxWidth="320px"
+        top="70px"
+        left="50%"
+        transform="translate(-50%, 0)"
       >
-        <div
-          css={notificationStyle(this.props, this.state)}
+        <Flex
           className="toast__container"
+          transition=".3s ease"
+          position="relative"
+          pointerEvents="auto"
+          overflow="hidden"
+          padding="8px"
+          marginBottom="16px"
+          fontSize="13px"
+          width="100%"
+          minHeight="50px"
+          boxShadow="0 0 10px #999"
+          color="#fff"
+          backgroundColor={getBackgroundColor()}
+          backgroundPosition="15px"
+          backgroundRepeat="no-repeat"
+          flexDirection="row"
+          justifyContent="flex-start"
+          alignItems="center"
+          boxSizing="border-box"
         >
           {toastIcon}
-          <div
-            css={notificationMessageContainerStyle()}
+          <Box
             className={messageClassName}
+            width="calc(100% - 60px)"
           >
-            <p css={notificationMessageStyle()}>
+            <Text
+              margin="0"
+              textAlign="left"
+              marginLeft="-1px"
+            >
               {Translator.translate(this.state.message, this.props.lang)}
-            </p>
-          </div>
-          <button
-            css={notificationCloseButtonStyle()}
+            </Text>
+          </Box>
+          <Button
+            className="toast__close"
             type="button"
             onClick={this.deleteToast}
-            className="toast__close"
+            width="25px"
+            height="25px"
+            padding="0"
+            border="none"
+            outline="none"
+            backgroundColor="transparent"
+            cursor="pointer"
+            sx={{
+              img: {
+                flexShrink: "0",
+                maxWidth: "100%"
+              }
+            }}
           >
-            <i
-              css={iconStyle(closeIcon, this.props.theme)}
+            <Box
+              as="i"
               title={Translator.translate("CLOSE", this.props.lang)}
-            ></i>
-          </button>
-        </div>
-      </div>
+              width="24px"
+              height="24px"
+              display="inline-block"
+              sx={{
+                mask: `url(${closeIcon}) center center no-repeat`,
+                backgroundColor: this.props.theme.color.white,
+              }}
+            />
+          </Button>
+        </Flex>
+      </Box>
     );
   }
 }

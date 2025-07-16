@@ -1,11 +1,8 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
+import { Box, Flex } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 import { CometChatUserList } from "../../Users";
-import { Box } from "@chakra-ui/react";
 import { CometChatGroupList } from "../../Groups";
 import { CometChatConversationList } from "../../Chats";
 import { CometChatUserProfile } from "../../UserProfile";
@@ -17,14 +14,6 @@ import { CometChatContext } from "../../../util/CometChatContext";
 import Translator from "../../../resources/localization/translator";
 import { theme } from "../../../resources/theme";
 import tabs from "../../../resources/tabs.json";
-
-import {
-  footerStyle,
-  navbarStyle,
-  itemStyle,
-  itemLinkStyle,
-  itemLinkTextStyle,
-} from "./style";
 
 
 export class CometChatNavBar extends React.Component {
@@ -182,9 +171,15 @@ export class CometChatNavBar extends React.Component {
       switch (tab) {
         case "SIDEBAR_CHATS":
           return (
-            <div
+            <Flex
               key={tab}
-              css={itemStyle(this.props)}
+              p="8px"
+              cursor="pointer"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              fontSize="12px"
+              color={this.props.theme.color.helpText}
               className="navbar__item"
               onClick={() => this.tabChanged("SIDEBAR_CHATS")}
             >
@@ -197,13 +192,19 @@ export class CometChatNavBar extends React.Component {
               <Box color={chatsTabActive ? "#086972" : "gray"}>
                 {Translator.translate("CHATS", this.context.language)}
               </Box>
-            </div>
+            </Flex>
           );
         case "SIDEBAR_USERS":
           return (
-            <div
+            <Flex
               key={tab}
-              css={itemStyle(this.props)}
+              p="8px"
+              cursor="pointer"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              fontSize="12px"
+              color={this.props.theme.color.helpText}
               className="navbar__item"
               onClick={() => this.tabChanged("SIDEBAR_USERS")}
             >
@@ -216,13 +217,19 @@ export class CometChatNavBar extends React.Component {
               <Box color={userTabActive ? "#086972" : "gray"}>
                 {Translator.translate("USERS", this.context.language)}
               </Box>
-            </div>
+            </Flex>
           );
         case "SIDEBAR_GROUPS":
           return (
-            <div
+            <Flex
               key={tab}
-              css={itemStyle(this.props)}
+              p="8px"
+              cursor="pointer"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              fontSize="12px"
+              color={this.props.theme.color.helpText}
               className="navbar__item"
               onClick={() => this.tabChanged("SIDEBAR_GROUPS")}
             >
@@ -235,13 +242,19 @@ export class CometChatNavBar extends React.Component {
               <Box color={groupsTabActive ? "#086972" : "gray"}>
                 {Translator.translate("GROUPS", this.context.language)}
               </Box>
-            </div>
+            </Flex>
           );
         case "SIDEBAR_MOREINFO":
           return (
-            <div
+            <Flex
               key={tab}
-              css={itemStyle(this.props)}
+              p="8px"
+              cursor="pointer"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              fontSize="12px"
+              color={this.props.theme.color.helpText}
               className="navbar__item"
               onClick={() => this.tabChanged("SIDEBAR_MOREINFO")}
             >
@@ -254,7 +267,7 @@ export class CometChatNavBar extends React.Component {
               <Box color={moreTabActive ? "#086972" : "gray"}>
                 {Translator.translate("MORE", this.context.language)}
               </Box>
-            </div>
+            </Flex>
           );
 
         default:
@@ -267,11 +280,23 @@ export class CometChatNavBar extends React.Component {
     return (
       <React.Fragment>
         {this.getActiveTab()}
-        <div css={footerStyle()} className="sidebar__footer">
-          <div css={navbarStyle()} className="footer__navbar">
+        <Box
+          w="100%"
+          zIndex="1"
+          h="64px"
+          className="sidebar__footer"
+        >
+          <Flex
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-around"
+            w="100%"
+            h="100%"
+            className="footer__navbar"
+          >
             {this.getTabList()}
-          </div>
-        </div>
+          </Flex>
+        </Box>
       </React.Fragment>
     );
   }

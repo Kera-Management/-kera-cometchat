@@ -1,8 +1,6 @@
 import React from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import PropTypes from "prop-types";
+import { Box, Flex } from "@chakra-ui/react";
 
 import { CometChatUserList } from "..";
 import { CometChatMessages } from "../../Messages";
@@ -13,12 +11,6 @@ import * as enums from "../../../util/enums.js";
 
 import { theme } from "../../../resources/theme";
 import Translator from "../../../resources/localization/translator";
-
-import {
-  userScreenStyle,
-  userScreenSidebarStyle,
-  userScreenMainStyle,
-} from "./style";
 
 class CometChatUserListWithMessages extends React.Component {
   loggedInUser = null;
@@ -73,14 +65,58 @@ class CometChatUserListWithMessages extends React.Component {
         user={this.props.chatWithUser}
         language={this.props.lang}
       >
-        <div
-          css={userScreenStyle(this.props)}
+        <Flex
           className="cometchat cometchat--contacts"
           dir={Translator.getDirection(this.props.lang)}
+          height="100%"
+          width="100%"
+          boxSizing="border-box"
+          fontFamily={this.props.theme.fontFamily}
+          border={`1px solid ${this.props.theme.borderColor.primary}`}
+          sx={{
+            "*": {
+              boxSizing: "border-box",
+              fontFamily: this.props.theme.fontFamily,
+              "::-webkit-scrollbar": {
+                width: "8px",
+                height: "4px",
+              },
+              "::-webkit-scrollbar-track": {
+                background: "#ffffff00"
+              },
+              "::-webkit-scrollbar-thumb": {
+                background: "#ccc",
+                "&:hover": {
+                  background: "#aaa"
+                }
+              }
+            }
+          }}
         >
-          <div
-            css={userScreenSidebarStyle(this.state, this.props)}
+          <Box
             className="contacts__sidebar"
+            width={{ base: "100%", md: "280px" }}
+            borderRight={`1px solid ${this.props.theme.borderColor.primary}`}
+            height="100%"
+            position="relative"
+            display="flex"
+            flexDirection="column"
+            sx={{
+              "> .contacts": {
+                height: "calc(100% - 5px)",
+              },
+              "@media (max-width: 768px)": {
+                position: "absolute !important",
+                left: this.state.sidebarview ? "0" : "-100%",
+                top: "0",
+                bottom: "0",
+                width: "100% !important",
+                zIndex: "2",
+                backgroundColor: this.props.theme.backgroundColor.white,
+                transition: "all .3s ease-out",
+                boxShadow: this.state.sidebarview ? "rgba(0, 0, 0, .4) -30px 0 30px 30px" : "none"
+              }
+            }}
           >
             <CometChatUserList
               _parent="ulwm"
@@ -89,19 +125,23 @@ class CometChatUserListWithMessages extends React.Component {
               onItemClick={this.itemClicked}
               actionGenerated={this.actionHandler}
             />
-          </div>
-          <div
-            css={userScreenMainStyle(this.state, this.props)}
+          </Box>
+          <Box
             className="contacts__main"
+            width={{ base: "100%", md: "calc(100% - 280px)" }}
+            height="100%"
+            order="2"
+            display="flex"
+            flexDirection="row"
           >
             {messageScreen}
-          </div>
+          </Box>
           <CometChatIncomingCall
             theme={this.props.theme}
             lang={this.props.lang}
             actionGenerated={this.actionHandler}
           />
-        </div>
+        </Flex>
       </CometChatContextProvider>
     );
   }
