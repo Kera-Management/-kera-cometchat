@@ -5,12 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.thumbnailStyle = exports.nameStyle = exports.incomingCallWrapperStyle = exports.headerWrapperStyle = exports.headerButtonStyle = exports.callTypeStyle = exports.callIconStyle = exports.callDetailStyle = exports.callContainerStyle = exports.ButtonStyle = void 0;
 require("core-js/modules/es.array.includes.js");
-require("core-js/modules/es.string.includes.js");
-require("core-js/modules/es.regexp.exec.js");
-require("core-js/modules/es.string.replace.js");
 require("core-js/modules/es.parse-int.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.includes.js");
+require("core-js/modules/es.string.replace.js");
 var _templateObject;
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+function _taggedTemplateLiteral(e, t) { return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } })); }
 const incomingCallWrapperStyle = (props, keyframes) => {
   const slideDown = keyframes(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    0% { transform: translateY(-50px); }\n    100% { transform: translateY(0px); }\n    "])));
   let positionValue = "absolute";

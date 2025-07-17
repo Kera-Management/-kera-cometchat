@@ -2,7 +2,7 @@ import React from "react";
 import dateFormat from "dateformat";
 import PropTypes from "prop-types";
 import { CometChat } from "@cometchat-pro/chat";
-import { Info } from "phosphor-react";
+import { Info, CaretLeft } from "phosphor-react";
 import { Box, Flex, Text, Heading } from "@chakra-ui/react";
 
 import { MessageHeaderManager } from "./controller";
@@ -630,10 +630,18 @@ class CometChatMessageHeader extends React.Component {
       <Text
         fontSize="13px"
         width="100%"
-        color={this.context.type === CometChat.ACTION_TYPE.TYPE_USER 
-          ? (this.state.presence === "offline" ? this.context.theme.color.helpText : this.context.theme.color.blue)
-          : this.context.theme.color.helpText}
-        textTransform={this.context.type === CometChat.ACTION_TYPE.TYPE_USER ? "capitalize" : "none"}
+        color={
+          this.context.type === CometChat.ACTION_TYPE.TYPE_USER
+            ? this.state.presence === "offline"
+              ? this.context.theme.color.helpText
+              : this.context.theme.color.blue
+            : this.context.theme.color.helpText
+        }
+        textTransform={
+          this.context.type === CometChat.ACTION_TYPE.TYPE_USER
+            ? "capitalize"
+            : "none"
+        }
         className={chatStatusClassName}
       >
         {this.state.status}
@@ -754,13 +762,17 @@ class CometChatMessageHeader extends React.Component {
             display={{ base: "block", md: "none" }}
             sx={{
               mask: `url(${menuIcon}) center center no-repeat`,
-              backgroundColor: this.context.theme.primaryColor,
               width: "24px",
               height: "24px",
-              ...(this.props.hasOwnProperty("sidebar") && this.props.sidebar === 0 ? { display: "none !important" } : {})
+              ...(this.props.hasOwnProperty("sidebar") &&
+              this.props.sidebar === 0
+                ? { display: "none !important" }
+                : {}),
             }}
             onClick={this.resetChat}
-          />
+          >
+            <CaretLeft size={24} weight="duotone" />
+          </Box>
           <Box
             className="chat__thumbnail"
             display="inline-block"

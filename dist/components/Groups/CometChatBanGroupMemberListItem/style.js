@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.userStyle = exports.roleStyle = exports.nameStyle = exports.modalRowStyle = exports.avatarStyle = exports.actionStyle = void 0;
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.map.js");
 const modalRowStyle = context => {
   return {
     borderLeft: "1px solid ".concat(context.theme.borderColor.primary),

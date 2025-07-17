@@ -4,63 +4,35 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.USER_ONLINE = exports.USER_OFFLINE = exports.TYPING_STARTED = exports.TYPING_ENDED = exports.TRANSIENT_MESSAGE_RECEIVED = exports.TEXT_MESSAGE_RECEIVED = exports.OUTGOING_CALL_REJECTED = exports.OUTGOING_CALL_ACCEPTED = exports.MESSAGE_READ = exports.MESSAGE_EDITED = exports.MESSAGE_DELIVERED = exports.MESSAGE_DELETED = exports.MEDIA_MESSAGE_RECEIVED = exports.KEYS = exports.INCOMING_CALL_RECEIVED = exports.INCOMING_CALL_CANCELLED = exports.GROUP_MEMBER_UNBANNED = exports.GROUP_MEMBER_SCOPE_CHANGED = exports.GROUP_MEMBER_LEFT = exports.GROUP_MEMBER_KICKED = exports.GROUP_MEMBER_JOINED = exports.GROUP_MEMBER_BANNED = exports.GROUP_MEMBER_ADDED = exports.EVENTS = exports.CUSTOM_TYPE_WHITEBOARD = exports.CUSTOM_TYPE_STICKER = exports.CUSTOM_TYPE_POLL = exports.CUSTOM_TYPE_MEETING = exports.CUSTOM_TYPE_DOCUMENT = exports.CUSTOM_MESSAGE_RECEIVED = exports.CONSTANTS = exports.ACTIONS = void 0;
-const TEXT_MESSAGE_RECEIVED = 'onTextMessageReceived';
-exports.TEXT_MESSAGE_RECEIVED = TEXT_MESSAGE_RECEIVED;
-const MEDIA_MESSAGE_RECEIVED = 'onMediaMessageReceived';
-exports.MEDIA_MESSAGE_RECEIVED = MEDIA_MESSAGE_RECEIVED;
-const CUSTOM_MESSAGE_RECEIVED = 'onCustomMessageReceived';
-exports.CUSTOM_MESSAGE_RECEIVED = CUSTOM_MESSAGE_RECEIVED;
-const MESSAGE_DELIVERED = 'onMessagesDelivered';
-exports.MESSAGE_DELIVERED = MESSAGE_DELIVERED;
-const MESSAGE_READ = 'onMessagesRead';
-exports.MESSAGE_READ = MESSAGE_READ;
-const MESSAGE_DELETED = 'onMessageDeleted';
-exports.MESSAGE_DELETED = MESSAGE_DELETED;
-const MESSAGE_EDITED = 'onMessageEdited';
-exports.MESSAGE_EDITED = MESSAGE_EDITED;
-const TRANSIENT_MESSAGE_RECEIVED = "onTransientMessageReceived";
-exports.TRANSIENT_MESSAGE_RECEIVED = TRANSIENT_MESSAGE_RECEIVED;
-const INCOMING_CALL_RECEIVED = 'onIncomingCallReceived';
-exports.INCOMING_CALL_RECEIVED = INCOMING_CALL_RECEIVED;
-const OUTGOING_CALL_ACCEPTED = 'onOutgoingCallAccepted';
-exports.OUTGOING_CALL_ACCEPTED = OUTGOING_CALL_ACCEPTED;
-const OUTGOING_CALL_REJECTED = 'onOutgoingCallRejected';
-exports.OUTGOING_CALL_REJECTED = OUTGOING_CALL_REJECTED;
-const INCOMING_CALL_CANCELLED = 'onIncomingCallCancelled';
-exports.INCOMING_CALL_CANCELLED = INCOMING_CALL_CANCELLED;
-const GROUP_MEMBER_SCOPE_CHANGED = "onGroupMemberScopeChanged";
-exports.GROUP_MEMBER_SCOPE_CHANGED = GROUP_MEMBER_SCOPE_CHANGED;
-const GROUP_MEMBER_KICKED = "onGroupMemberKicked";
-exports.GROUP_MEMBER_KICKED = GROUP_MEMBER_KICKED;
-const GROUP_MEMBER_BANNED = "onGroupMemberBanned";
-exports.GROUP_MEMBER_BANNED = GROUP_MEMBER_BANNED;
-const GROUP_MEMBER_UNBANNED = "onGroupMemberUnbanned";
-exports.GROUP_MEMBER_UNBANNED = GROUP_MEMBER_UNBANNED;
-const GROUP_MEMBER_ADDED = "onMemberAddedToGroup";
-exports.GROUP_MEMBER_ADDED = GROUP_MEMBER_ADDED;
-const GROUP_MEMBER_LEFT = "onGroupMemberLeft";
-exports.GROUP_MEMBER_LEFT = GROUP_MEMBER_LEFT;
-const GROUP_MEMBER_JOINED = "onGroupMemberJoined";
-exports.GROUP_MEMBER_JOINED = GROUP_MEMBER_JOINED;
-const USER_ONLINE = "onUserOnline";
-exports.USER_ONLINE = USER_ONLINE;
-const USER_OFFLINE = "onUserOffline";
-exports.USER_OFFLINE = USER_OFFLINE;
-const TYPING_STARTED = "onTypingStarted";
-exports.TYPING_STARTED = TYPING_STARTED;
-const TYPING_ENDED = "onTypingEnded";
-exports.TYPING_ENDED = TYPING_ENDED;
-const CUSTOM_TYPE_POLL = "extension_poll";
-exports.CUSTOM_TYPE_POLL = CUSTOM_TYPE_POLL;
-const CUSTOM_TYPE_STICKER = "extension_sticker";
-exports.CUSTOM_TYPE_STICKER = CUSTOM_TYPE_STICKER;
-const CUSTOM_TYPE_DOCUMENT = "extension_document";
-exports.CUSTOM_TYPE_DOCUMENT = CUSTOM_TYPE_DOCUMENT;
-const CUSTOM_TYPE_WHITEBOARD = "extension_whiteboard";
-exports.CUSTOM_TYPE_WHITEBOARD = CUSTOM_TYPE_WHITEBOARD;
-const CUSTOM_TYPE_MEETING = "meeting";
-exports.CUSTOM_TYPE_MEETING = CUSTOM_TYPE_MEETING;
-const CONSTANTS = {
+const TEXT_MESSAGE_RECEIVED = exports.TEXT_MESSAGE_RECEIVED = 'onTextMessageReceived';
+const MEDIA_MESSAGE_RECEIVED = exports.MEDIA_MESSAGE_RECEIVED = 'onMediaMessageReceived';
+const CUSTOM_MESSAGE_RECEIVED = exports.CUSTOM_MESSAGE_RECEIVED = 'onCustomMessageReceived';
+const MESSAGE_DELIVERED = exports.MESSAGE_DELIVERED = 'onMessagesDelivered';
+const MESSAGE_READ = exports.MESSAGE_READ = 'onMessagesRead';
+const MESSAGE_DELETED = exports.MESSAGE_DELETED = 'onMessageDeleted';
+const MESSAGE_EDITED = exports.MESSAGE_EDITED = 'onMessageEdited';
+const TRANSIENT_MESSAGE_RECEIVED = exports.TRANSIENT_MESSAGE_RECEIVED = "onTransientMessageReceived";
+const INCOMING_CALL_RECEIVED = exports.INCOMING_CALL_RECEIVED = 'onIncomingCallReceived';
+const OUTGOING_CALL_ACCEPTED = exports.OUTGOING_CALL_ACCEPTED = 'onOutgoingCallAccepted';
+const OUTGOING_CALL_REJECTED = exports.OUTGOING_CALL_REJECTED = 'onOutgoingCallRejected';
+const INCOMING_CALL_CANCELLED = exports.INCOMING_CALL_CANCELLED = 'onIncomingCallCancelled';
+const GROUP_MEMBER_SCOPE_CHANGED = exports.GROUP_MEMBER_SCOPE_CHANGED = "onGroupMemberScopeChanged";
+const GROUP_MEMBER_KICKED = exports.GROUP_MEMBER_KICKED = "onGroupMemberKicked";
+const GROUP_MEMBER_BANNED = exports.GROUP_MEMBER_BANNED = "onGroupMemberBanned";
+const GROUP_MEMBER_UNBANNED = exports.GROUP_MEMBER_UNBANNED = "onGroupMemberUnbanned";
+const GROUP_MEMBER_ADDED = exports.GROUP_MEMBER_ADDED = "onMemberAddedToGroup";
+const GROUP_MEMBER_LEFT = exports.GROUP_MEMBER_LEFT = "onGroupMemberLeft";
+const GROUP_MEMBER_JOINED = exports.GROUP_MEMBER_JOINED = "onGroupMemberJoined";
+const USER_ONLINE = exports.USER_ONLINE = "onUserOnline";
+const USER_OFFLINE = exports.USER_OFFLINE = "onUserOffline";
+const TYPING_STARTED = exports.TYPING_STARTED = "onTypingStarted";
+const TYPING_ENDED = exports.TYPING_ENDED = "onTypingEnded";
+const CUSTOM_TYPE_POLL = exports.CUSTOM_TYPE_POLL = "extension_poll";
+const CUSTOM_TYPE_STICKER = exports.CUSTOM_TYPE_STICKER = "extension_sticker";
+const CUSTOM_TYPE_DOCUMENT = exports.CUSTOM_TYPE_DOCUMENT = "extension_document";
+const CUSTOM_TYPE_WHITEBOARD = exports.CUSTOM_TYPE_WHITEBOARD = "extension_whiteboard";
+const CUSTOM_TYPE_MEETING = exports.CUSTOM_TYPE_MEETING = "meeting";
+const CONSTANTS = exports.CONSTANTS = {
   LOCALE: "cometchat:locale",
   ACTIVECALL: "cometchat:activecall",
   MAX_MESSAGE_COUNT: 1000,
@@ -98,8 +70,7 @@ const CONSTANTS = {
   LIVE_REACTION_INTERVAL: 1500,
   FILE_METADATA: "file"
 };
-exports.CONSTANTS = CONSTANTS;
-const ACTIONS = {
+const ACTIONS = exports.ACTIONS = {
   MESSAGE_SENT: "messageSent",
   MESSAGE_COMPOSED: "messageComposed",
   ERROR_IN_SENDING_MESSAGE: "errorInSendingMessage",
@@ -173,14 +144,11 @@ const ACTIONS = {
   INFO: "infoMessage",
   TRANSLATE_MESSAGE: "translateMessage"
 };
-exports.ACTIONS = ACTIONS;
-const EVENTS = {
+const EVENTS = exports.EVENTS = {
   NEW_MESSAGES: "newMessagesArrived",
   CLEAR_UNREAD_MESSAGES: "clearUnreadMessages"
 };
-exports.EVENTS = EVENTS;
-const KEYS = {
+const KEYS = exports.KEYS = {
   METADATA: "metadata",
   INCREMENT_UNREAD_COUNT: "incrementUnreadCount"
 };
-exports.KEYS = KEYS;

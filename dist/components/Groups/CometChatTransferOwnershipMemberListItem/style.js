@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.selectionColumnStyle = exports.selectionBoxStyle = exports.nameStyle = exports.modalRowStyle = exports.modalColumnStyle = exports.avatarStyle = void 0;
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.map.js");
 const modalRowStyle = (props, context) => {
   return {
     display: "flex",

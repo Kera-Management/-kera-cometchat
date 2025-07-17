@@ -1,6 +1,7 @@
 "use strict";
 
 require("core-js/modules/es.object.assign.js");
+require("core-js/modules/es.weak-map.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,7 +9,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.CometChatConversationListItem = void 0;
 require("core-js/modules/es.json.stringify.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _Shared = require("../../Shared");
@@ -18,12 +19,12 @@ var _common = require("../../../util/common");
 var _CometChatContext = require("../../../util/CometChatContext");
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatConversationListItem extends _react.default.PureComponent {
   constructor(props) {
     super(props);
@@ -138,9 +139,9 @@ class CometChatConversationListItem extends _react.default.PureComponent {
       return messageText;
     });
     _defineProperty(this, "getMessage", lastMessage => {
-      var _this$props, _this$props$loggedInU, _lastMessage$sender, _lastMessage$sender2;
+      var _this$props, _lastMessage$sender, _lastMessage$sender2;
       let message = null;
-      const sender = ((_this$props = this.props) === null || _this$props === void 0 ? void 0 : (_this$props$loggedInU = _this$props.loggedInUser) === null || _this$props$loggedInU === void 0 ? void 0 : _this$props$loggedInU.uid) !== (lastMessage === null || lastMessage === void 0 ? void 0 : (_lastMessage$sender = lastMessage.sender) === null || _lastMessage$sender === void 0 ? void 0 : _lastMessage$sender.uid) ? "".concat(lastMessage === null || lastMessage === void 0 ? void 0 : (_lastMessage$sender2 = lastMessage.sender) === null || _lastMessage$sender2 === void 0 ? void 0 : _lastMessage$sender2.name, ": ") : "";
+      const sender = ((_this$props = this.props) === null || _this$props === void 0 || (_this$props = _this$props.loggedInUser) === null || _this$props === void 0 ? void 0 : _this$props.uid) !== (lastMessage === null || lastMessage === void 0 || (_lastMessage$sender = lastMessage.sender) === null || _lastMessage$sender === void 0 ? void 0 : _lastMessage$sender.uid) ? "".concat(lastMessage === null || lastMessage === void 0 || (_lastMessage$sender2 = lastMessage.sender) === null || _lastMessage$sender2 === void 0 ? void 0 : _lastMessage$sender2.name, ": ") : "";
       switch (lastMessage.type) {
         case _chat.CometChat.MESSAGE_TYPE.TEXT:
           {
@@ -363,67 +364,110 @@ class CometChatConversationListItem extends _react.default.PureComponent {
   render() {
     let lastMessageTimeStamp = null;
     if (this.state.lastMessage) {
-      lastMessageTimeStamp = (0, _react2.jsx)("span", {
-        css: (0, _style.itemLastMsgTimeStyle)(this.props),
+      lastMessageTimeStamp = /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        fontSize: "11px",
+        width: "70px",
+        textAlign: "right",
+        color: this.props.theme.color.helpText,
         className: "item__details__timestamp"
       }, this.state.lastMessageTimestamp);
     }
     let presence;
     if (this.props.conversation.conversationType === _chat.CometChat.RECEIVER_TYPE.USER) {
       const status = this.props.conversation.conversationWith.status;
-      presence = (0, _react2.jsx)(_Shared.CometChatUserPresence, {
+      presence = /*#__PURE__*/_react.default.createElement(_Shared.CometChatUserPresence, {
         status: status,
         borderColor: this.props.theme.borderColor.primary
       });
     }
     let avatar = null;
     if (this.props.conversation.conversationType === _chat.CometChat.RECEIVER_TYPE.USER) {
-      avatar = (0, _react2.jsx)(_Shared.CometChatAvatar, {
+      avatar = /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
         user: this.props.conversation.conversationWith
       });
     } else if (this.props.conversation.conversationType === _chat.CometChat.RECEIVER_TYPE.GROUP) {
-      avatar = (0, _react2.jsx)(_Shared.CometChatAvatar, {
+      avatar = /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
         group: this.props.conversation.conversationWith
       });
     }
     let unreadCount = null;
     if (this.state.enableUnreadCount) {
-      unreadCount = (0, _react2.jsx)(_Shared.CometChatBadgeCount, {
+      unreadCount = /*#__PURE__*/_react.default.createElement(_Shared.CometChatBadgeCount, {
         count: this.props.conversation.unreadMessageCount
       });
     }
     let toolTipView = null;
     if (this.state.isHovering) {
-      toolTipView = (0, _react2.jsx)(_CometChatConversationListActions.CometChatConversationListActions, _extends({}, this.props, {
+      toolTipView = /*#__PURE__*/_react.default.createElement(_CometChatConversationListActions.CometChatConversationListActions, _extends({}, this.props, {
         conversation: this.props.conversation
       }));
     }
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.listItem)(this.props),
+    const isSelected = this.props.selectedConversation && this.props.selectedConversation.conversationId === this.props.conversation.conversationId;
+    return /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      direction: "row",
+      justify: "left",
+      align: "center",
+      cursor: "pointer",
+      width: "100%",
+      padding: "8px 16px",
+      position: "relative",
+      bg: isSelected ? this.props.theme.backgroundColor.primary : "transparent",
+      _hover: {
+        bg: this.props.theme.backgroundColor.primary
+      },
       className: "list__item",
       onMouseEnter: () => this.handleMouseHover(true),
       onMouseLeave: () => this.handleMouseHover(false),
       onClick: () => this.props.handleClick(this.props.conversation)
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.itemThumbnailStyle)(),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      display: "inline-block",
+      width: "36px",
+      height: "36px",
+      flexShrink: 0,
       className: "list__item__thumbnail"
-    }, avatar, presence), (0, _react2.jsx)("div", {
-      css: (0, _style.itemDetailStyle)(),
+    }, avatar, presence), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      width: "calc(100% - 45px)",
+      flexGrow: 1,
+      paddingLeft: "16px",
+      sx: {
+        "&[dir=rtl]": {
+          paddingRight: "16px",
+          paddingLeft: "0"
+        }
+      },
       className: "list__item__details",
       dir: _translator.default.getDirection(this.context.language)
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.itemRowStyle)(),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      justify: "space-between",
+      align: "baseline",
       className: "item__details_block_one"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.itemNameStyle)(this.props),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+      fontSize: "15px",
+      fontWeight: "600",
+      display: "block",
+      width: "calc(100% - 70px)",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      lineHeight: "22px",
+      color: this.props.theme.color.primary,
       className: "item__details__name",
       onMouseEnter: event => this.toggleTooltip(event, true),
       onMouseLeave: event => this.toggleTooltip(event, false)
-    }, this.props.conversation.conversationWith.name), lastMessageTimeStamp), (0, _react2.jsx)("div", {
-      css: (0, _style.itemRowStyle)(),
+    }, this.props.conversation.conversationWith.name), lastMessageTimeStamp), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      justify: "space-between",
+      align: "baseline",
       className: "item__details_block_two"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.itemLastMsgStyle)(this.props),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+      margin: "0",
+      fontSize: "13px",
+      fontWeight: "400",
+      width: "calc(100% - 50px)",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      lineHeight: "20px",
+      color: this.props.theme.color.helpText,
       className: "item__details__last-message",
       onMouseEnter: event => this.toggleTooltip(event, true),
       onMouseLeave: event => this.toggleTooltip(event, false)

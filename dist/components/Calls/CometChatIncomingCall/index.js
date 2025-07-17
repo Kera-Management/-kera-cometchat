@@ -1,13 +1,22 @@
 "use strict";
 
+require("core-js/modules/es.object.assign.js");
+require("core-js/modules/es.weak-map.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatIncomingCall = void 0;
+require("core-js/modules/es.array.includes.js");
+require("core-js/modules/es.parse-int.js");
 require("core-js/modules/es.promise.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.includes.js");
+require("core-js/modules/es.string.replace.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _controller = require("./controller");
@@ -19,13 +28,14 @@ var _SoundManager = require("../../../util/SoundManager");
 var _Storage = require("../../../util/Storage");
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
 var _incomingCall = _interopRequireDefault(require("./resources/incoming-call.svg"));
 var _incomingVideoCall = _interopRequireDefault(require("./resources/incoming-video-call.svg"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatIncomingCall extends _react.default.PureComponent {
   constructor(props) {
     super(props);
@@ -247,64 +257,198 @@ class CometChatIncomingCall extends _react.default.PureComponent {
     let callScreen = null,
       incomingCallAlert = null;
     if (this.state.incomingCall) {
-      let callType = (0, _react2.jsx)(_react.default.Fragment, null, (0, _react2.jsx)("i", {
-        css: (0, _style.callIconStyle)(_incomingCall.default, this.context),
-        title: _translator.default.translate("INCOMING_AUDIO_CALL", this.props.lang)
-      }), (0, _react2.jsx)("span", null, _translator.default.translate("INCOMING_AUDIO_CALL", this.props.lang)));
+      let callType = /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        w: "24px",
+        h: "24px",
+        display: "inline-block",
+        cursor: "pointer",
+        bg: this.context.theme.secondaryTextColor,
+        title: _translator.default.translate("INCOMING_AUDIO_CALL", this.props.lang),
+        sx: {
+          mask: "url(".concat(_incomingCall.default, ") center center no-repeat")
+        }
+      }), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        p: "0 5px"
+      }, _translator.default.translate("INCOMING_AUDIO_CALL", this.props.lang)));
       if (this.state.incomingCall.type === _chat.CometChat.CALL_TYPE.VIDEO) {
-        callType = (0, _react2.jsx)(_react.default.Fragment, null, (0, _react2.jsx)("i", {
-          css: (0, _style.callIconStyle)(_incomingVideoCall.default, this.context),
-          title: _translator.default.translate("INCOMING_VIDEO_CALL", this.props.lang)
-        }), (0, _react2.jsx)("span", null, _translator.default.translate("INCOMING_VIDEO_CALL", this.props.lang)));
+        callType = /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+          w: "24px",
+          h: "24px",
+          display: "inline-block",
+          cursor: "pointer",
+          bg: this.context.theme.secondaryTextColor,
+          title: _translator.default.translate("INCOMING_VIDEO_CALL", this.props.lang),
+          sx: {
+            mask: "url(".concat(_incomingVideoCall.default, ") center center no-repeat")
+          }
+        }), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+          p: "0 5px"
+        }, _translator.default.translate("INCOMING_VIDEO_CALL", this.props.lang)));
       }
-      incomingCallAlert = (0, _react2.jsx)("div", {
-        css: (0, _style.incomingCallWrapperStyle)(this.props, _react2.keyframes),
-        className: "callalert__wrapper"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.callContainerStyle)(),
+
+      // Calculate positioning based on widget settings
+      const getPositionProps = () => {
+        let positionProps = {
+          position: "absolute",
+          top: "0",
+          left: "0",
+          right: "0",
+          bottom: "unset",
+          zIndex: "998"
+        };
+        if (this.props.hasOwnProperty("widgetsettings")) {
+          if (this.props.widgetsettings.hasOwnProperty("dockedview") && this.props.widgetsettings.dockedview) {
+            if (this.props.widgetsettings.hasOwnProperty("launched") && this.props.widgetsettings.launched) {
+              positionProps.zIndex = "2147483000";
+              positionProps.position = "fixed";
+              positionProps.top = "unset";
+              positionProps.bottom = "100px";
+              if (this.props.widgetsettings.hasOwnProperty("alignment") && this.props.widgetsettings.alignment === "left") {
+                positionProps.right = "unset";
+                positionProps.left = "20px";
+                if (this.props.widgetsettings.hasOwnProperty("width") && this.props.widgetsettings.width.includes("px")) {
+                  const widgetWidth = this.props.widgetsettings.width.replace("px", "");
+                  positionProps.right = parseInt(widgetWidth) - 250 - 15 + "px";
+                }
+                if (this.props.widgetsettings.hasOwnProperty("height") && this.props.widgetsettings.height.includes("px")) {
+                  const widgetHeight = this.props.widgetsettings.height.replace("px", "");
+                  positionProps.bottom = parseInt(widgetHeight) - 140 + 100 + "px";
+                }
+              } else {
+                positionProps.left = "unset";
+                positionProps.right = "20px";
+                if (this.props.widgetsettings.hasOwnProperty("width") && this.props.widgetsettings.width.includes("px")) {
+                  const widgetWidth = this.props.widgetsettings.width.replace("px", "");
+                  positionProps.right = parseInt(widgetWidth) - 250 - 15 + "px";
+                }
+                if (this.props.widgetsettings.hasOwnProperty("height") && this.props.widgetsettings.height.includes("px")) {
+                  const widgetHeight = this.props.widgetsettings.height.replace("px", "");
+                  positionProps.bottom = parseInt(widgetHeight) - 140 + 100 + "px";
+                }
+              }
+            } else {
+              positionProps.left = "unset";
+              positionProps.position = "fixed";
+            }
+          } else {
+            positionProps.zIndex = "2147483000";
+          }
+        }
+        return positionProps;
+      };
+      incomingCallAlert = /*#__PURE__*/_react.default.createElement(_react2.Box, _extends({}, getPositionProps(), {
+        borderRadius: "10px",
+        m: "16px",
+        bg: this.props.theme.backgroundColor.callScreenGrey,
+        color: this.props.theme.color.white,
+        textAlign: "center",
+        boxSizing: "border-box",
+        fontFamily: this.props.theme.fontFamily,
+        w: "248px",
+        className: "callalert__wrapper",
+        sx: {
+          animation: "slideDown 250ms ease",
+          "@keyframes slideDown": {
+            "0%": {
+              transform: "translateY(-50px)"
+            },
+            "100%": {
+              transform: "translateY(0px)"
+            }
+          },
+          "*": {
+            boxSizing: "border-box",
+            fontFamily: this.props.theme.fontFamily
+          }
+        }
+      }), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        flexDirection: "column",
+        w: "100%",
+        p: "16px",
         className: "callalert__container"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.headerWrapperStyle)(),
+      }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        w: "100%",
         className: "callalert__header"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.callDetailStyle)(),
+      }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        w: "calc(100% - 36px)",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "left",
         className: "header__detail"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.nameStyle)(),
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        fontSize: "15px",
+        fontWeight: "600",
+        display: "block",
+        w: "100%",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        lineHeight: "20px",
         className: "name"
-      }, this.state.incomingCall.sender.name), (0, _react2.jsx)("div", {
-        css: (0, _style.callTypeStyle)(this.props),
+      }, this.state.incomingCall.sender.name), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        fontSize: "13px",
+        w: "100%",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        textTransform: "capitalize",
+        lineHeight: "20px",
+        color: "#8A8A8A",
+        justifyContent: "start",
+        alignItems: "center",
+        p: "2px 0 0 0px",
         className: "calltype"
-      }, callType)), (0, _react2.jsx)("div", {
-        css: (0, _style.thumbnailStyle)(),
+      }, callType)), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        w: "36px",
+        h: "36px",
+        justifyContent: "center",
         className: "header__thumbnail"
-      }, (0, _react2.jsx)(_Shared.CometChatAvatar, {
+      }, /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
         user: this.state.incomingCall.sender
-      }))), (0, _react2.jsx)("div", {
-        css: (0, _style.headerButtonStyle)(),
+      }))), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        w: "100%",
+        justifyContent: "space-between",
+        m: "10px 0 0 0",
         className: "callalert__buttons",
         ref: this.callButtonRef
-      }, (0, _react2.jsx)("button", {
-        type: "button",
-        css: (0, _style.ButtonStyle)(this.props, 0),
+      }, /*#__PURE__*/_react.default.createElement(_react2.Button, {
+        cursor: "pointer",
+        p: "8px 16px",
+        bg: "".concat(this.props.theme.backgroundColor.red, "!important"),
+        borderRadius: "5px",
+        color: this.props.theme.color.white,
+        fontSize: "100%",
+        outline: "0",
+        border: "0",
+        w: "49%",
+        overflow: "hidden",
         className: "button button__decline",
         onClick: () => this.rejectCall(this.state.incomingCall, _chat.CometChat.CALL_STATUS.REJECTED)
-      }, _translator.default.translate("DECLINE", this.props.lang)), (0, _react2.jsx)("button", {
-        type: "button",
-        css: (0, _style.ButtonStyle)(this.props, 1),
+      }, _translator.default.translate("DECLINE", this.props.lang)), /*#__PURE__*/_react.default.createElement(_react2.Button, {
+        cursor: "pointer",
+        p: "8px 16px",
+        bg: "".concat(this.props.theme.backgroundColor.blue, "!important"),
+        borderRadius: "5px",
+        color: this.props.theme.color.white,
+        fontSize: "100%",
+        outline: "0",
+        border: "0",
+        w: "49%",
+        overflow: "hidden",
         className: "button button__accept",
         onClick: this.acceptCall
       }, _translator.default.translate("ACCEPT", this.props.lang)))));
     }
     if (this.state.callInProgress) {
-      callScreen = (0, _react2.jsx)(_CometChatCallScreen.CometChatCallScreen, {
+      callScreen = /*#__PURE__*/_react.default.createElement(_CometChatCallScreen.CometChatCallScreen, {
         loggedInUser: this.loggedInUser,
         call: this.state.callInProgress,
         lang: this.props.lang,
         actionGenerated: this.actionHandler
       });
     }
-    return (0, _react2.jsx)(_react.default.Fragment, null, incomingCallAlert, callScreen);
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, incomingCallAlert, callScreen);
   }
 }
 

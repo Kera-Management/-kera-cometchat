@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = exports.CometChatManager = void 0;
 require("core-js/modules/es.promise.js");
 var _chat = require("@cometchat-pro/chat");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatManager {
   constructor() {
     _defineProperty(this, "loggedInUser", void 0);
@@ -79,5 +81,4 @@ _defineProperty(CometChatManager, "rejectCall", (sessionId, rejectStatus) => {
   });
   return promise;
 });
-var _default = CometChatManager;
-exports.default = _default;
+var _default = exports.default = CometChatManager;

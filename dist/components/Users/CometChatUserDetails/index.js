@@ -1,5 +1,6 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -9,7 +10,7 @@ require("core-js/modules/es.object.assign.js");
 require("core-js/modules/es.string.trim.js");
 var _react = _interopRequireDefault(require("react"));
 var _dateformat = _interopRequireDefault(require("dateformat"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _Shared = require("../../Shared");
@@ -19,12 +20,12 @@ var _CometChatContext = require("../../../util/CometChatContext");
 var enums = _interopRequireWildcard(require("../../../util/enums.js"));
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
 var _theme = require("../../../resources/theme");
-var _style = require("./style");
 var _back = _interopRequireDefault(require("./resources/back.svg"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatUserDetails extends _react.default.Component {
   constructor(props) {
     super(props);
@@ -221,45 +222,90 @@ class CometChatUserDetails extends _react.default.Component {
     }
     let viewProfile = null;
     if (this.state.enableViewProfile === true && this.context.item.hasOwnProperty("link") && this.context.item.link && this.context.item.link.trim().length) {
-      viewProfile = (0, _react2.jsx)("div", {
-        css: (0, _style.sectionStyle)(),
+      viewProfile = /*#__PURE__*/_react.default.createElement(_react2.VStack, {
+        margin: "0",
+        padding: "16px 16px 0 16px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
         className: "detailpane__section"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.actionSectionStyle)(this.context),
-        className: "section section__viewprofile"
-      }, (0, _react2.jsx)("h6", {
-        css: (0, _style.sectionHeaderStyle)(this.props),
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        width: "100%",
+        className: "section section__viewprofile",
+        sx: {
+          "> div": {
+            fontWeight: "600",
+            cursor: "pointer",
+            fontSize: "12px"
+          },
+          ".item__link": {
+            color: this.context.theme.color.blue
+          }
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+        as: "h6",
+        margin: "0",
+        width: "100%",
+        fontSize: "12px",
+        fontWeight: "500",
+        lineHeight: "20px",
+        color: this.context.theme.color.secondary,
+        textTransform: "uppercase",
         className: "section__header"
-      }, _translator.default.translate("ACTIONS", this.context.language)), (0, _react2.jsx)("div", {
-        css: (0, _style.sectionContentStyle)(),
+      }, _translator.default.translate("ACTIONS", this.context.language)), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        width: "100%",
+        margin: "6px 0",
         className: "section__content"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.contentItemStyle)(),
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        width: "100%",
         className: "content__item"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.itemLinkStyle)(this.context),
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        fontSize: "15px",
+        lineHeight: "20px",
+        fontWeight: "600",
+        display: "inline-block",
+        color: this.context.theme.color.red,
+        cursor: "pointer",
         className: "item__link",
         onClick: this.viewProfile
       }, _translator.default.translate("VIEW_PROFILE", this.context.language))))));
     }
     let blockUserText;
     if (this.context.item.blockedByMe) {
-      blockUserText = (0, _react2.jsx)("div", {
-        css: (0, _style.itemLinkStyle)(this.context),
+      blockUserText = /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        fontSize: "15px",
+        lineHeight: "20px",
+        fontWeight: "600",
+        display: "inline-block",
+        color: this.context.theme.color.red,
+        cursor: "pointer",
         className: "item__link",
         onClick: this.unblockUser
       }, _translator.default.translate("UNBLOCK_USER", this.context.language));
     } else {
-      blockUserText = (0, _react2.jsx)("div", {
-        css: (0, _style.itemLinkStyle)(this.context),
+      blockUserText = /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        fontSize: "15px",
+        lineHeight: "20px",
+        fontWeight: "600",
+        display: "inline-block",
+        color: this.context.theme.color.red,
+        cursor: "pointer",
         className: "item__link",
         onClick: this.blockUser
       }, _translator.default.translate("BLOCK_USER", this.context.language));
     }
-    let sharedmediaView = (0, _react2.jsx)("div", {
-      css: (0, _style.mediaSectionStyle)(),
+    let sharedmediaView = /*#__PURE__*/_react.default.createElement(_react2.VStack, {
+      height: "calc(100% - 255px)",
+      width: "100%",
+      margin: "0",
+      padding: "16px 16px 0 16px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
       className: "detailpane__section"
-    }, (0, _react2.jsx)(_index.CometChatSharedMediaView, {
+    }, /*#__PURE__*/_react.default.createElement(_index.CometChatSharedMediaView, {
       theme: this.props.theme,
       lang: this.context.language
     }));
@@ -268,38 +314,100 @@ class CometChatUserDetails extends _react.default.Component {
     if (this.state.enableSharedMedia === false) {
       sharedmediaView = null;
     }
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.userDetailStyle)(this.context),
-      className: "detailpane detailpane--user"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.headerStyle)(this.context),
+    const isOnline = this.state.status ? this.state.status.toLowerCase() : "";
+    const compareToOnline = _translator.default.translate(_chat.CometChat.USER_STATUS.ONLINE.toUpperCase(), this.context.language).toLowerCase();
+    const statusColor = isOnline === compareToOnline ? this.context.theme.color.blue : this.context.theme.color.helpText;
+    return /*#__PURE__*/_react.default.createElement(_react2.VStack, {
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      position: "relative",
+      boxSizing: "border-box",
+      fontFamily: this.context.theme.fontFamily,
+      className: "detailpane detailpane--user",
+      sx: {
+        "*": {
+          boxSizing: "border-box",
+          fontFamily: this.context.theme.fontFamily
+        }
+      }
+    }, /*#__PURE__*/_react.default.createElement(_react2.HStack, {
+      padding: "16px",
+      position: "relative",
+      borderBottom: "1px solid ".concat(this.context.theme.borderColor.primary),
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      height: "69px",
       className: "detailpane__header"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.headerCloseStyle)(_back.default, this.context),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      cursor: "pointer",
+      display: {
+        base: "block",
+        sm: "block",
+        md: "block",
+        lg: "none"
+      },
+      width: "24px",
+      height: "24px",
       className: "header__close",
-      onClick: this.closeDetailView
-    }), (0, _react2.jsx)("h4", {
-      css: (0, _style.headerTitleStyle)(),
+      onClick: this.closeDetailView,
+      sx: {
+        mask: "url(".concat(_back.default, ") center center no-repeat"),
+        backgroundColor: this.context.theme.primaryColor
+      }
+    }), /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+      as: "h4",
+      margin: "0",
+      fontWeight: "700",
+      fontSize: "20px",
       className: "header__title"
-    }, _translator.default.translate("DETAILS", this.context.language))), (0, _react2.jsx)("div", {
-      css: (0, _style.sectionStyle)(),
+    }, _translator.default.translate("DETAILS", this.context.language))), /*#__PURE__*/_react.default.createElement(_react2.VStack, {
+      margin: "0",
+      padding: "16px 16px 0 16px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
       className: "detailpane__section"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.userInfoSectionStyle)(),
+    }, /*#__PURE__*/_react.default.createElement(_react2.HStack, {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-start",
       className: "section section__userinfo"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.userThumbnailStyle)(),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      width: "35px",
+      height: "35px",
+      display: "inline-block",
+      flexShrink: "0",
+      margin: "0 16px 0 0",
       className: "user__thumbnail"
-    }, (0, _react2.jsx)(_Shared.CometChatAvatar, {
+    }, /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
       user: this.context.item
-    })), (0, _react2.jsx)("div", {
-      css: (0, _style.userStatusStyle)(),
-      className: "user__status"
-    }, (0, _react2.jsx)("h6", {
-      css: (0, _style.userNameStyle)()
-    }, this.context.item.name), (0, _react2.jsx)("span", {
-      css: (0, _style.userPresenceStyle)(this.context, this.state)
-    }, this.state.status)))), (0, _react2.jsx)(_Shared.CometChatToastNotification, {
+    })), /*#__PURE__*/_react.default.createElement(_react2.VStack, {
+      width: "calc(100% - 50px)",
+      className: "user__status",
+      spacing: 0,
+      alignItems: "flex-start"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+      as: "h6",
+      margin: "0",
+      fontSize: "15px",
+      fontWeight: "600",
+      lineHeight: "22px",
+      width: "100%",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
+    }, this.context.item.name), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+      as: "span",
+      width: "calc(100% - 50px)",
+      textTransform: "capitalize",
+      fontSize: "13px",
+      fontWeight: "400",
+      lineHeight: "20px",
+      color: statusColor
+    }, this.state.status)))), /*#__PURE__*/_react.default.createElement(_Shared.CometChatToastNotification, {
       ref: el => this.toastRef = el,
       lang: this.props.lang
     }), viewProfile, sharedmediaView);

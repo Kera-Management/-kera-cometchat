@@ -4,17 +4,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatBackdrop = void 0;
-var _react = require("@emotion/react");
+var _react = _interopRequireDefault(require("react"));
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
-var _style = require("./style");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-/** @jsxRuntime classic */
-/** @jsx jsx */
-
-const CometChatBackdrop = props => props.show ? (0, _react.jsx)("div", {
-  css: (0, _style.backdropStyle)(props),
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+const CometChatBackdrop = props => props.show ? /*#__PURE__*/_react.default.createElement(_react2.Box, {
+  zIndex: "3",
+  backgroundColor: "#000",
+  opacity: ".3",
+  position: "fixed",
+  width: "100%",
+  height: "100%",
+  top: "0",
+  left: "0",
+  cursor: "pointer",
+  transition: "background .3s ease-out 0",
   className: "modal__backdrop",
-  onClick: props.clicked
+  onClick: props.clicked,
+  sx: props.style
 }) : null;
 
 // Specifies the default values for props:

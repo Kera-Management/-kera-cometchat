@@ -1,7 +1,12 @@
-import React from 'react';
-import { ChakraProvider, Box, createSystem, defaultConfig } from '@chakra-ui/react';
-import { CometChatContext } from '../src/lib/util/CometChatContext';
-import { theme as cometChatTheme } from '../src/lib/resources/theme';
+import React from "react";
+import {
+  ChakraProvider,
+  Box,
+  createSystem,
+  defaultConfig,
+} from "@chakra-ui/react";
+import { CometChatContext } from "../src/lib/util/CometChatContext";
+import { theme as cometChatTheme } from "../src/lib/resources/theme";
 
 // Create a Chakra system
 const system = createSystem(defaultConfig);
@@ -9,33 +14,34 @@ const system = createSystem(defaultConfig);
 // Mock CometChat context for Storybook
 const mockCometChatContext = {
   theme: cometChatTheme,
-  language: 'en',
+  language: "en",
   UIKitSettings: {
-    tabs: ['SIDEBAR_CHATS', 'SIDEBAR_USERS', 'SIDEBAR_GROUPS'],
+    tabs: ["SIDEBAR_CHATS", "SIDEBAR_USERS", "SIDEBAR_GROUPS"],
   },
   FeatureRestriction: {
     isUnreadCountEnabled: () => Promise.resolve(true),
     isUserPresenceEnabled: () => Promise.resolve(true),
     isHideDeletedMessagesEnabled: () => Promise.resolve(false),
   },
-  getLoggedinUser: () => Promise.resolve({
-    uid: 'storybook-user',
-    name: 'Storybook User',
-    avatar: 'https://via.placeholder.com/40x40/4CAF50/FFFFFF?text=SB',
-  }),
+  getLoggedinUser: () =>
+    Promise.resolve({
+      uid: "storybook-user",
+      name: "Storybook User",
+      avatar: "https://via.placeholder.com/40x40/4CAF50/FFFFFF?text=SB",
+    }),
 };
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/,
       },
     },
-    layout: 'centered',
+    layout: "centered",
   },
   decorators: [
     (Story) => (

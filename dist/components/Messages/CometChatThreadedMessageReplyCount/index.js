@@ -1,24 +1,20 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatThreadedMessageReplyCount = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _CometChatContext = require("../../../util/CometChatContext");
 var enums = _interopRequireWildcard(require("../../../util/enums.js"));
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-/** @jsxRuntime classic */
-/** @jsx jsx */
-
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 const CometChatThreadedMessageReplyCount = props => {
   const context = _react.default.useContext(_CometChatContext.CometChatContext);
   const [reply, setReply] = _react.default.useState(false);
@@ -39,8 +35,19 @@ const CometChatThreadedMessageReplyCount = props => {
   };
   const replyCount = props.message.replyCount;
   const replyText = replyCount === 1 ? "".concat(replyCount, " ").concat(_translator.default.translate("REPLY", context.language)) : "".concat(replyCount, " ").concat(_translator.default.translate("REPLIES", context.language));
-  let replies = (0, _react2.jsx)("span", {
-    css: (0, _style.replyCountStyle)(context),
+  let replies = /*#__PURE__*/_react.default.createElement(_react2.Text, {
+    as: "span",
+    display: "inline-block",
+    fontSize: "11px",
+    fontWeight: "500",
+    lineHeight: "12px",
+    textTransform: "lowercase",
+    padding: "0 10px",
+    cursor: "pointer",
+    color: context.theme.color.blue,
+    _hover: {
+      textDecoration: "underline"
+    },
     className: "replycount",
     onClick: viewThread
   }, replyText);

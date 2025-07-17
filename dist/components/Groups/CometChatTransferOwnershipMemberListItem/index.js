@@ -5,14 +5,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CometChatTransferOwnershipMemberListItem = void 0;
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _CometChatContext = require("../../../util/CometChatContext");
 var _Shared = require("../../Shared");
-var _style = require("./style");
 var _groupMemberUnselect = _interopRequireDefault(require("./resources/group-member-unselect.svg"));
 var _groupMemberSelect = _interopRequireDefault(require("./resources/group-member-select.svg"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatTransferOwnershipMemberListItem extends _react.default.Component {
   constructor(props, context) {
     super(props, context);
@@ -44,36 +45,85 @@ class CometChatTransferOwnershipMemberListItem extends _react.default.Component 
     };
   }
   render() {
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.modalRowStyle)(this.props, this.context)
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.modalColumnStyle)(this.context),
+    return /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      width: "100%",
+      fontSize: "14px",
+      padding: "8px",
+      direction: "row",
+      justify: "flex-start",
+      align: "center",
+      borderLeft: "1px solid ".concat(this.context.theme.borderColor.primary),
+      borderRight: "1px solid ".concat(this.context.theme.borderColor.primary),
+      borderBottom: "1px solid ".concat(this.context.theme.borderColor.primary)
+    }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
       className: "memberinfo",
+      width: {
+        base: "calc(100% - 120px)",
+        sm: "calc(100% - 140px)",
+        md: "calc(100% - 180px)",
+        lg: "calc(100% - 180px)"
+      },
       onMouseEnter: event => this.toggleTooltip(event, true),
       onMouseLeave: event => this.toggleTooltip(event, false)
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.avatarStyle)(),
-      className: "avatar"
-    }, (0, _react2.jsx)(_Shared.CometChatAvatar, {
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "avatar",
+      display: "inline-block",
+      float: "left",
+      width: "36px",
+      height: "36px",
+      marginRight: "8px"
+    }, /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
       user: this.props.member
-    }), (0, _react2.jsx)(_Shared.CometChatUserPresence, {
+    }), /*#__PURE__*/_react.default.createElement(_Shared.CometChatUserPresence, {
       status: this.props.member.status
-    })), (0, _react2.jsx)("div", {
-      css: (0, _style.nameStyle)(),
-      className: "name"
-    }, this.props.member.name)), (0, _react2.jsx)("div", {
-      css: (0, _style.selectionColumnStyle)(this.context),
-      className: "selection"
-    }, (0, _react2.jsx)("span", null, this.context.roles[this.props.member.scope]), (0, _react2.jsx)("input", {
-      css: (0, _style.selectionBoxStyle)(_groupMemberUnselect.default, _groupMemberSelect.default, this.context),
-      type: "radio",
+    })), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+      className: "name",
+      margin: "10px",
+      width: "calc(100% - 50px)",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
+    }, this.props.member.name)), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "selection",
+      width: {
+        base: "120px",
+        sm: "140px",
+        md: "180px",
+        lg: "180px"
+      },
+      justify: "flex-start",
+      align: "center"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+      fontSize: "12px",
+      display: "block",
+      paddingRight: "8px"
+    }, this.context.roles[this.props.member.scope]), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      position: "relative"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Radio, {
+      isChecked: this.state.checked,
       name: "transferOwnership",
-      checked: this.state.checked,
       id: this.props.member.uid + "sel",
-      onChange: this.handleCheck
-    }), (0, _react2.jsx)("label", {
+      onChange: this.handleCheck,
+      display: "none",
+      sx: {
+        " + label": {
+          display: "block",
+          cursor: "pointer",
+          mask: "url(".concat(_groupMemberUnselect.default, ") center center no-repeat"),
+          backgroundColor: this.context.theme.secondaryTextColor,
+          userSelect: "none",
+          padding: "8px"
+        },
+        "&:checked + label": {
+          mask: "url(".concat(_groupMemberSelect.default, ") center center no-repeat"),
+          backgroundColor: this.context.theme.secondaryTextColor,
+          padding: "8px"
+        }
+      }
+    }), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      as: "label",
       htmlFor: this.props.member.uid + "sel"
-    }, "\xA0")));
+    }, "\xA0"))));
   }
 }
 exports.CometChatTransferOwnershipMemberListItem = CometChatTransferOwnershipMemberListItem;

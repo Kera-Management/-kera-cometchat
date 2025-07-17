@@ -1,5 +1,9 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.filter.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,25 +12,27 @@ exports.CometChatMessageHeader = void 0;
 require("core-js/modules/es.parse-int.js");
 var _react = _interopRequireDefault(require("react"));
 var _dateformat = _interopRequireDefault(require("dateformat"));
-var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _phosphorReact = require("phosphor-react");
+var _react2 = require("@chakra-ui/react");
 var _controller = require("./controller");
 var _Shared = require("../../Shared");
 var _CometChatContext = require("../../../util/CometChatContext");
 var enums = _interopRequireWildcard(require("../../../util/enums.js"));
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
 var _menu = _interopRequireDefault(require("./resources/menu.svg"));
 var _audioCall = _interopRequireDefault(require("./resources/audio-call.svg"));
 var _videoCall = _interopRequireDefault(require("./resources/video-call.svg"));
 var _info = _interopRequireDefault(require("./resources/info.svg"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatMessageHeader extends _react.default.Component {
   constructor(props) {
     super(props);
@@ -134,7 +140,6 @@ class CometChatMessageHeader extends _react.default.Component {
         }
         //}
       };
-
       if (this.context.type === _chat.CometChat.ACTION_TYPE.TYPE_GROUP && this.context.type === item.receiverType && this.context.item.guid === item.receiverId) {
         const typingText = "".concat(item.sender.name, " ").concat(_translator.default.translate("IS_TYPING", this.context.language));
         showTyping(typingText);
@@ -159,7 +164,6 @@ class CometChatMessageHeader extends _react.default.Component {
         }
         //}
       };
-
       if (this.context.type === _chat.CometChat.ACTION_TYPE.TYPE_GROUP && this.context.type === item.receiverType && this.context.item.guid === item.receiverId) {
         this.setStatusForGroup();
         endTyping();
@@ -192,6 +196,9 @@ class CometChatMessageHeader extends _react.default.Component {
       this.context.setItem({});
       this.props.actionGenerated(enums.ACTIONS["TOGGLE_SIDEBAR"]);
     });
+    /**
+     * if typing indicator feature is disabled
+     */
     _defineProperty(this, "enableTypingIndicator", () => {
       this.context.FeatureRestriction.isTypingIndicatorsEnabled().then(response => {
         if (response !== this.state.enableTypingIndicator) {
@@ -533,10 +540,10 @@ class CometChatMessageHeader extends _react.default.Component {
     let chatNameClassName = "user__name";
     let chatStatusClassName = "user__status";
     if (this.context.type === _chat.CometChat.ACTION_TYPE.TYPE_USER) {
-      avatar = (0, _react2.jsx)(_Shared.CometChatAvatar, {
+      avatar = /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
         user: this.context.item
       });
-      presence = (0, _react2.jsx)(_Shared.CometChatUserPresence, {
+      presence = /*#__PURE__*/_react.default.createElement(_Shared.CometChatUserPresence, {
         status: this.state.presence,
         borderColor: this.props.theme.borderColor.primary
       });
@@ -547,28 +554,39 @@ class CometChatMessageHeader extends _react.default.Component {
       videoCallClassName = "option__videocall-group";
       audioCallClassName = "option__audiocall-group";
       viewDetailClassName = "option__viewdetail-group";
-      avatar = (0, _react2.jsx)(_Shared.CometChatAvatar, {
+      avatar = /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
         group: this.context.item
       });
     }
     let typing = null;
     if (this.state.typing) {
-      typing = (0, _react2.jsx)("span", {
-        css: (0, _style.chatStatusStyle)(this.state, this.context),
+      typing = /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        fontSize: "13px",
+        width: "100%",
+        color: this.context.theme.color.helpText,
+        fontStyle: "italic",
         className: chatStatusClassName
       }, this.state.typing);
     }
-    let status = (0, _react2.jsx)("span", {
-      css: (0, _style.chatStatusStyle)(this.state, this.context),
+    let status = /*#__PURE__*/_react.default.createElement(_react2.Text, {
+      fontSize: "13px",
+      width: "100%",
+      color: this.context.type === _chat.CometChat.ACTION_TYPE.TYPE_USER ? this.state.presence === "offline" ? this.context.theme.color.helpText : this.context.theme.color.blue : this.context.theme.color.helpText,
+      textTransform: this.context.type === _chat.CometChat.ACTION_TYPE.TYPE_USER ? "capitalize" : "none",
       className: chatStatusClassName
     }, this.state.status);
     const viewDetailText = _translator.default.translate("VIEW_DETAIL", this.context.language);
-    let viewDetailBtn = (0, _react2.jsx)("div", {
+    let viewDetailBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: viewDetailClassName,
-      css: (0, _style.chatOptionStyle)(_info.default, this.context, 0),
+      w: "24px",
+      h: "24px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      ml: "16px",
       title: viewDetailText,
       onClick: this.viewDetail
-    }, (0, _react2.jsx)(_phosphorReact.Info, {
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.Info, {
       size: 32,
       weight: "duotone"
     }));
@@ -613,30 +631,74 @@ class CometChatMessageHeader extends _react.default.Component {
     if (this.state.enableUserPresence === false && this.context.type === _chat.CometChat.ACTION_TYPE.TYPE_USER) {
       status = null;
     }
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.chatHeaderStyle)(this.context),
-      className: "chat__header"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.chatDetailStyle)(),
-      className: "chat__details"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.chatSideBarBtnStyle)(_menu.default, this.props, this.context),
+    return /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "chat__header",
+      p: "16px",
+      w: "100%",
+      bg: this.context.theme.backgroundColor.white,
+      zIndex: "1",
+      borderBottom: "1px solid ".concat(this.context.theme.borderColor.primary),
+      justify: "space-between",
+      align: "center"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "chat__details",
+      align: "center",
+      width: "calc(100% - 116px)"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "chat__sidebar-menu",
+      cursor: "pointer",
+      display: {
+        base: "block",
+        md: "none"
+      },
+      sx: _objectSpread({
+        mask: "url(".concat(_menu.default, ") center center no-repeat"),
+        width: "24px",
+        height: "24px"
+      }, this.props.hasOwnProperty("sidebar") && this.props.sidebar === 0 ? {
+        display: "none !important"
+      } : {}),
       onClick: this.resetChat
-    }), (0, _react2.jsx)("div", {
-      css: (0, _style.chatThumbnailStyle)(),
-      className: "chat__thumbnail"
-    }, avatar, presence), (0, _react2.jsx)("div", {
-      css: (0, _style.chatUserStyle)(this.context),
-      className: chatWithClassName
-    }, (0, _react2.jsx)("h6", {
-      css: (0, _style.chatNameStyle)(this.context),
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.CaretLeft, {
+      size: 24,
+      weight: "duotone"
+    })), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "chat__thumbnail",
+      display: "inline-block",
+      w: "36px",
+      h: "36px",
+      flexShrink: "0",
+      m: "0 16px",
+      position: "relative"
+    }, avatar, presence), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: chatWithClassName,
+      w: {
+        base: "calc(100% - 80px)",
+        md: "calc(100% - 50px)"
+      },
+      p: "0",
+      flexGrow: "1",
+      display: "flex",
+      flexDirection: "column"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+      as: "h6",
       className: chatNameClassName,
+      m: "0",
+      fontSize: "15px",
+      fontWeight: "600",
+      lineHeight: "22px",
+      w: "100%",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      color: this.context.theme.primary,
       onMouseEnter: event => this.toggleTooltip(event, true),
       onMouseLeave: event => this.toggleTooltip(event, false)
-    }, this.context.item.name), typing ? typing : status)), (0, _react2.jsx)("div", {
-      css: (0, _style.chatOptionWrapStyle)(),
-      className: "chat__options"
+    }, this.context.item.name), typing ? typing : status)), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "chat__options",
+      justify: "space-between",
+      align: "center",
+      w: "auto"
     }, viewDetailBtn));
   }
 }

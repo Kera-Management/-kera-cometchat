@@ -5,22 +5,18 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CometChatUserProfile = void 0;
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
+var _react2 = require("@chakra-ui/react");
 var _chat = require("@cometchat-pro/chat");
 var _Shared = require("../../Shared");
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
 var _notify = _interopRequireDefault(require("./resources/notify.svg"));
 var _privacy = _interopRequireDefault(require("./resources/privacy.svg"));
 var _chats = _interopRequireDefault(require("./resources/chats.svg"));
 var _help = _interopRequireDefault(require("./resources/help.svg"));
 var _warning = _interopRequireDefault(require("./resources/warning.svg"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-/** @jsxRuntime classic */
-/** @jsx jsx */
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 class CometChatUserProfile extends _react.default.Component {
   constructor(props) {
     super(props);
@@ -39,82 +35,167 @@ class CometChatUserProfile extends _react.default.Component {
   render() {
     let userProfile = null;
     if (this.state.loggedInUser) {
-      let avatar = (0, _react2.jsx)(_Shared.CometChatAvatar, {
+      let avatar = /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
         user: this.state.loggedInUser
       });
-      userProfile = (0, _react2.jsx)(_react.default.Fragment, null, (0, _react2.jsx)("div", {
-        css: (0, _style.headerStyle)(this.props),
-        className: "userinfo__header"
-      }, (0, _react2.jsx)("h4", {
-        css: (0, _style.headerTitleStyle)(),
-        className: "header__title"
-      }, _translator.default.translate("MORE", this.props.lang))), (0, _react2.jsx)("div", {
-        css: (0, _style.detailStyle)(),
-        className: "userinfo__detail"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.thumbnailStyle)(),
-        className: "detail__thumbnail"
-      }, avatar), (0, _react2.jsx)("div", {
-        css: (0, _style.userDetailStyle)(),
+      userProfile = /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "userinfo__header",
+        padding: "16px",
+        position: "relative",
+        borderBottom: "1px solid ".concat(this.props.theme.borderColor.primary),
+        height: "70px",
+        display: "flex",
+        alignItems: "center"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+        as: "h4",
+        className: "header__title",
+        margin: "0",
+        fontSize: "22px",
+        fontWeight: "700",
+        lineHeight: "26px"
+      }, _translator.default.translate("MORE", this.props.lang))), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        className: "userinfo__detail",
+        padding: "16px",
+        flexDirection: "row",
+        justifyContent: "left",
+        alignItems: "center"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "detail__thumbnail",
+        display: "inline-block",
+        width: "36px",
+        height: "36px",
+        flexShrink: "0"
+      }, avatar), /*#__PURE__*/_react.default.createElement(_react2.Box, {
         className: "detail__user",
-        dir: _translator.default.getDirection(this.props.lang)
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.userNameStyle)(),
-        className: "user__name"
-      }, this.state.loggedInUser.name), (0, _react2.jsx)("p", {
-        css: (0, _style.userStatusStyle)(this.props),
-        className: "user__status"
-      }, _translator.default.translate("ONLINE", this.props.lang)))), (0, _react2.jsx)("div", {
-        css: (0, _style.optionsStyle)(),
-        className: "userinfo__options"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.optionTitleStyle)(this.props),
-        className: "options__title"
-      }, _translator.default.translate("PREFERENCES", this.props.lang)), (0, _react2.jsx)("div", {
-        css: (0, _style.optionListStyle)(),
-        className: "options_list"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.optionStyle)(_notify.default),
-        className: "option option-notification"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.optionNameStyle)(),
-        className: "option_name"
-      }, _translator.default.translate("NOTIFICATIONS", this.props.lang))), (0, _react2.jsx)("div", {
-        css: (0, _style.optionStyle)(_privacy.default),
-        className: "option option-privacy"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.optionNameStyle)(),
-        className: "option_name"
-      }, _translator.default.translate("PRIVACY_AND_SECURITY", this.props.lang))), (0, _react2.jsx)("div", {
-        css: (0, _style.optionStyle)(_chats.default),
-        className: "option option-chats"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.optionNameStyle)(),
-        className: "option_name"
-      }, _translator.default.translate("CHATS", this.props.lang)))), (0, _react2.jsx)("div", {
-        css: (0, _style.optionTitleStyle)(this.props),
-        className: "options__title"
-      }, _translator.default.translate("OTHER", this.props.lang)), (0, _react2.jsx)("div", {
-        css: (0, _style.optionListStyle)(),
-        className: "options_list"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.optionStyle)(_help.default),
-        className: "option option-help"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.optionNameStyle)(),
-        className: "option_name"
-      }, _translator.default.translate("HELP", this.props.lang))), (0, _react2.jsx)("div", {
-        css: (0, _style.optionStyle)(_warning.default),
-        className: "option option-report"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.optionNameStyle)(),
-        className: "option_name"
+        dir: _translator.default.getDirection(this.props.lang),
+        width: "calc(100% - 45px)",
+        flexGrow: "1",
+        paddingLeft: "16px",
+        sx: {
+          "&[dir=rtl]": {
+            paddingRight: "16px",
+            paddingLeft: "0"
+          }
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        className: "user__name",
+        margin: "0",
+        fontSize: "15px",
+        fontWeight: "600",
+        display: "block",
+        maxWidth: "100%",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap"
+      }, this.state.loggedInUser.name), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        as: "p",
+        className: "user__status",
+        fontSize: "13px",
+        margin: "0",
+        color: this.props.theme.color.blue
+      }, _translator.default.translate("ONLINE", this.props.lang)))), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "userinfo__options",
+        height: "calc(100% - 145px)",
+        overflowY: "auto",
+        padding: "0 16px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "left",
+        alignItems: "flex-start"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        className: "options__title",
+        margin: "5px 0",
+        width: "100%",
+        fontSize: "12px",
+        color: this.props.theme.color.helpText,
+        textTransform: "uppercase"
+      }, _translator.default.translate("PREFERENCES", this.props.lang)), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "options_list",
+        padding: "10px 0",
+        width: "100%",
+        fontSize: "15px"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option option-notification",
+        width: "100%",
+        padding: "16px 16px 16px 36px",
+        fontWeight: "600",
+        sx: {
+          background: "url(".concat(_notify.default, ") left center no-repeat")
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option_name",
+        width: "100%"
+      }, _translator.default.translate("NOTIFICATIONS", this.props.lang))), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option option-privacy",
+        width: "100%",
+        padding: "16px 16px 16px 36px",
+        fontWeight: "600",
+        sx: {
+          background: "url(".concat(_privacy.default, ") left center no-repeat")
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option_name",
+        width: "100%"
+      }, _translator.default.translate("PRIVACY_AND_SECURITY", this.props.lang))), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option option-chats",
+        width: "100%",
+        padding: "16px 16px 16px 36px",
+        fontWeight: "600",
+        sx: {
+          background: "url(".concat(_chats.default, ") left center no-repeat")
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option_name",
+        width: "100%"
+      }, _translator.default.translate("CHATS", this.props.lang)))), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        className: "options__title",
+        margin: "5px 0",
+        width: "100%",
+        fontSize: "12px",
+        color: this.props.theme.color.helpText,
+        textTransform: "uppercase"
+      }, _translator.default.translate("OTHER", this.props.lang)), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "options_list",
+        padding: "10px 0",
+        width: "100%",
+        fontSize: "15px"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option option-help",
+        width: "100%",
+        padding: "16px 16px 16px 36px",
+        fontWeight: "600",
+        sx: {
+          background: "url(".concat(_help.default, ") left center no-repeat")
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option_name",
+        width: "100%"
+      }, _translator.default.translate("HELP", this.props.lang))), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option option-report",
+        width: "100%",
+        padding: "16px 16px 16px 36px",
+        fontWeight: "600",
+        sx: {
+          background: "url(".concat(_warning.default, ") left center no-repeat")
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "option_name",
+        width: "100%"
       }, _translator.default.translate("REPORT_PROBLEM", this.props.lang))))));
     }
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.userInfoScreenStyle)(this.props),
-      className: "userinfo"
-    }, userProfile, (0, _react2.jsx)(_Shared.CometChatToastNotification, {
+    return /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "userinfo",
+      display: "flex",
+      flexDirection: "column !important",
+      height: "calc(100% - 50px)",
+      fontFamily: this.props.theme.fontFamily,
+      sx: {
+        "*": {
+          boxSizing: "border-box",
+          fontFamily: this.props.theme.fontFamily
+        }
+      }
+    }, userProfile, /*#__PURE__*/_react.default.createElement(_Shared.CometChatToastNotification, {
       ref: el => this.toastRef = el,
       lang: this.props.lang
     }));

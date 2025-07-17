@@ -1,17 +1,21 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.SoundManager = void 0;
 require("core-js/modules/es.promise.js");
-require("core-js/modules/web.dom-collections.iterator.js");
 var enums = _interopRequireWildcard(require("./enums"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var _SoundManager;
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class SoundManager {}
 exports.SoundManager = SoundManager;
+_SoundManager = SoundManager;
 _defineProperty(SoundManager, "widgetSettings", void 0);
 _defineProperty(SoundManager, "incomingCallAudio", null);
 _defineProperty(SoundManager, "outgoingCallAudio", null);
@@ -21,19 +25,19 @@ _defineProperty(SoundManager, "incomingOtherMessageAudio", null);
 _defineProperty(SoundManager, "play", (action, context) => {
   switch (action) {
     case enums.CONSTANTS.AUDIO["INCOMING_CALL"]:
-      SoundManager.onIncomingCall(context);
+      _SoundManager.onIncomingCall(context);
       break;
     case enums.CONSTANTS.AUDIO["OUTGOING_CALL"]:
-      SoundManager.onOutgoingCall(context);
+      _SoundManager.onOutgoingCall(context);
       break;
     case enums.CONSTANTS.AUDIO["INCOMING_MESSAGE"]:
-      SoundManager.onIncomingMessage(context);
+      _SoundManager.onIncomingMessage(context);
       break;
     case enums.CONSTANTS.AUDIO["INCOMING_OTHER_MESSAGE"]:
-      SoundManager.onIncomingOtherMessage(context);
+      _SoundManager.onIncomingOtherMessage(context);
       break;
     case enums.CONSTANTS.AUDIO["OUTGOING_MESSAGE"]:
-      SoundManager.onOutgoingMessage(context);
+      _SoundManager.onOutgoingMessage(context);
       break;
     default:
       break;
@@ -42,10 +46,10 @@ _defineProperty(SoundManager, "play", (action, context) => {
 _defineProperty(SoundManager, "pause", (action, context) => {
   switch (action) {
     case enums.CONSTANTS.AUDIO["INCOMING_CALL"]:
-      SoundManager.pauseIncomingCall(context);
+      _SoundManager.pauseIncomingCall(context);
       break;
     case enums.CONSTANTS.AUDIO["OUTGOING_CALL"]:
-      SoundManager.pauseOutgoingCall(context);
+      _SoundManager.pauseOutgoingCall(context);
       break;
     case enums.CONSTANTS.AUDIO["INCOMING_MESSAGE"]:
     case enums.CONSTANTS.AUDIO["INCOMING_OTHER_MESSAGE"]:
@@ -55,43 +59,43 @@ _defineProperty(SoundManager, "pause", (action, context) => {
   }
 });
 _defineProperty(SoundManager, "onIncomingMessage", context => {
-  SoundManager.enableSoundForMessages(context).then(response => {
+  _SoundManager.enableSoundForMessages(context).then(response => {
     if (response === true) {
-      if (SoundManager.incomingMessageAudio === null) {
+      if (_SoundManager.incomingMessageAudio === null) {
         Promise.resolve().then(() => _interopRequireWildcard(require("../resources/audio/incomingmessage.wav"))).then(response => {
-          SoundManager.incomingMessageAudio = new Audio(response.default);
-          SoundManager.playMessageAlert(SoundManager.incomingMessageAudio);
+          _SoundManager.incomingMessageAudio = new Audio(response.default);
+          _SoundManager.playMessageAlert(_SoundManager.incomingMessageAudio);
         });
       } else {
-        SoundManager.playMessageAlert(SoundManager.incomingMessageAudio);
+        _SoundManager.playMessageAlert(_SoundManager.incomingMessageAudio);
       }
     }
   });
 });
 _defineProperty(SoundManager, "onIncomingOtherMessage", context => {
-  SoundManager.enableSoundForMessages(context).then(response => {
+  _SoundManager.enableSoundForMessages(context).then(response => {
     if (response === true) {
-      if (SoundManager.incomingOtherMessageAudio === null) {
+      if (_SoundManager.incomingOtherMessageAudio === null) {
         Promise.resolve().then(() => _interopRequireWildcard(require("../resources/audio/incomingothermessage.wav"))).then(response => {
-          SoundManager.incomingOtherMessageAudio = new Audio(response.default);
-          SoundManager.playMessageAlert(SoundManager.incomingOtherMessageAudio);
+          _SoundManager.incomingOtherMessageAudio = new Audio(response.default);
+          _SoundManager.playMessageAlert(_SoundManager.incomingOtherMessageAudio);
         });
       } else {
-        SoundManager.playMessageAlert(SoundManager.incomingOtherMessageAudio);
+        _SoundManager.playMessageAlert(_SoundManager.incomingOtherMessageAudio);
       }
     }
   });
 });
 _defineProperty(SoundManager, "onOutgoingMessage", context => {
-  SoundManager.enableSoundForMessages(context).then(response => {
+  _SoundManager.enableSoundForMessages(context).then(response => {
     if (response === true) {
-      if (SoundManager.outgoingMessageAudio === null) {
+      if (_SoundManager.outgoingMessageAudio === null) {
         Promise.resolve().then(() => _interopRequireWildcard(require("../resources/audio/outgoingmessage.wav"))).then(response => {
-          SoundManager.outgoingMessageAudio = new Audio(response.default);
-          SoundManager.playMessageAlert(SoundManager.outgoingMessageAudio);
+          _SoundManager.outgoingMessageAudio = new Audio(response.default);
+          _SoundManager.playMessageAlert(_SoundManager.outgoingMessageAudio);
         });
       } else {
-        SoundManager.playMessageAlert(SoundManager.outgoingMessageAudio);
+        _SoundManager.playMessageAlert(_SoundManager.outgoingMessageAudio);
       }
     }
   });
@@ -101,29 +105,29 @@ _defineProperty(SoundManager, "playMessageAlert", messageAudio => {
   messageAudio.play();
 });
 _defineProperty(SoundManager, "onIncomingCall", context => {
-  SoundManager.enableSoundForCalls(context).then(response => {
+  _SoundManager.enableSoundForCalls(context).then(response => {
     if (response === true) {
-      if (SoundManager.incomingCallAudio === null) {
+      if (_SoundManager.incomingCallAudio === null) {
         Promise.resolve().then(() => _interopRequireWildcard(require("../resources/audio/incomingcall.wav"))).then(response => {
-          SoundManager.incomingCallAudio = new Audio(response.default);
-          SoundManager.playCallAlert(SoundManager.incomingCallAudio);
+          _SoundManager.incomingCallAudio = new Audio(response.default);
+          _SoundManager.playCallAlert(_SoundManager.incomingCallAudio);
         });
       } else {
-        SoundManager.playCallAlert(SoundManager.incomingCallAudio);
+        _SoundManager.playCallAlert(_SoundManager.incomingCallAudio);
       }
     }
   });
 });
 _defineProperty(SoundManager, "onOutgoingCall", context => {
-  SoundManager.enableSoundForCalls(context).then(response => {
+  _SoundManager.enableSoundForCalls(context).then(response => {
     if (response === true) {
-      if (SoundManager.outgoingCallAudio === null) {
+      if (_SoundManager.outgoingCallAudio === null) {
         Promise.resolve().then(() => _interopRequireWildcard(require("../resources/audio/outgoingcall.wav"))).then(response => {
-          SoundManager.outgoingCallAudio = new Audio(response.default);
-          SoundManager.playCallAlert(SoundManager.outgoingCallAudio);
+          _SoundManager.outgoingCallAudio = new Audio(response.default);
+          _SoundManager.playCallAlert(_SoundManager.outgoingCallAudio);
         });
       } else {
-        SoundManager.playCallAlert(SoundManager.outgoingCallAudio);
+        _SoundManager.playCallAlert(_SoundManager.outgoingCallAudio);
       }
     }
   });
@@ -143,19 +147,19 @@ _defineProperty(SoundManager, "playCallAlert", callAudio => {
   } catch (error) {}
 });
 _defineProperty(SoundManager, "pauseIncomingCall", context => {
-  SoundManager.enableSoundForCalls(context).then(response => {
+  _SoundManager.enableSoundForCalls(context).then(response => {
     if (response === true) {
-      if (SoundManager.incomingCallAudio) {
-        SoundManager.incomingCallAudio.pause();
+      if (_SoundManager.incomingCallAudio) {
+        _SoundManager.incomingCallAudio.pause();
       }
     }
   });
 });
 _defineProperty(SoundManager, "pauseOutgoingCall", context => {
-  SoundManager.enableSoundForCalls(context).then(response => {
+  _SoundManager.enableSoundForCalls(context).then(response => {
     if (response === true) {
-      if (SoundManager.outgoingCallAudio) {
-        SoundManager.outgoingCallAudio.pause();
+      if (_SoundManager.outgoingCallAudio) {
+        _SoundManager.outgoingCallAudio.pause();
       }
     }
   });

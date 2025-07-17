@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.previewWrapperStyle = exports.previewOptionsWrapperStyle = exports.previewOptionStyle = exports.previewHeadingStyle = exports.previewCloseStyle = void 0;
 var _templateObject;
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+function _taggedTemplateLiteral(e, t) { return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } })); }
 const previewWrapperStyle = (context, keyframes) => {
   const slideAnimation = keyframes(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    from {\n        bottom: -55px\n    }\n    to {\n        bottom: 0px\n    }"])));
   return {

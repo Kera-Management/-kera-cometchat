@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Emojis = void 0;
-const Emojis = {
+const Emojis = exports.Emojis = {
   "grinning": "😀",
   "smiley": "😃",
   "smile": "😄",
@@ -1743,4 +1743,3 @@ const Emojis = {
   "waving_black_flag": "🏴",
   "waving_white_flag": "🏳️"
 };
-exports.Emojis = Emojis;

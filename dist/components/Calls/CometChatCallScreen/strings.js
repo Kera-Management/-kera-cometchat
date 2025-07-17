@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LocalizedString = void 0;
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 const LocalizedString = language => {
   return {
     SELECT_VIDEO_SOURCE: _translator.default.translate("SELECT_VIDEO_SOURCE", language),

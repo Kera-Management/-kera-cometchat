@@ -5,21 +5,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CometChatCreatePollOptions = void 0;
 var _react = require("react");
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _CometChatContext = require("../../../../util/CometChatContext");
-var _style = require("../CometChatCreatePoll/style");
 var _translator = _interopRequireDefault(require("../../../../resources/localization/translator"));
-var _style2 = require("./style");
 var _remove = _interopRequireDefault(require("./resources/remove.svg"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-/** @jsxRuntime classic */
-/** @jsx jsx */
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 const CometChatCreatePollOptions = props => {
   const context = (0, _react.useContext)(_CometChatContext.CometChatContext);
-  return (0, _react2.jsx)("tr", {
+  return /*#__PURE__*/React.createElement("tr", {
     className: "poll__options"
-  }, (0, _react2.jsx)("td", null, "\xA0"), (0, _react2.jsx)("td", null, (0, _react2.jsx)("input", {
+  }, /*#__PURE__*/React.createElement("td", null, "\xA0"), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
     autoFocus: true,
     tabIndex: props.tabIndex,
     type: "text",
@@ -27,11 +22,20 @@ const CometChatCreatePollOptions = props => {
     placeholder: _translator.default.translate("ENTER_YOUR_OPTION", context.language),
     value: props.value,
     onChange: event => props.optionChangeHandler(event, props.option)
-  })), (0, _react2.jsx)("td", {
-    css: (0, _style.iconWrapperStyle)(),
+  })), /*#__PURE__*/React.createElement(_react2.Box, {
+    as: "td",
+    width: "50px",
     className: "option__remove"
-  }, (0, _react2.jsx)("span", {
-    css: (0, _style2.removeOptionIconStyle)(_remove.default, context),
+  }, /*#__PURE__*/React.createElement(_react2.Box, {
+    as: "span",
+    cursor: "pointer",
+    display: "block",
+    height: "24px",
+    width: "24px",
+    sx: {
+      mask: "url(".concat(_remove.default, ") center center no-repeat"),
+      backgroundColor: context.theme.color.red
+    },
     onClick: () => props.removePollOption(props.option)
   })));
 };

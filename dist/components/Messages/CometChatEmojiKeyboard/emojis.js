@@ -12,8 +12,8 @@ var _objects = _interopRequireDefault(require("./resources/objects.svg"));
 var _travel = _interopRequireDefault(require("./resources/travel.svg"));
 var _flags = _interopRequireDefault(require("./resources/flags.svg"));
 var _food = _interopRequireDefault(require("./resources/food.svg"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-const Emojis = [{
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+const Emojis = exports.Emojis = [{
   "people": {
     "id": "people",
     "name": "Smileys",
@@ -8106,4 +8106,3 @@ const Emojis = [{
     }
   }
 }];
-exports.Emojis = Emojis;

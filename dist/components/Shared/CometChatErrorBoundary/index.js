@@ -5,12 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CometChatErrorBoundary = void 0;
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatErrorBoundary extends _react.default.Component {
   constructor(props) {
     super(props);
@@ -32,8 +33,18 @@ class CometChatErrorBoundary extends _react.default.Component {
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return (0, _react2.jsx)("div", {
-        css: (0, _style.errorContainerStyle)()
+      return /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        position: "absolute",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "auto",
+        padding: "16px",
+        zIndex: "2",
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "#F35051",
+        color: "#fff"
       }, _translator.default.translate("USER_NOT_LOGGED_IN", this.props.lang));
     }
     return this.props.children;

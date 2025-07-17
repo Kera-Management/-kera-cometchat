@@ -38,4 +38,4 @@ var _incomingothermessage = _interopRequireDefault(require("./incomingothermessa
 var _outgoingmessage = _interopRequireDefault(require("./outgoingmessage.wav"));
 var _incomingcall = _interopRequireDefault(require("./incomingcall.wav"));
 var _outgoingcall = _interopRequireDefault(require("./outgoingcall.wav"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }

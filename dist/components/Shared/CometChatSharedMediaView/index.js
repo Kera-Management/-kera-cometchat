@@ -1,30 +1,32 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatSharedMediaView = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
+var _react2 = require("@chakra-ui/react");
 var _chat = require("@cometchat-pro/chat");
 var _CometChatContext = require("../../../util/CometChatContext");
 var _controller = require("./controller");
 var enums = _interopRequireWildcard(require("../../../util/enums.js"));
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
 var _fileUpload = _interopRequireDefault(require("./resources/file-upload.svg"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatSharedMediaView extends _react.default.Component {
   constructor(props) {
     var _this;
     super(props);
     _this = this;
+    //callback for listener functions
     _defineProperty(this, "messageUpdated", (key, message) => {
       switch (key) {
         case enums.MESSAGE_DELETED:
@@ -48,6 +50,7 @@ class CometChatSharedMediaView extends _react.default.Component {
         });
       }
     });
+    //message is received or composed & sent
     _defineProperty(this, "messageReceived", message => {
       const messageType = message.data.type;
       if (this.context.type === _chat.CometChat.ACTION_TYPE.TYPE_GROUP && message.getReceiverType() === _chat.CometChat.RECEIVER_TYPE.GROUP && message.getReceiver().guid === this.context.item.guid && messageType === this.state.messagetype) {
@@ -122,72 +125,221 @@ class CometChatSharedMediaView extends _react.default.Component {
     this.SharedMediaManager = null;
     this._isMounted = false;
   }
-
-  //callback for listener functions
-
   render() {
     const template = (message, key) => {
       if (this.state.messagetype === "image" && message.data.url) {
-        return (0, _react2.jsx)("div", {
+        return /*#__PURE__*/_react.default.createElement(_react2.Box, {
           id: message.id,
           key: key,
-          css: (0, _style.itemStyle)(this.state, this.props, _fileUpload.default, this.context),
-          className: "item item__image"
-        }, (0, _react2.jsx)("img", {
+          className: "item item__image",
+          margin: "0.5rem",
+          textAlign: "center",
+          flex: "1 0 auto",
+          height: "120px",
+          width: "120px",
+          backgroundColor: this.props.theme.backgroundColor.lightGrey,
+          sx: {
+            "@for $i from 1 through 36": {
+              "&:nth-of-type(#{$i})": {
+                maxWidth: "100%"
+              }
+            }
+          }
+        }, /*#__PURE__*/_react.default.createElement(_react2.Image, {
           src: message.data.url,
-          alt: _translator.default.translate("SHARED_MEDIA", this.props.lang)
+          alt: _translator.default.translate("SHARED_MEDIA", this.props.lang),
+          display: "block",
+          width: "100%",
+          height: "100%",
+          objectFit: "contain"
         }));
       } else if (this.state.messagetype === "video" && message.data.url) {
-        return (0, _react2.jsx)("div", {
+        return /*#__PURE__*/_react.default.createElement(_react2.Box, {
           id: message.id,
           key: key,
-          css: (0, _style.itemStyle)(this.state, this.props, _fileUpload.default, this.context),
-          className: "item item__video"
-        }, (0, _react2.jsx)("video", {
-          src: message.data.url
+          className: "item item__video",
+          margin: "0.5rem",
+          textAlign: "center",
+          flex: "1 0 auto",
+          sx: {
+            "@for $i from 1 through 36": {
+              "&:nth-of-type(#{$i})": {
+                maxWidth: "100%"
+              }
+            }
+          }
+        }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+          as: "video",
+          src: message.data.url,
+          height: "120px",
+          width: "120px",
+          margin: "auto"
         }));
       } else if (this.state.messagetype === "file" && message.data.attachments) {
-        return (0, _react2.jsx)("div", {
+        return /*#__PURE__*/_react.default.createElement(_react2.Box, {
           id: message.id,
           key: key,
-          css: (0, _style.itemStyle)(this.state, this.props, _fileUpload.default, this.context),
-          className: "item item__file"
-        }, (0, _react2.jsx)("a", {
+          className: "item item__file",
+          margin: "0.5rem",
+          textAlign: "center",
+          flex: "1 0 auto",
+          backgroundColor: this.props.theme.backgroundColor.lightGrey,
+          sx: {
+            "@for $i from 1 through 36": {
+              "&:nth-of-type(#{$i})": {
+                maxWidth: "100%"
+              }
+            }
+          }
+        }, /*#__PURE__*/_react.default.createElement(_react2.Link, {
           href: message.data.attachments[0].url,
           target: "_blank",
-          rel: "noopener noreferrer"
-        }, (0, _react2.jsx)("i", null), (0, _react2.jsx)("span", null, message.data.attachments[0].name)));
+          rel: "noopener noreferrer",
+          maxWidth: "100%",
+          maxHeight: "100%",
+          margin: "auto",
+          display: "flex",
+          padding: "8px",
+          _hover: {
+            color: this.props.theme.secondaryTextColor
+          },
+          _visited: {
+            color: this.props.theme.secondaryTextColor
+          }
+        }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+          width: "30px",
+          height: "24px",
+          display: "inline-block",
+          sx: {
+            mask: "url(".concat(_fileUpload.default, ") left center no-repeat"),
+            backgroundColor: this.context.theme.secondaryTextColor
+          }
+        }), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+          fontSize: "13px",
+          color: this.props.theme.secondaryTextColor,
+          whiteSpace: "pre-wrap",
+          wordBreak: "break-word",
+          textAlign: "left",
+          width: "calc(100% - 30px)"
+        }, message.data.attachments[0].name)));
       }
     };
     const messages = [...this.state.messageList];
     const messageList = messages.map((message, key) => {
       return template(message, key);
     });
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.sectionStyle)(this.props),
-      className: "section section__sharedmedia"
-    }, (0, _react2.jsx)("h6", {
-      css: (0, _style.sectionHeaderStyle)(this.props),
-      className: "section__header"
-    }, _translator.default.translate("SHARED_MEDIA", this.props.lang)), (0, _react2.jsx)("div", {
-      css: (0, _style.sectionContentStyle)(this.props),
+    return /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "section section__sharedmedia",
+      width: "100%",
+      height: this.props.containerHeight ? "calc(100% - ".concat(this.props.containerHeight, ")") : "calc(100% - 20px)"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+      as: "h6",
+      className: "section__header",
+      margin: "0",
+      width: "100%",
+      fontSize: "12px",
+      fontWeight: "500!important",
+      lineHeight: "20px",
+      color: this.props.theme.color.secondary,
+      textTransform: "uppercase"
+    }, _translator.default.translate("SHARED_MEDIA", this.props.lang)), /*#__PURE__*/_react.default.createElement(_react2.VStack, {
       "data-id": "sharedmedia",
-      className: "section__content"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.mediaBtnStyle)(),
-      className: "media__button"
-    }, (0, _react2.jsx)("span", {
-      css: (0, _style.buttonStyle)(this.state, "image"),
-      onClick: () => this.mediaClickHandler("image")
-    }, _translator.default.translate("PHOTOS", this.props.lang)), (0, _react2.jsx)("span", {
-      css: (0, _style.buttonStyle)(this.state, "video"),
-      onClick: () => this.mediaClickHandler("video")
-    }, _translator.default.translate("VIDEOS", this.props.lang)), (0, _react2.jsx)("span", {
-      css: (0, _style.buttonStyle)(this.state, "file"),
-      onClick: () => this.mediaClickHandler("file")
-    }, _translator.default.translate("DOCS", this.props.lang))), (0, _react2.jsx)("div", {
-      css: (0, _style.mediaItemStyle)(),
+      className: "section__content",
+      width: "100%",
+      margin: "6px 0",
+      display: "flex",
+      flexDirection: "column",
+      height: "calc(100% - 20px)",
+      spacing: 0
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "media__button",
+      borderRadius: "8px",
+      backgroundColor: "rgba(20, 20, 20, 0.08)",
+      width: "100%",
+      padding: "2px",
+      margin: "6px 0",
+      clear: "both"
+    }, /*#__PURE__*/_react.default.createElement(_react2.HStack, {
+      spacing: 0
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      onClick: () => this.mediaClickHandler("image"),
+      display: "inline-block",
+      width: "33.33%",
+      fontSize: "13px",
+      fontWeight: "500",
+      lineHeight: "18px",
+      padding: "5px",
+      position: "relative",
+      textAlign: "center",
+      cursor: "pointer",
+      backgroundColor: this.state.messagetype === "image" ? "#fff" : "transparent",
+      boxShadow: this.state.messagetype === "image" ? "rgba(20, 20, 20, 0.04) 0 3px 1px, rgba(20, 20, 20, 0.12) 0 3px 8px" : "none",
+      borderRadius: this.state.messagetype === "image" ? "7px" : "0",
+      sx: {
+        "&:before": {
+          content: this.state.messagetype === "image" ? "none" : '""',
+          position: "absolute",
+          display: this.state.messagetype === "image" ? "none" : "block",
+          width: "2px",
+          height: "16px",
+          backgroundColor: "rgba(20, 20, 20, 0.12)",
+          right: "-2px",
+          top: "6px"
+        }
+      }
+    }, _translator.default.translate("PHOTOS", this.props.lang)), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      onClick: () => this.mediaClickHandler("video"),
+      display: "inline-block",
+      width: "33.33%",
+      fontSize: "13px",
+      fontWeight: "500",
+      lineHeight: "18px",
+      padding: "5px",
+      position: "relative",
+      textAlign: "center",
+      cursor: "pointer",
+      backgroundColor: this.state.messagetype === "video" ? "#fff" : "transparent",
+      boxShadow: this.state.messagetype === "video" ? "rgba(20, 20, 20, 0.04) 0 3px 1px, rgba(20, 20, 20, 0.12) 0 3px 8px" : "none",
+      borderRadius: this.state.messagetype === "video" ? "7px" : "0",
+      sx: {
+        "&:before": {
+          content: this.state.messagetype === "video" ? "none" : '""',
+          position: "absolute",
+          display: this.state.messagetype === "video" ? "none" : "block",
+          width: "2px",
+          height: "16px",
+          backgroundColor: "rgba(20, 20, 20, 0.12)",
+          right: "-2px",
+          top: "6px"
+        }
+      }
+    }, _translator.default.translate("VIDEOS", this.props.lang)), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      onClick: () => this.mediaClickHandler("file"),
+      display: "inline-block",
+      width: "33.33%",
+      fontSize: "13px",
+      fontWeight: "500",
+      lineHeight: "18px",
+      padding: "5px",
+      position: "relative",
+      textAlign: "center",
+      cursor: "pointer",
+      backgroundColor: this.state.messagetype === "file" ? "#fff" : "transparent",
+      boxShadow: this.state.messagetype === "file" ? "rgba(20, 20, 20, 0.04) 0 3px 1px, rgba(20, 20, 20, 0.12) 0 3px 8px" : "none",
+      borderRadius: this.state.messagetype === "file" ? "7px" : "0",
+      sx: {
+        "&:last-of-type::before": {
+          display: "none"
+        }
+      }
+    }, _translator.default.translate("DOCS", this.props.lang)))), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
       className: "media_items",
+      height: "calc(100% - 45px)",
+      overflowY: "auto",
+      overflowX: "hidden",
+      display: "flex",
+      flexWrap: "wrap",
+      fontSize: "14px",
       ref: el => this.messageContainer = el,
       onScroll: this.handleScroll
     }, messageList.length ? messageList : _translator.default.translate("NO_RECORDS_FOUND", this.props.lang))));

@@ -1,5 +1,6 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -7,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.CometChatSenderFileMessageBubble = void 0;
 require("core-js/modules/es.json.stringify.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _ = require("..");
 var _Extensions = require("../Extensions");
@@ -15,12 +16,12 @@ var _CometChatContext = require("../../../util/CometChatContext");
 var _common = require("../../../util/common");
 var enums = _interopRequireWildcard(require("../../../util/enums.js"));
 var _theme = require("../../../resources/theme");
-var _style = require("./style");
 var _fileUpload = _interopRequireDefault(require("./resources/file-upload.svg"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatSenderFileMessageBubble extends _react.default.Component {
   constructor(props) {
     super(props);
@@ -90,10 +91,15 @@ class CometChatSenderFileMessageBubble extends _react.default.Component {
     const reactionsData = (0, _common.checkMessageForExtensionsData)(this.props.message, "reactions");
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
-        messageReactions = (0, _react2.jsx)("div", {
-          css: (0, _style.messageReactionsWrapperStyle)(),
-          className: "message__reaction__wrapper"
-        }, (0, _react2.jsx)(_Extensions.CometChatMessageReactions, {
+        messageReactions = /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+          className: "message__reaction__wrapper",
+          display: "flex",
+          alignSelf: "flex-end",
+          width: "100%",
+          flexWrap: "wrap",
+          justifyContent: "flex-end",
+          minHeight: "36px"
+        }, /*#__PURE__*/_react.default.createElement(_Extensions.CometChatMessageReactions, {
           message: this.props.message,
           actionGenerated: this.props.actionGenerated
         }));
@@ -101,7 +107,7 @@ class CometChatSenderFileMessageBubble extends _react.default.Component {
     }
     let toolTipView = null;
     if (this.state.isHovering) {
-      toolTipView = (0, _react2.jsx)(_.CometChatMessageActions, {
+      toolTipView = /*#__PURE__*/_react.default.createElement(_.CometChatMessageActions, {
         message: this.props.message,
         actionGenerated: this.props.actionGenerated
       });
@@ -109,40 +115,125 @@ class CometChatSenderFileMessageBubble extends _react.default.Component {
     let fileMessage = null;
     if (this.state.fileData.hasOwnProperty("fileUrl")) {
       var _this$state$fileData, _this$state$fileData2;
-      fileMessage = (0, _react2.jsx)("a", {
+      fileMessage = /*#__PURE__*/_react.default.createElement(_react2.Link, {
         href: (_this$state$fileData = this.state.fileData) === null || _this$state$fileData === void 0 ? void 0 : _this$state$fileData.fileUrl,
         target: "_blank",
         rel: "noopener noreferrer",
-        className: "message__file"
-      }, (0, _react2.jsx)("i", {
-        css: (0, _style.iconStyle)(_fileUpload.default, this.context)
-      }), (0, _react2.jsx)("p", null, (_this$state$fileData2 = this.state.fileData) === null || _this$state$fileData2 === void 0 ? void 0 : _this$state$fileData2.fileName));
+        className: "message__file",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "0 0",
+        textDecoration: "none",
+        color: this.context.theme.color.white,
+        maxWidth: "100%",
+        fontSize: "14px",
+        _visited: {
+          color: this.context.theme.color.white,
+          textDecoration: "none"
+        },
+        _active: {
+          color: this.context.theme.color.white,
+          textDecoration: "none"
+        },
+        _hover: {
+          color: this.context.theme.color.white,
+          textDecoration: "none"
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        as: "i",
+        width: "24px",
+        height: "24px",
+        display: "inline-block",
+        flexShrink: "0",
+        sx: {
+          mask: "url(".concat(_fileUpload.default, ") center center no-repeat"),
+          backgroundColor: this.context.theme.color.white
+        }
+      }), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        as: "p",
+        margin: "0",
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+        textAlign: "left",
+        width: "100%",
+        fontSize: "14px",
+        marginLeft: "8px"
+      }, (_this$state$fileData2 = this.state.fileData) === null || _this$state$fileData2 === void 0 ? void 0 : _this$state$fileData2.fileName));
     } else {
       var _this$state$fileData3;
-      fileMessage = (0, _react2.jsx)(_react.default.Fragment, null, (0, _react2.jsx)("i", {
-        css: (0, _style.iconStyle)(_fileUpload.default, this.context)
-      }), (0, _react2.jsx)("p", null, (_this$state$fileData3 = this.state.fileData) === null || _this$state$fileData3 === void 0 ? void 0 : _this$state$fileData3.fileName));
+      fileMessage = /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        className: "message__file",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "0 0",
+        textDecoration: "none",
+        color: this.context.theme.color.white,
+        maxWidth: "100%",
+        fontSize: "14px"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        as: "i",
+        width: "24px",
+        height: "24px",
+        display: "inline-block",
+        flexShrink: "0",
+        sx: {
+          mask: "url(".concat(_fileUpload.default, ") center center no-repeat"),
+          backgroundColor: this.context.theme.color.white
+        }
+      }), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        as: "p",
+        margin: "0",
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+        textAlign: "left",
+        width: "100%",
+        fontSize: "14px",
+        marginLeft: "8px"
+      }, (_this$state$fileData3 = this.state.fileData) === null || _this$state$fileData3 === void 0 ? void 0 : _this$state$fileData3.fileName));
     }
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.messageContainerStyle)(),
+    return /*#__PURE__*/_react.default.createElement(_react2.Flex, {
       className: "sender__message__container message__file",
+      alignSelf: "flex-end",
+      marginBottom: "16px",
+      paddingLeft: "16px",
+      paddingRight: "16px",
+      maxWidth: "65%",
+      clear: "both",
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      flexShrink: "0",
       onMouseEnter: this.handleMouseHover,
       onMouseLeave: this.handleMouseHover
-    }, toolTipView, (0, _react2.jsx)("div", {
-      css: (0, _style.messageWrapperStyle)(),
-      className: "message__wrapper"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.messageFileWrapper)(this.context),
-      className: "message__file__wrapper"
-    }, (0, _react2.jsx)("div", {
-      className: "message__file"
-    }, fileMessage))), messageReactions, (0, _react2.jsx)("div", {
-      css: (0, _style.messageInfoWrapperStyle)(),
-      className: "message__info__wrapper"
-    }, (0, _react2.jsx)(_.CometChatThreadedMessageReplyCount, {
+    }, toolTipView, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "message__wrapper",
+      width: "auto",
+      flex: "1 1",
+      alignSelf: "flex-end",
+      display: "flex"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "message__file__wrapper",
+      display: "inline-block",
+      borderRadius: "12px",
+      backgroundColor: this.context.theme.primaryColor,
+      color: this.context.theme.color.white,
+      padding: "8px 16px",
+      alignSelf: "flex-end",
+      maxWidth: "100%"
+    }, fileMessage)), messageReactions, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "message__info__wrapper",
+      alignSelf: "flex-end",
+      display: "flex",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      height: "25px",
+      padding: "4px 8px"
+    }, /*#__PURE__*/_react.default.createElement(_.CometChatThreadedMessageReplyCount, {
       message: this.props.message,
       actionGenerated: this.props.actionGenerated
-    }), (0, _react2.jsx)(_.CometChatReadReceipt, {
+    }), /*#__PURE__*/_react.default.createElement(_.CometChatReadReceipt, {
       message: this.props.message
     })));
   }

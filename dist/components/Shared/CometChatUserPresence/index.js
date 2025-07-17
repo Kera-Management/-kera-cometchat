@@ -6,14 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.CometChatUserPresence = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _CometChatContext = require("../../../util/CometChatContext");
-var _style = require("./style");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-/** @jsxRuntime classic */
-/** @jsx jsx */
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 const CometChatUserPresence = props => {
   const context = _react.default.useContext(_CometChatContext.CometChatContext);
   const [presence, setPresence] = _react.default.useState(false);
@@ -43,10 +39,20 @@ const CometChatUserPresence = props => {
     borderColor: borderColor,
     borderRadius: cornerRadius
   });
-  return (0, _react2.jsx)("span", {
-    css: (0, _style.presenceStyle)(props),
-    className: "presence",
-    style: getStyle()
+  const backgroundColor = props.status === "online" || props.status === "available" ? "#3BDF2F" : "#C4C4C4";
+  return /*#__PURE__*/_react.default.createElement(_react2.Box, {
+    as: "span",
+    width: "9px",
+    height: "9px",
+    top: "-12px",
+    float: "right",
+    position: "relative",
+    backgroundColor: backgroundColor,
+    borderWidth: borderWidth,
+    borderStyle: "solid",
+    borderColor: borderColor,
+    borderRadius: cornerRadius,
+    className: "presence"
   });
 };
 

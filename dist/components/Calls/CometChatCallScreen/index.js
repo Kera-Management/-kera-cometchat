@@ -1,17 +1,21 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.filter.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatCallScreen = void 0;
 require("core-js/modules/es.parse-float.js");
+require("core-js/modules/es.parse-int.js");
 require("core-js/modules/es.regexp.exec.js");
 require("core-js/modules/es.string.replace.js");
-require("core-js/modules/es.parse-int.js");
 var _react = _interopRequireDefault(require("react"));
 var _chat = require("@cometchat-pro/chat");
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
 var _theme = require("../../../resources/theme");
@@ -21,13 +25,15 @@ var _Storage = require("../../../util/Storage");
 var _increaseSize = _interopRequireDefault(require("./resources/increase-size.svg"));
 var _reduceSize = _interopRequireDefault(require("./resources/reduce-size.svg"));
 var _strings = require("./strings");
-var _style = require("./style");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+// Removed emotion styles - now using Chakra UI
+
 class CometChatCallScreen extends _react.default.PureComponent {
   constructor(_props) {
     super(_props);
@@ -335,54 +341,166 @@ class CometChatCallScreen extends _react.default.PureComponent {
   }
   render() {
     const resizeText = _translator.default.translate("RESIZE", this.props.lang);
-    let iconView = (0, _react2.jsx)("i", {
-      css: (0, _style.iconStyle)(_reduceSize.default),
-      title: resizeText
+    let iconView = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      width: "24px",
+      height: "24px",
+      display: "inline-block",
+      cursor: "pointer",
+      title: resizeText,
+      sx: {
+        mask: "url(".concat(_reduceSize.default, ") center center no-repeat"),
+        backgroundColor: "white"
+      }
     });
     if (this.state.maximized === false) {
-      iconView = (0, _react2.jsx)("i", {
-        css: (0, _style.iconStyle)(_increaseSize.default),
-        title: resizeText
+      iconView = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        width: "24px",
+        height: "24px",
+        display: "inline-block",
+        cursor: "pointer",
+        title: resizeText,
+        sx: {
+          mask: "url(".concat(_increaseSize.default, ") center center no-repeat"),
+          backgroundColor: "white"
+        }
       });
     }
-    return (0, _react2.jsx)(_react.default.Fragment, null, (0, _react2.jsx)("div", {
-      css: (0, _style.callScreenBackgroundStyle)(this.state),
-      ref: this.callScreenBackgroundEl
-    }), (0, _react2.jsx)("div", {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      ref: this.callScreenBackgroundEl,
+      display: "none",
+      width: "100vw",
+      height: "100vh",
+      position: "fixed",
+      top: "0",
+      left: "0",
+      bottom: "0",
+      right: "0",
+      zIndex: "2147483001"
+    }), /*#__PURE__*/_react.default.createElement(_react2.Box, {
       ref: this.callScreenEl,
       className: "callscreen__container",
-      css: (0, _style.callScreenContainerStyle)(this.props),
-      style: {
-        top: this.state.y + "px",
-        left: this.state.x + "px"
+      width: this.props.maxWidth,
+      height: this.props.maxHeight,
+      position: "fixed",
+      top: this.state.y + "px",
+      left: this.state.x + "px",
+      overflow: "hidden",
+      zIndex: "2147483002",
+      sx: {
+        "*": {
+          boxSizing: "border-box",
+          fontFamily: this.props.theme.fontFamily
+        }
       }
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.callScreenInnerBackgroundStyle)(),
-      ref: this.callScreenInnerBackgroundEl
-    }), (0, _react2.jsx)("div", {
-      css: (0, _style.callScreenHeaderStyle)(this.state),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      ref: this.callScreenInnerBackgroundEl,
+      display: "none",
+      position: "absolute",
+      top: "0",
+      left: "0",
+      bottom: "0",
+      right: "0",
+      zIndex: "2147483003"
+    }), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
       className: "callscreen__header",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      backgroundColor: "#282c34",
+      width: "100%",
+      height: "50px",
+      position: "absolute",
+      top: "0",
+      right: "0",
+      bottom: "0",
+      left: "0",
+      zIndex: "2147483004",
+      cursor: this.state.maximized ? "default" : "grabbing",
       onMouseDown: this.enableDragging
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.headerTitleStyle)()
-    }, "\xA0"), (0, _react2.jsx)("div", {
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      width: "calc(100% - 55px)",
+      padding: "16px"
+    }, "\xA0"), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
       className: "callscreen__resize",
-      css: (0, _style.headerButtonStyle)(),
+      width: "55px",
+      padding: "16px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
       onClick: this.toggle,
       onMouseDown: e => e.stopPropagation()
-    }, (0, _react2.jsx)("button", {
+    }, /*#__PURE__*/_react.default.createElement(_react2.Button, {
       type: "button",
-      title: resizeText
-    }, iconView))), (0, _react2.jsx)("div", {
-      css: (0, _style.callScreenWrapperStyle)(this.props, _react2.keyframes),
+      title: resizeText,
+      border: "none",
+      background: "transparent",
+      cursor: "pointer",
+      outline: "none",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      padding: "0px",
+      sx: {
+        userSelect: "none",
+        "img": {
+          maxWidth: "100%",
+          flexShrink: "0"
+        }
+      }
+    }, iconView))), /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "callscreen__wrapper",
       ref: el => {
         this.callScreenFrame = el;
+      },
+      width: "100%",
+      height: "calc(100% - 50px)",
+      position: "absolute",
+      top: "50px",
+      right: "0",
+      bottom: "0",
+      left: "0",
+      backgroundColor: this.props.theme.backgroundColor.darkGrey,
+      zIndex: "999",
+      color: this.props.theme.color.white,
+      textAlign: "center",
+      boxSizing: "border-box",
+      fontFamily: this.props.theme.fontFamily,
+      sx: {
+        animation: "fadeIn 250ms ease",
+        "@keyframes fadeIn": {
+          from: {
+            opacity: 0
+          },
+          to: {
+            opacity: 1
+          }
+        },
+        "*": {
+          boxSizing: "border-box",
+          fontFamily: this.props.theme.fontFamily
+        },
+        iframe: {
+          border: "none"
+        }
       }
-    }), (0, _react2.jsx)("div", {
-      css: (0, _style.callScreenResizerStyle)(this.state),
+    }), /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "callscreen__resizer-both",
-      onMouseDown: this.initResize
+      onMouseDown: this.initResize,
+      width: "35px",
+      height: "35px",
+      position: "absolute",
+      right: "0",
+      bottom: "0",
+      zIndex: "2147483004",
+      display: this.state.maximized ? "none" : "block",
+      cursor: this.state.maximized ? "default" : "nwse-resize",
+      sx: {
+        clipPath: this.state.maximized ? "none" : "polygon(100% 0,100% 100%,0 100%)",
+        background: this.state.maximized ? "none" : "repeating-linear-gradient(135deg,hsla(0,0%,100%,.5),hsla(0,0%,100%,.5) 2px,#000 0,#000 4px)"
+      }
     })));
   }
 }

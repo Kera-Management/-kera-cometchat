@@ -1,21 +1,25 @@
 "use strict";
 
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.filter.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatActionMessageBubble = void 0;
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _CometChatContext = require("../../../util/CometChatContext");
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatActionMessageBubble extends _react.default.Component {
   constructor(props, context) {
     super(props, context);
@@ -82,11 +86,11 @@ class CometChatActionMessageBubble extends _react.default.Component {
           {
             actionMessage = _translator.default.translate("CALL_UNANSWERED", this.context.language);
             if (call.type === _chat.CometChat.CALL_TYPE.AUDIO && (call.receiverType === _chat.CometChat.RECEIVER_TYPE.USER || call.receiverType === _chat.CometChat.RECEIVER_TYPE.GROUP)) {
-              var _this$loggedInUser10;
-              actionMessage = call.callInitiator.uid === ((_this$loggedInUser10 = this.loggedInUser) === null || _this$loggedInUser10 === void 0 ? void 0 : _this$loggedInUser10.uid) ? _translator.default.translate("UNANSWERED_AUDIO_CALL", this.context.language) : _translator.default.translate("MISSED_AUDIO_CALL", this.context.language);
+              var _this$loggedInUser0;
+              actionMessage = call.callInitiator.uid === ((_this$loggedInUser0 = this.loggedInUser) === null || _this$loggedInUser0 === void 0 ? void 0 : _this$loggedInUser0.uid) ? _translator.default.translate("UNANSWERED_AUDIO_CALL", this.context.language) : _translator.default.translate("MISSED_AUDIO_CALL", this.context.language);
             } else if (call.type === _chat.CometChat.CALL_TYPE.VIDEO && (call.receiverType === _chat.CometChat.RECEIVER_TYPE.USER || call.receiverType === _chat.CometChat.RECEIVER_TYPE.GROUP)) {
-              var _this$loggedInUser11;
-              actionMessage = call.callInitiator.uid === ((_this$loggedInUser11 = this.loggedInUser) === null || _this$loggedInUser11 === void 0 ? void 0 : _this$loggedInUser11.uid) ? _translator.default.translate("UNANSWERED_VIDEO_CALL", this.context.language) : _translator.default.translate("MISSED_VIDEO_CALL", this.context.language);
+              var _this$loggedInUser1;
+              actionMessage = call.callInitiator.uid === ((_this$loggedInUser1 = this.loggedInUser) === null || _this$loggedInUser1 === void 0 ? void 0 : _this$loggedInUser1.uid) ? _translator.default.translate("UNANSWERED_VIDEO_CALL", this.context.language) : _translator.default.translate("MISSED_VIDEO_CALL", this.context.language);
             }
             break;
           }
@@ -110,8 +114,8 @@ class CometChatActionMessageBubble extends _react.default.Component {
     _defineProperty(this, "getActionMessage", message => {
       var _message$actionBy, _message$actionOn;
       let actionMessage = null;
-      const byUser = message === null || message === void 0 ? void 0 : (_message$actionBy = message.actionBy) === null || _message$actionBy === void 0 ? void 0 : _message$actionBy.name;
-      const onUser = message === null || message === void 0 ? void 0 : (_message$actionOn = message.actionOn) === null || _message$actionOn === void 0 ? void 0 : _message$actionOn.name;
+      const byUser = message === null || message === void 0 || (_message$actionBy = message.actionBy) === null || _message$actionBy === void 0 ? void 0 : _message$actionBy.name;
+      const onUser = message === null || message === void 0 || (_message$actionOn = message.actionOn) === null || _message$actionOn === void 0 ? void 0 : _message$actionOn.name;
       switch (message.action) {
         case _chat.CometChat.ACTION_TYPE.MEMBER_JOINED:
           actionMessage = "".concat(byUser, " ").concat(_translator.default.translate("JOINED", this.context.language));
@@ -156,11 +160,16 @@ class CometChatActionMessageBubble extends _react.default.Component {
     });
   }
   render() {
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.actionMessageStyle)(),
+    return /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      padding: "8px 16px",
+      marginBottom: "16px",
+      textAlign: "center",
+      height: "36px",
       className: "action__message"
-    }, (0, _react2.jsx)("p", {
-      css: (0, _style.actionMessageTxtStyle)()
+    }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+      fontSize: "13.5px",
+      margin: "0",
+      lineHeight: "20px"
     }, this.getMessage(this.props.message)));
   }
 }

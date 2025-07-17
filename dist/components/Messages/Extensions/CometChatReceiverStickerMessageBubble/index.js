@@ -5,8 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CometChatReceiverStickerMessageBubble = void 0;
 require("core-js/modules/es.json.stringify.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.search.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _ = require("../..");
@@ -16,9 +18,10 @@ var _CometChatContext = require("../../../../util/CometChatContext");
 var _common = require("../../../../util/common");
 var _theme = require("../../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../../resources/localization/translator"));
-var _style = require("./style");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatReceiverStickerMessageBubble extends _react.default.Component {
   constructor(props) {
     super(props);
@@ -46,17 +49,23 @@ class CometChatReceiverStickerMessageBubble extends _react.default.Component {
     let avatar = null,
       name = null;
     if (this.props.message.receiverType === _chat.CometChat.RECEIVER_TYPE.GROUP) {
-      avatar = (0, _react2.jsx)("div", {
-        css: (0, _style.messageThumbnailStyle)(),
+      avatar = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        w: "36px",
+        h: "36px",
+        m: "10px 5px",
+        float: "left",
+        flexShrink: "0",
         className: "message__thumbnail"
-      }, (0, _react2.jsx)(_Shared.CometChatAvatar, {
+      }, /*#__PURE__*/_react.default.createElement(_Shared.CometChatAvatar, {
         user: this.props.message.sender
       }));
-      name = (0, _react2.jsx)("div", {
-        css: (0, _style.nameWrapperStyle)(avatar),
+      name = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        alignSelf: "flex-start",
+        p: avatar ? "3px 5px" : "0",
         className: "message__name__wrapper"
-      }, (0, _react2.jsx)("span", {
-        css: (0, _style.nameStyle)(this.context),
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        fontSize: "11px",
+        color: this.context.theme.color.search,
         className: "message__name"
       }, this.props.message.sender.name));
     }
@@ -66,7 +75,7 @@ class CometChatReceiverStickerMessageBubble extends _react.default.Component {
       stickerData = this.props.message.data.customData;
       if (stickerData.hasOwnProperty("sticker_url")) {
         const stickerName = stickerData.hasOwnProperty("sticker_name") ? stickerData.sticker_name : _translator.default.translate("STICKER", this.context.language);
-        stickerImg = (0, _react2.jsx)("img", {
+        stickerImg = /*#__PURE__*/_react.default.createElement(_react2.Image, {
           src: stickerData.sticker_url,
           alt: stickerName
         });
@@ -76,10 +85,14 @@ class CometChatReceiverStickerMessageBubble extends _react.default.Component {
     const reactionsData = (0, _common.checkMessageForExtensionsData)(this.props.message, "reactions");
     if (reactionsData) {
       if (Object.keys(reactionsData).length) {
-        messageReactions = (0, _react2.jsx)("div", {
-          css: (0, _style.messageReactionsWrapperStyle)(),
+        messageReactions = /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+          alignSelf: "flex-start",
+          w: "100%",
+          flexWrap: "wrap",
+          justifyContent: "flex-start",
+          minH: "36px",
           className: "message__reaction__wrapper"
-        }, (0, _react2.jsx)(_2.CometChatMessageReactions, {
+        }, /*#__PURE__*/_react.default.createElement(_2.CometChatMessageReactions, {
           message: this.props.message,
           actionGenerated: this.props.actionGenerated
         }));
@@ -87,34 +100,62 @@ class CometChatReceiverStickerMessageBubble extends _react.default.Component {
     }
     let toolTipView = null;
     if (this.state.isHovering) {
-      toolTipView = (0, _react2.jsx)(_.CometChatMessageActions, {
+      toolTipView = /*#__PURE__*/_react.default.createElement(_.CometChatMessageActions, {
         message: this.props.message,
         actionGenerated: this.props.actionGenerated
       });
     }
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.messageContainerStyle)(),
+    return /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      alignSelf: "flex-start",
+      mb: "16px",
+      pl: "16px",
+      pr: "16px",
+      maxW: "65%",
+      clear: "both",
+      position: "relative",
+      flexDirection: "column",
+      flexShrink: "0",
       className: "receiver__message__container message__sticker",
       onMouseEnter: this.handleMouseHover,
       onMouseLeave: this.handleMouseHover
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.messageWrapperStyle)(),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      w: "auto",
+      flex: "1 1",
+      alignSelf: "flex-start",
       className: "message__wrapper"
-    }, avatar, (0, _react2.jsx)("div", {
-      css: (0, _style.messageDetailStyle)(name),
+    }, avatar, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      flex: "1 1",
+      flexDirection: "column",
       className: "message__details"
-    }, name, toolTipView, (0, _react2.jsx)("div", {
-      css: (0, _style.messageImgContainerStyle)(),
+    }, name, toolTipView, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      w: "auto",
+      flex: "1 1",
+      alignSelf: "flex-start",
       className: "message__image__container"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.messageImgWrapperStyle)(this.context),
-      className: "message__image__wrapper"
-    }, stickerImg)), messageReactions, (0, _react2.jsx)("div", {
-      css: (0, _style.messageInfoWrapperStyle)(),
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      display: "inline-block",
+      alignSelf: "flex-start",
+      maxW: "128px",
+      h: "128px",
+      cursor: "pointer",
+      className: "message__image__wrapper",
+      sx: {
+        ["@media ".concat(this.context.theme.breakPoints[1], ", ").concat(this.context.theme.breakPoints[2])]: {
+          maxW: "128px",
+          h: "128px",
+          p: "2px 2px"
+        }
+      }
+    }, stickerImg)), messageReactions, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      alignSelf: "flex-start",
+      p: "4px 8px",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      h: "25px",
       className: "message__info__wrapper"
-    }, (0, _react2.jsx)(_.CometChatReadReceipt, {
+    }, /*#__PURE__*/_react.default.createElement(_.CometChatReadReceipt, {
       message: this.props.message
-    }), (0, _react2.jsx)(_.CometChatThreadedMessageReplyCount, {
+    }), /*#__PURE__*/_react.default.createElement(_.CometChatThreadedMessageReplyCount, {
       message: this.props.message,
       actionGenerated: this.props.actionGenerated
     })))));

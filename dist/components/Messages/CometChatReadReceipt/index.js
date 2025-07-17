@@ -1,11 +1,16 @@
 "use strict";
 
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.filter.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatReadReceipt = void 0;
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.search.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _common = require("../../../util/common");
@@ -13,16 +18,17 @@ var _CometChatContext = require("../../../util/CometChatContext");
 var _phosphorReact = require("phosphor-react");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
 var _theme = require("../../../resources/theme");
-var _style = require("./style");
 var _messageRead = _interopRequireDefault(require("./resources/message-read.svg"));
 var _messageDelivered = _interopRequireDefault(require("./resources/message-delivered.svg"));
 var _messageSent = _interopRequireDefault(require("./resources/message-sent.svg"));
 var _wait = _interopRequireDefault(require("./resources/wait.svg"));
 var _warningSmall = _interopRequireDefault(require("./resources/warning-small.svg"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatReadReceipt extends _react.default.PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -64,12 +70,12 @@ class CometChatReadReceipt extends _react.default.PureComponent {
     this._isMounted = false;
   }
   render() {
-    var _this$props$message, _this$props$message$s, _this$loggedInUser;
+    var _this$props$message, _this$loggedInUser;
     let ticks,
       receiptText = null,
       dateField = null,
       color = null;
-    if (((_this$props$message = this.props.message) === null || _this$props$message === void 0 ? void 0 : (_this$props$message$s = _this$props$message.sender) === null || _this$props$message$s === void 0 ? void 0 : _this$props$message$s.uid) === ((_this$loggedInUser = this.loggedInUser) === null || _this$loggedInUser === void 0 ? void 0 : _this$loggedInUser.uid)) {
+    if (((_this$props$message = this.props.message) === null || _this$props$message === void 0 || (_this$props$message = _this$props$message.sender) === null || _this$props$message === void 0 ? void 0 : _this$props$message.uid) === ((_this$loggedInUser = this.loggedInUser) === null || _this$loggedInUser === void 0 ? void 0 : _this$loggedInUser.uid)) {
       if (this.props.message.receiverType === _chat.CometChat.RECEIVER_TYPE.GROUP) {
         if (this.props.message.hasOwnProperty("error")) {
           ticks = _warningSmall.default;
@@ -122,14 +128,20 @@ class CometChatReadReceipt extends _react.default.PureComponent {
     if (this.state.receipts === false) {
       ticks = null;
     }
-    const receipt = ticks ? (0, _react2.jsx)(_phosphorReact.Check, {
+    const receipt = ticks ? /*#__PURE__*/_react.default.createElement(_phosphorReact.Check, {
       size: 12,
       weight: "duotone"
     }) : null;
     const timestamp = (0, _common.getMessageSentTime)(dateField, this.context.language);
-    return (0, _react2.jsx)(_react.default.Fragment, null, (0, _react2.jsx)("span", {
-      css: (0, _style.msgTimestampStyle)(this.context, this.props, this.loggedInUser),
-      className: "message__timestamp"
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      as: "span",
+      className: "message__timestamp",
+      display: "flex",
+      fontSize: "11px",
+      fontWeight: "500",
+      lineHeight: "12px",
+      textTransform: "uppercase",
+      color: this.context.theme.color.search
     }, timestamp), receipt);
   }
 }

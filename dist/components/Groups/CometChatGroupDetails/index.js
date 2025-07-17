@@ -1,13 +1,18 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
+require("core-js/modules/esnext.iterator.filter.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatGroupDetails = void 0;
 require("core-js/modules/es.object.assign.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.find.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _controller = require("./controller");
@@ -18,15 +23,15 @@ var _CometChatContext = require("../../../util/CometChatContext");
 var enums = _interopRequireWildcard(require("../../../util/enums.js"));
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
 var _theme = require("../../../resources/theme");
-var _style = require("./style");
 var _back = _interopRequireDefault(require("./resources/back.svg"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatGroupDetails extends _react.default.Component {
   constructor(props, context) {
     var _this;
@@ -249,6 +254,9 @@ class CometChatGroupDetails extends _react.default.Component {
           break;
       }
     });
+    /*
+      Updating group members presence
+      */
     _defineProperty(this, "updateGroupMemberPresence", member => {
       let memberlist = [...this.context.groupMembers];
       //search for user
@@ -577,58 +585,143 @@ class CometChatGroupDetails extends _react.default.Component {
     this._isMounted = false;
   }
   render() {
-    var _this$context, _this$context$item2;
+    var _this$context;
     if (this.state.loggedInUser === null) {
       return null;
     }
-    let viewMembersBtn = (0, _react2.jsx)("div", {
-      css: (0, _style.contentItemStyle)(),
-      className: "content__item"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.itemLinkStyle)(this.context, 0),
+    let viewMembersBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "content__item",
+      position: "relative",
+      display: "flex",
+      clear: "both",
+      width: "100%",
+      py: "6px",
+      sx: {
+        "&:first-of-type": {
+          paddingTop: "0"
+        },
+        "&:last-of-type": {
+          paddingBottom: "0"
+        }
+      }
+    }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
       className: "item__link",
-      onClick: () => this.clickHandler("viewmember", true)
+      onClick: () => this.clickHandler("viewmember", true),
+      fontSize: "15px",
+      lineHeight: "20px",
+      display: "inline-block",
+      cursor: "pointer",
+      fontWeight: "600",
+      color: this.context.theme.color.primary
     }, _translator.default.translate("VIEW_MEMBERS", this.context.language)));
     let addMembersBtn = null,
       deleteGroupBtn = null,
       bannedMembersBtn = null;
     if (this.context.item.scope === _chat.CometChat.GROUP_MEMBER_SCOPE.ADMIN) {
-      addMembersBtn = (0, _react2.jsx)("div", {
-        css: (0, _style.contentItemStyle)(),
-        className: "content__item"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.itemLinkStyle)(this.context, 0),
+      addMembersBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "content__item",
+        position: "relative",
+        display: "flex",
+        clear: "both",
+        width: "100%",
+        py: "6px",
+        sx: {
+          "&:first-of-type": {
+            paddingTop: "0"
+          },
+          "&:last-of-type": {
+            paddingBottom: "0"
+          }
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
         className: "item__link",
-        onClick: () => this.clickHandler("addmember", true)
+        onClick: () => this.clickHandler("addmember", true),
+        fontSize: "15px",
+        lineHeight: "20px",
+        display: "inline-block",
+        cursor: "pointer",
+        fontWeight: "600",
+        color: this.context.theme.color.primary
       }, _translator.default.translate("ADD_MEMBERS", this.context.language)));
-      deleteGroupBtn = (0, _react2.jsx)("div", {
-        css: (0, _style.contentItemStyle)(),
-        className: "content__item"
-      }, (0, _react2.jsx)("span", {
-        css: (0, _style.itemLinkStyle)(this.context, 1),
+      deleteGroupBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "content__item",
+        position: "relative",
+        display: "flex",
+        clear: "both",
+        width: "100%",
+        py: "6px",
+        sx: {
+          "&:first-of-type": {
+            paddingTop: "0"
+          },
+          "&:last-of-type": {
+            paddingBottom: "0"
+          }
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
         className: "item__link",
-        onClick: this.deleteGroup
+        onClick: this.deleteGroup,
+        fontSize: "15px",
+        lineHeight: "20px",
+        display: "inline-block",
+        cursor: "pointer",
+        fontWeight: "600",
+        color: this.context.theme.color.red
       }, _translator.default.translate("DELETE_AND_EXIT", this.context.language)));
     }
     if (this.context.item.scope !== _chat.CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT) {
-      bannedMembersBtn = (0, _react2.jsx)("div", {
-        css: (0, _style.contentItemStyle)(),
-        className: "content__item"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.itemLinkStyle)(this.context, 0),
+      bannedMembersBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "content__item",
+        position: "relative",
+        display: "flex",
+        clear: "both",
+        width: "100%",
+        py: "6px",
+        sx: {
+          "&:first-of-type": {
+            paddingTop: "0"
+          },
+          "&:last-of-type": {
+            paddingBottom: "0"
+          }
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
         className: "item__link",
-        onClick: () => this.clickHandler("banmember", true)
+        onClick: () => this.clickHandler("banmember", true),
+        fontSize: "15px",
+        lineHeight: "20px",
+        display: "inline-block",
+        cursor: "pointer",
+        fontWeight: "600",
+        color: this.context.theme.color.primary
       }, _translator.default.translate("BANNED_MEMBERS", this.context.language)));
     }
-    let leaveGroupBtn = (0, _react2.jsx)("div", {
-      css: (0, _style.contentItemStyle)(),
-      className: "content__item"
-    }, (0, _react2.jsx)("span", {
-      css: (0, _style.itemLinkStyle)(this.context, 0),
+    let leaveGroupBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "content__item",
+      position: "relative",
+      display: "flex",
+      clear: "both",
+      width: "100%",
+      py: "6px",
+      sx: {
+        "&:first-of-type": {
+          paddingTop: "0"
+        },
+        "&:last-of-type": {
+          paddingBottom: "0"
+        }
+      }
+    }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
       className: "item__link",
-      onClick: this.leaveGroup
+      onClick: this.leaveGroup,
+      fontSize: "15px",
+      lineHeight: "20px",
+      display: "inline-block",
+      cursor: "pointer",
+      fontWeight: "600",
+      color: this.context.theme.color.primary
     }, _translator.default.translate("LEAVE_GROUP", this.context.language)));
-    let sharedmediaView = (0, _react2.jsx)(_index.CometChatSharedMediaView, {
+    let sharedmediaView = /*#__PURE__*/_react.default.createElement(_index.CometChatSharedMediaView, {
       containerHeight: "225px",
       lang: this.context.language
     });
@@ -660,7 +753,7 @@ class CometChatGroupDetails extends _react.default.Component {
     }
 
     //if leaving group feature is disabled
-    if (this.state.enableLeaveGroup === false || ((_this$context = this.context) === null || _this$context === void 0 ? void 0 : (_this$context$item2 = _this$context.item) === null || _this$context$item2 === void 0 ? void 0 : _this$context$item2.membersCount) === 1) {
+    if (this.state.enableLeaveGroup === false || ((_this$context = this.context) === null || _this$context === void 0 || (_this$context = _this$context.item) === null || _this$context === void 0 ? void 0 : _this$context.membersCount) === 1) {
       leaveGroupBtn = null;
     }
 
@@ -668,25 +761,51 @@ class CometChatGroupDetails extends _react.default.Component {
     if (this.state.enableSharedMedia === false) {
       sharedmediaView = null;
     }
-    let members = (0, _react2.jsx)("div", {
-      css: (0, _style.sectionStyle)(),
-      className: "section section__members"
-    }, (0, _react2.jsx)("h6", {
-      css: (0, _style.sectionHeaderStyle)(this.context),
-      className: "section__header"
-    }, _translator.default.translate("MEMBERS", this.context.language)), (0, _react2.jsx)("div", {
-      css: (0, _style.sectionContentStyle)(),
-      className: "section__content"
+    let members = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "section section__members",
+      width: "100%"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+      className: "section__header",
+      as: "h6",
+      m: 0,
+      width: "100%",
+      fontSize: "12px",
+      fontWeight: "500",
+      lineHeight: "20px",
+      color: this.context.theme.color.secondary,
+      textTransform: "uppercase"
+    }, _translator.default.translate("MEMBERS", this.context.language)), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "section__content",
+      width: "100%",
+      margin: "6px 0",
+      sx: {
+        "&:not(:last-of-type)": {
+          marginBottom: "16px"
+        }
+      }
     }, viewMembersBtn, addMembersBtn, bannedMembersBtn));
-    let options = (0, _react2.jsx)("div", {
-      css: (0, _style.sectionStyle)(),
-      className: "section section__options"
-    }, (0, _react2.jsx)("h6", {
-      css: (0, _style.sectionHeaderStyle)(this.context),
-      className: "section__header"
-    }, _translator.default.translate("OPTIONS", this.context.language)), (0, _react2.jsx)("div", {
-      css: (0, _style.sectionContentStyle)(),
-      className: "section__content"
+    let options = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "section section__options",
+      width: "100%"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+      className: "section__header",
+      as: "h6",
+      m: 0,
+      width: "100%",
+      fontSize: "12px",
+      fontWeight: "500",
+      lineHeight: "20px",
+      color: this.context.theme.color.secondary,
+      textTransform: "uppercase"
+    }, _translator.default.translate("OPTIONS", this.context.language)), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "section__content",
+      width: "100%",
+      margin: "6px 0",
+      sx: {
+        "&:not(:last-of-type)": {
+          marginBottom: "16px"
+        }
+      }
     }, leaveGroupBtn, deleteGroupBtn));
     if (viewMembersBtn === null && addMembersBtn === null && bannedMembersBtn === null) {
       members = null;
@@ -696,7 +815,7 @@ class CometChatGroupDetails extends _react.default.Component {
     }
     let viewMembers = null;
     if (this.state.viewMember) {
-      viewMembers = (0, _react2.jsx)(_.CometChatViewGroupMemberList, {
+      viewMembers = /*#__PURE__*/_react.default.createElement(_.CometChatViewGroupMemberList, {
         loggedinuser: this.state.loggedInUser,
         lang: this.props.lang,
         enableChangeScope: this.state.enableChangeScope,
@@ -708,14 +827,14 @@ class CometChatGroupDetails extends _react.default.Component {
     }
     let addMembers = null;
     if (this.state.addMember) {
-      addMembers = (0, _react2.jsx)(_.CometChatAddGroupMemberList, {
+      addMembers = /*#__PURE__*/_react.default.createElement(_.CometChatAddGroupMemberList, {
         close: () => this.clickHandler("addmember", false),
         actionGenerated: this.membersActionHandler
       });
     }
     let bannedMembers = null;
     if (this.state.banMember) {
-      bannedMembers = (0, _react2.jsx)(_.CometChatBanGroupMemberList, {
+      bannedMembers = /*#__PURE__*/_react.default.createElement(_.CometChatBanGroupMemberList, {
         loggedinuser: this.state.loggedInUser,
         close: () => this.clickHandler("banmember", false),
         actionGenerated: this.membersActionHandler
@@ -723,7 +842,7 @@ class CometChatGroupDetails extends _react.default.Component {
     }
     let showDeleteConfirmDialog = null;
     if (this.state.showDeleteConfirmDialog) {
-      showDeleteConfirmDialog = (0, _react2.jsx)(_Shared.CometChatConfirmDialog, _extends({}, this.props, {
+      showDeleteConfirmDialog = /*#__PURE__*/_react.default.createElement(_Shared.CometChatConfirmDialog, _extends({}, this.props, {
         onClick: this.onDeleteConfirm,
         message: _translator.default.translate("DELETE_CONFIRM", this.context.language),
         confirmButtonText: _translator.default.translate("DELETE", this.context.language),
@@ -732,7 +851,7 @@ class CometChatGroupDetails extends _react.default.Component {
     }
     let showLeaveGroupConfirmDialog = null;
     if (this.state.showLeaveGroupConfirmDialog) {
-      showLeaveGroupConfirmDialog = (0, _react2.jsx)(_Shared.CometChatConfirmDialog, _extends({}, this.props, {
+      showLeaveGroupConfirmDialog = /*#__PURE__*/_react.default.createElement(_Shared.CometChatConfirmDialog, _extends({}, this.props, {
         onClick: this.onLeaveConfirm,
         message: _translator.default.translate("LEAVE_CONFIRM", this.context.language),
         confirmButtonText: _translator.default.translate("LEAVE", this.context.language),
@@ -741,7 +860,7 @@ class CometChatGroupDetails extends _react.default.Component {
     }
     let showTransferOwnershipConfirmDialog = null;
     if (this.state.showTransferOwnershipConfirmDialog) {
-      showTransferOwnershipConfirmDialog = (0, _react2.jsx)(_Shared.CometChatConfirmDialog, _extends({}, this.props, {
+      showTransferOwnershipConfirmDialog = /*#__PURE__*/_react.default.createElement(_Shared.CometChatConfirmDialog, _extends({}, this.props, {
         onClick: this.onTransferConfirm,
         message: _translator.default.translate("TRANSFER_CONFIRM", this.context.language),
         confirmButtonText: _translator.default.translate("TRANSFER", this.context.language),
@@ -750,30 +869,64 @@ class CometChatGroupDetails extends _react.default.Component {
     }
     let transferOwnership = null;
     if (this.state.transferOwnership) {
-      transferOwnership = (0, _react2.jsx)(_.CometChatTransferOwnershipMemberList, {
+      transferOwnership = /*#__PURE__*/_react.default.createElement(_.CometChatTransferOwnershipMemberList, {
         roles: this.roles,
         loggedinuser: this.state.loggedInUser,
         actionGenerated: this.membersActionHandler,
         close: () => this.clickHandler("transferownership", false)
       });
     }
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.detailStyle)(this.context),
-      className: "detailpane"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.headerStyle)(this.context),
-      className: "detailpane__header"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.headerCloseStyle)(_back.default, this.context),
+    return /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "detailpane",
+      height: "100%",
+      position: "relative",
+      boxSizing: "border-box",
+      fontFamily: this.context.theme.fontFamily,
+      sx: {
+        "*": {
+          boxSizing: "border-box",
+          fontFamily: this.context.theme.fontFamily
+        }
+      }
+    }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "detailpane__header",
+      p: 4,
+      position: "relative",
+      borderBottom: "1px solid ".concat(this.context.theme.borderColor.primary),
+      justifyContent: "flex-start",
+      alignItems: "center",
+      height: "69px"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "header__close",
+      cursor: "pointer",
+      display: "none",
+      sx: {
+        mask: "url(".concat(_back.default, ") center center no-repeat"),
+        backgroundColor: this.context.theme.primaryColor,
+        [this.context.theme.breakPoints[1]]: {
+          display: "block"
+        }
+      },
+      width: "24px",
+      height: "24px",
       onClick: this.closeGroupDetail
-    }), (0, _react2.jsx)("h4", {
-      css: (0, _style.headerTitleStyle)(),
-      className: "header__title"
-    }, _translator.default.translate("DETAILS", this.context.language))), (0, _react2.jsx)("div", {
-      css: (0, _style.detailPaneStyle)(),
-      className: "detailpane__section"
-    }, members, options, sharedmediaView), viewMembers, addMembers, bannedMembers, transferOwnership, showDeleteConfirmDialog, showLeaveGroupConfirmDialog, showTransferOwnershipConfirmDialog, (0, _react2.jsx)(_Shared.CometChatToastNotification, {
+    }), /*#__PURE__*/_react.default.createElement(_react2.Heading, {
+      className: "header__title",
+      as: "h4",
+      m: 0,
+      fontWeight: "700",
+      fontSize: "22px",
+      lineHeight: "26px"
+    }, _translator.default.translate("DETAILS", this.context.language))), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "detailpane__section",
+      m: 0,
+      p: 4,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+      height: "calc(100% - 70px)"
+    }, members, options, sharedmediaView), viewMembers, addMembers, bannedMembers, transferOwnership, showDeleteConfirmDialog, showLeaveGroupConfirmDialog, showTransferOwnershipConfirmDialog, /*#__PURE__*/_react.default.createElement(_Shared.CometChatToastNotification, {
       ref: el => this.toastRef = el,
       lang: this.props.lang
     }));

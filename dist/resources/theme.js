@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.theme = void 0;
-const theme = {
+const theme = exports.theme = {
   fontFamily: "Inter, sans-serif",
   fontSize: "14px",
   primaryColor: "#39f",
@@ -42,4 +42,3 @@ const theme = {
   },
   breakPoints: ["(min-width: 320px) and (max-width: 767px)", "(min-width: 320px) and (max-width: 480px)", "(min-width: 481px) and (max-width: 768px)", "(min-width: 769px) and (max-width: 1024px)", "(min-width: 1025px) and (max-width: 1200px)"]
 };
-exports.theme = theme;

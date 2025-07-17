@@ -1,16 +1,21 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
+require("core-js/modules/esnext.iterator.filter.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatConversationList = void 0;
-require("core-js/modules/web.dom-collections.iterator.js");
-require("core-js/modules/es.promise.js");
-require("core-js/modules/es.parse-int.js");
 require("core-js/modules/es.object.assign.js");
+require("core-js/modules/es.parse-int.js");
+require("core-js/modules/es.promise.js");
 require("core-js/modules/es.string.trim.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.for-each.js");
+require("core-js/modules/esnext.iterator.map.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _controller = require("./controller");
@@ -23,15 +28,15 @@ var _SoundManager = require("../../../util/SoundManager");
 var _CometChatEvent = require("../../../util/CometChatEvent");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
 var _theme = require("../../../resources/theme");
-var _style = require("./style");
 var _back = _interopRequireDefault(require("./resources/back.svg"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatConversationList extends _react.default.Component {
   constructor(props) {
     var _this;
@@ -39,6 +44,11 @@ class CometChatConversationList extends _react.default.Component {
     _this = this;
     _defineProperty(this, "loggedInUser", null);
     _defineProperty(this, "incrementUnreadCount", false);
+    // componentWillUnmount() {
+    //   this._isMounted = false;
+    //   this.ConversationListManager.removeListeners();
+    //   this.ConversationListManager = null;
+    // }
     _defineProperty(this, "filterConversation", () => {
       const conversationlist = [...this.state.conversationlist];
       return conversationlist.find(c => {
@@ -244,13 +254,13 @@ class CometChatConversationList extends _react.default.Component {
       conversationList.forEach((conversation, conversationKey) => {
         if ((conversation === null || conversation === void 0 ? void 0 : conversation.conversationType) === messageReceipt.receiverType) {
           var _conversation$convers, _conversation$convers2;
-          if ((conversation === null || conversation === void 0 ? void 0 : conversation.conversationType) === _chat.CometChat.RECEIVER_TYPE.USER && messageReceipt.receiver === (conversation === null || conversation === void 0 ? void 0 : (_conversation$convers = conversation.conversationWith) === null || _conversation$convers === void 0 ? void 0 : _conversation$convers.uid) || (conversation === null || conversation === void 0 ? void 0 : conversation.conversationType) === _chat.CometChat.RECEIVER_TYPE.GROUP && messageReceipt.receiver === (conversation === null || conversation === void 0 ? void 0 : (_conversation$convers2 = conversation.conversationWith) === null || _conversation$convers2 === void 0 ? void 0 : _conversation$convers2.guid)) {
+          if ((conversation === null || conversation === void 0 ? void 0 : conversation.conversationType) === _chat.CometChat.RECEIVER_TYPE.USER && messageReceipt.receiver === (conversation === null || conversation === void 0 || (_conversation$convers = conversation.conversationWith) === null || _conversation$convers === void 0 ? void 0 : _conversation$convers.uid) || (conversation === null || conversation === void 0 ? void 0 : conversation.conversationType) === _chat.CometChat.RECEIVER_TYPE.GROUP && messageReceipt.receiver === (conversation === null || conversation === void 0 || (_conversation$convers2 = conversation.conversationWith) === null || _conversation$convers2 === void 0 ? void 0 : _conversation$convers2.guid)) {
             var _conversation$lastMes;
             let unreadMessageCount = conversation.unreadMessageCount;
             /**
              * If the message id of the read reciept if greater than or equal to the lastmessage id, set unreadmessagecount to 0
              */
-            if ((messageReceipt === null || messageReceipt === void 0 ? void 0 : messageReceipt.messageId) >= (conversation === null || conversation === void 0 ? void 0 : (_conversation$lastMes = conversation.lastMessage) === null || _conversation$lastMes === void 0 ? void 0 : _conversation$lastMes.id)) {
+            if ((messageReceipt === null || messageReceipt === void 0 ? void 0 : messageReceipt.messageId) >= (conversation === null || conversation === void 0 || (_conversation$lastMes = conversation.lastMessage) === null || _conversation$lastMes === void 0 ? void 0 : _conversation$lastMes.id)) {
               unreadMessageCount = 0;
             }
             let newConversationObj = _objectSpread(_objectSpread({}, conversation), {}, {
@@ -541,6 +551,7 @@ class CometChatConversationList extends _react.default.Component {
       const bottom = Math.round(e.currentTarget.scrollHeight - e.currentTarget.scrollTop) === Math.round(e.currentTarget.clientHeight);
       if (bottom) this.getConversations();
     });
+    //click handler
     _defineProperty(this, "handleClick", conversation => {
       if (!this.props.onItemClick) return;
       this.props.onItemClick(conversation.conversationWith, conversation.conversationType);
@@ -619,7 +630,7 @@ class CometChatConversationList extends _react.default.Component {
       if (optionSelected === "yes") {
         var _conversation$convers3, _conversation$convers4;
         const conversation = this.state.conversationToBeDeleted;
-        const conversationWith = conversation.conversationType === _chat.CometChat.RECEIVER_TYPE.GROUP ? conversation === null || conversation === void 0 ? void 0 : (_conversation$convers3 = conversation.conversationWith) === null || _conversation$convers3 === void 0 ? void 0 : _conversation$convers3.guid : conversation === null || conversation === void 0 ? void 0 : (_conversation$convers4 = conversation.conversationWith) === null || _conversation$convers4 === void 0 ? void 0 : _conversation$convers4.uid;
+        const conversationWith = conversation.conversationType === _chat.CometChat.RECEIVER_TYPE.GROUP ? conversation === null || conversation === void 0 || (_conversation$convers3 = conversation.conversationWith) === null || _conversation$convers3 === void 0 ? void 0 : _conversation$convers3.guid : conversation === null || conversation === void 0 || (_conversation$convers4 = conversation.conversationWith) === null || _conversation$convers4 === void 0 ? void 0 : _conversation$convers4.uid;
         _chat.CometChat.deleteConversation(conversationWith, conversation.conversationType).then(deletedConversation => {
           this.conversationDeleted(conversation);
         }).catch(error => this.toastRef.setError("SOMETHING_WRONG"));
@@ -768,16 +779,9 @@ class CometChatConversationList extends _react.default.Component {
     this.item = this.getContext().type === _chat.CometChat.ACTION_TYPE.TYPE_USER || _chat.CometChat.ACTION_TYPE.TYPE_GROUP ? this.getContext().item : null;
     this.hideGroupActionMessages();
   }
-
-  // componentWillUnmount() {
-  //   this._isMounted = false;
-  //   this.ConversationListManager.removeListeners();
-  //   this.ConversationListManager = null;
-  // }
-
   render() {
     const conversationList = this.state.conversationlist.map((conversation, key) => {
-      return (0, _react2.jsx)(_.CometChatConversationListItem, {
+      return /*#__PURE__*/_react.default.createElement(_.CometChatConversationListItem, {
         key: conversation.conversationId,
         conversation: conversation,
         loggedInUser: this.loggedInUser,
@@ -787,17 +791,40 @@ class CometChatConversationList extends _react.default.Component {
     });
     let messageContainer = null;
     if (this.state.decoratorMessage.length !== 0) {
-      messageContainer = (0, _react2.jsx)("div", {
-        css: (0, _style.chatsMsgStyle)(),
-        className: "chats__decorator-message"
-      }, (0, _react2.jsx)("p", {
-        css: (0, _style.chatsMsgTxtStyle)(_theme.theme),
-        className: "decorator-message"
+      messageContainer = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "chats__decorator-message",
+        overflow: "hidden",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: "50%"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        className: "decorator-message",
+        m: 0,
+        minHeight: "36px",
+        color: _theme.theme.color.secondary,
+        fontSize: "20px",
+        fontWeight: "600",
+        lineHeight: "30px",
+        wordWrap: "break-word",
+        px: 4
       }, this.state.decoratorMessage));
     }
-    let closeBtn = (0, _react2.jsx)("div", {
-      css: (0, _style.chatsHeaderCloseStyle)(_back.default, _theme.theme),
+    let closeBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "header__close",
+      cursor: "pointer",
+      display: "none",
+      sx: {
+        mask: "url(".concat(_back.default, ") no-repeat left center"),
+        backgroundColor: _theme.theme.primaryColor,
+        [_theme.theme.breakPoints[0]]: {
+          display: "block !important"
+        }
+      },
+      height: "24px",
+      width: "33%",
       onClick: this.handleMenuClose
     });
     if (this.getContext() && Object.keys(this.getContext().item).length === 0) {
@@ -805,36 +832,81 @@ class CometChatConversationList extends _react.default.Component {
     }
     let showConfirmDialog = null;
     if (this.state.showConfirmDialog) {
-      showConfirmDialog = (0, _react2.jsx)(_Shared.CometChatConfirmDialog, _extends({}, this.props, {
+      showConfirmDialog = /*#__PURE__*/_react.default.createElement(_Shared.CometChatConfirmDialog, _extends({}, this.props, {
         onClick: this.onDeleteConfirm,
         message: _translator.default.translate("DELETE_CONFIRM", this.getContext().language),
         confirmButtonText: _translator.default.translate("DELETE", this.getContext().language),
         cancelButtonText: _translator.default.translate("CANCEL", this.getContext().language)
       }));
     }
-    const chatList = (0, _react2.jsx)("div", {
-      css: (0, _style.chatsWrapperStyle)(this.props, _theme.theme),
-      className: "chats"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.chatsHeaderStyle)(_theme.theme),
-      className: "chats__header"
-    }, closeBtn, (0, _react2.jsx)("h4", {
-      css: (0, _style.chatsHeaderTitleStyle)(this.props),
+    const chatList = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "chats",
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      boxSizing: "border-box",
+      sx: _objectSpread(_objectSpread({}, this.props._parent === "" ? {
+        border: "1px solid ".concat(_theme.theme.borderColor.primary)
+      } : {}), {}, {
+        "*": {
+          boxSizing: "border-box",
+          "::-webkit-scrollbar": {
+            width: "8px",
+            height: "4px"
+          },
+          "::-webkit-scrollbar-track": {
+            background: "#ffffff00"
+          },
+          "::-webkit-scrollbar-thumb": {
+            background: "#ccc",
+            "&:hover": {
+              background: "#aaa"
+            }
+          }
+        }
+      })
+    }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "chats__header",
+      p: 4,
+      alignItems: "center",
+      borderBottom: "1px solid ".concat(_theme.theme.borderColor.primary),
+      height: "69px"
+    }, closeBtn, /*#__PURE__*/_react.default.createElement(_react2.Heading, {
       className: "header__title",
-      dir: _translator.default.getDirection(this.props.lang)
-    }, _translator.default.translate("CHATS", this.props.lang))), messageContainer, (0, _react2.jsx)("div", {
-      css: (0, _style.chatsListStyle)(),
+      as: "h4",
+      m: 0,
+      display: "inline-block",
+      width: "100%",
+      textAlign: "left",
+      fontSize: "22px",
+      fontWeight: "700",
+      lineHeight: "26px",
+      dir: _translator.default.getDirection(this.props.lang),
+      sx: _objectSpread(_objectSpread({}, this.props.hasOwnProperty("enableCloseMenu") && this.props.enableCloseMenu.length > 0 ? {
+        width: "33%",
+        textAlign: "center"
+      } : {}), {}, {
+        "&[dir=rtl]": {
+          textAlign: "right"
+        }
+      })
+    }, _translator.default.translate("CHATS", this.props.lang))), messageContainer, /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "chats__list",
+      height: "calc(100% - 75px)",
+      width: "100%",
+      overflowY: "auto",
+      m: 0,
+      p: 0,
       onScroll: this.handleScroll,
       ref: el => this.chatListRef = el
-    }, conversationList), showConfirmDialog, (0, _react2.jsx)(_Shared.CometChatToastNotification, {
+    }, conversationList), showConfirmDialog, /*#__PURE__*/_react.default.createElement(_Shared.CometChatToastNotification, {
       ref: el => this.toastRef = el,
       lang: this.props.lang
     }));
     let chatListWrapper = chatList;
     //if used as a standalone component, add errorboundary and context provider
     if (this.props._parent === "") {
-      chatListWrapper = (0, _react2.jsx)(_CometChatContext.CometChatContextProvider, {
+      chatListWrapper = /*#__PURE__*/_react.default.createElement(_CometChatContext.CometChatContextProvider, {
         ref: el => this.contextProviderRef = el
       }, chatList);
     }

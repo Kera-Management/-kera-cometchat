@@ -1,33 +1,38 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
+require("core-js/modules/esnext.iterator.filter.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatMessageReactions = void 0;
-require("core-js/modules/es.regexp.exec.js");
-require("core-js/modules/es.string.replace.js");
-require("core-js/modules/esnext.string.replace-all.js");
 require("core-js/modules/es.array.includes.js");
+require("core-js/modules/es.regexp.exec.js");
 require("core-js/modules/es.string.includes.js");
+require("core-js/modules/es.string.replace.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.map.js");
+require("core-js/modules/esnext.string.replace-all.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
+var _react2 = require("@chakra-ui/react");
 var _CometChatContext = require("../../../../util/CometChatContext");
 var enums = _interopRequireWildcard(require("../../../../util/enums.js"));
 var _common = require("../../../../util/common");
 var _theme = require("../../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../../resources/localization/translator"));
-var _style = require("./style");
 var _reactions = _interopRequireDefault(require("./resources/reactions.svg"));
 var _EmojiMapping = require("./EmojiMapping");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatMessageReactions extends _react.default.Component {
   constructor(props, context) {
     super(props, context);
@@ -71,6 +76,7 @@ class CometChatMessageReactions extends _react.default.Component {
         return null;
       }
       const messageReactions = Object.keys(reaction).map((data, key) => {
+        var _this$loggedInUser;
         const reactionData = reaction[data];
         let reactionName = data.replaceAll(":", "");
         const reactionCount = Object.keys(reactionData).length;
@@ -94,16 +100,36 @@ class CometChatMessageReactions extends _react.default.Component {
           reactionTitle = reactionTitle.concat(str);
         }
         const reactionClassName = "reaction reaction__".concat(reactionName);
-        return (0, _react2.jsx)("div", {
+        const uid = (_this$loggedInUser = this.loggedInUser) === null || _this$loggedInUser === void 0 ? void 0 : _this$loggedInUser.uid;
+        const hasUserReacted = reactionData.hasOwnProperty(uid);
+        return /*#__PURE__*/_react.default.createElement(_react2.Box, {
           key: key,
-          css: (0, _style.messageReactionsStyle)(this.props, reactionData, this.context, this.loggedInUser),
+          fontSize: "11px",
+          p: "2px 6px",
+          display: "inline-flex",
+          alignItems: "center",
+          verticalAlign: "top",
+          backgroundColor: this.context.theme.backgroundColor.secondary,
+          borderRadius: "12px",
+          m: "4px 4px 0 0",
+          cursor: "pointer",
+          border: hasUserReacted ? "1px solid ".concat(this.context.theme.primaryColor) : "1px solid transparent",
+          _hover: {
+            border: hasUserReacted ? "1px solid ".concat(this.context.theme.primaryColor) : "1px solid ".concat(this.context.theme.borderColor.primary)
+          },
           onClick: this.reactToMessages.bind(this, reactionName),
           className: reactionClassName,
           title: reactionTitle
-        }, (0, _react2.jsx)("div", {
+        }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          fontSize: "16px",
           className: "emoji"
-        }, reactionName), (0, _react2.jsx)("span", {
-          css: (0, _style.reactionCountStyle)(this.context),
+        }, reactionName), /*#__PURE__*/_react.default.createElement(_react2.Text, {
+          color: this.context.theme.color.primary,
+          p: "0 1px 0 3px",
           className: "reaction__count"
         }, reactionCount));
       });
@@ -114,17 +140,49 @@ class CometChatMessageReactions extends _react.default.Component {
       if (this.state.enableMessageReaction === false) {
         return null;
       }
-      const addReactionEmoji = (0, _react2.jsx)("div", {
+      const addReactionEmoji = /*#__PURE__*/_react.default.createElement(_react2.Box, {
         key: "-1",
-        css: (0, _style.messageReactionsStyle)(this.props, {}, this.context),
+        fontSize: "11px",
+        p: "2px 6px",
+        display: "inline-flex",
+        alignItems: "center",
+        verticalAlign: "top",
+        backgroundColor: this.context.theme.backgroundColor.secondary,
+        borderRadius: "12px",
+        m: "4px 4px 0 0",
+        cursor: "pointer",
+        border: "1px solid transparent",
+        _hover: {
+          border: "1px solid ".concat(this.context.theme.borderColor.primary)
+        },
         className: "reaction reaction__add",
         title: _translator.default.translate("ADD_REACTION", this.context.language)
-      }, (0, _react2.jsx)("button", {
+      }, /*#__PURE__*/_react.default.createElement(_react2.Button, {
         type: "button",
-        css: (0, _style.emojiButtonStyle)(_reactions.default, this.context),
+        p: "0",
+        minW: "auto",
+        h: "auto",
+        outline: "0",
+        border: "0",
+        borderRadius: "4px",
+        alignItems: "center",
+        display: "inline-flex",
+        justifyContent: "center",
+        position: "relative",
+        bg: "transparent",
+        _hover: {
+          bg: "transparent"
+        },
         className: "button__reacttomessage",
         onClick: () => this.props.actionGenerated(enums.ACTIONS["REACT_TO_MESSAGE"], this.props.message)
-      }, (0, _react2.jsx)("i", null)));
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        h: "24px",
+        w: "24px",
+        sx: {
+          mask: "url(".concat(_reactions.default, ") center center no-repeat"),
+          backgroundColor: this.context.theme.secondaryTextColor
+        }
+      })));
       return addReactionEmoji;
     });
     this._isMounted = false;
@@ -147,8 +205,8 @@ class CometChatMessageReactions extends _react.default.Component {
     const messageReactions = this.getMessageReactions(reaction);
     const addReactionEmoji = this.addMessageReaction();
     if (messageReactions !== null && messageReactions.length && addReactionEmoji !== null) {
-      var _this$props$message, _this$props$message$s, _this$loggedInUser;
-      if (((_this$props$message = this.props.message) === null || _this$props$message === void 0 ? void 0 : (_this$props$message$s = _this$props$message.sender) === null || _this$props$message$s === void 0 ? void 0 : _this$props$message$s.uid) !== ((_this$loggedInUser = this.loggedInUser) === null || _this$loggedInUser === void 0 ? void 0 : _this$loggedInUser.uid)) {
+      var _this$props$message, _this$loggedInUser2;
+      if (((_this$props$message = this.props.message) === null || _this$props$message === void 0 || (_this$props$message = _this$props$message.sender) === null || _this$props$message === void 0 ? void 0 : _this$props$message.uid) !== ((_this$loggedInUser2 = this.loggedInUser) === null || _this$loggedInUser2 === void 0 ? void 0 : _this$loggedInUser2.uid)) {
         messageReactions.push(addReactionEmoji);
       } else {
         messageReactions.unshift(addReactionEmoji);

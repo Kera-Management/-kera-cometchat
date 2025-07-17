@@ -6,36 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.FeatureRestriction = void 0;
 require("core-js/modules/es.promise.js");
 var _chat = require("@cometchat-pro/chat");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class FeatureRestriction {
-  /**
-   * Core Chat
-   */
-
-  /**
-   * Voice & Video Calling/Conferencing
-   */
-
-  /**
-   * Collaboration
-   */
-
-  /**
-   * Moderation
-   */
-
-  /**
-   * User Engagement
-   */
-
-  /**
-   * User Experience
-   */
-
-  /**
-   * Extensions slug
-   */
-
   constructor(UIKitSettings) {
     _defineProperty(this, "UIKitSettings", void 0);
     _defineProperty(this, "isRecentChatListEnabled", () => new Promise(resolve => resolve(this.UIKitSettings.chats)));
@@ -352,6 +326,9 @@ class FeatureRestriction {
   // }
 }
 exports.FeatureRestriction = FeatureRestriction;
+/**
+ * Core Chat
+ */
 _defineProperty(FeatureRestriction, "chat_users_list_enabled", "core.chat.users.list.enabled");
 _defineProperty(FeatureRestriction, "chat_users_presence_enabled", "core.chat.users.presence.enabled");
 _defineProperty(FeatureRestriction, "chat_users_search_enabled", "core.chat.users.search.enabled");
@@ -371,6 +348,9 @@ _defineProperty(FeatureRestriction, "chat_messages_custom_enabled", "core.chat.m
 _defineProperty(FeatureRestriction, "chat_one_on_one_enabled", "core.chat.one-on-one.enabled");
 _defineProperty(FeatureRestriction, "chat_voice_notes_enabled", "core.chat.voice-notes.enabled");
 _defineProperty(FeatureRestriction, "chat_typing_indicator_enabled", "core.chat.typing-indicator.enabled");
+/**
+ * Voice & Video Calling/Conferencing
+ */
 _defineProperty(FeatureRestriction, "calls_enabled", "core.call.enabled");
 _defineProperty(FeatureRestriction, "call_one_on_one_video_enabled", "core.call.one-on-one.video.enabled");
 _defineProperty(FeatureRestriction, "call_groups_video_enabled", "core.call.groups.video.enabled");
@@ -379,8 +359,14 @@ _defineProperty(FeatureRestriction, "call_groups_audio_enabled", "core.call.grou
 _defineProperty(FeatureRestriction, "call_recording_enabled", "core.call.recording.enabled");
 _defineProperty(FeatureRestriction, "call_live_streaming_enabled", "core.call.live-streaming.enabled");
 _defineProperty(FeatureRestriction, "call_transcript_enabled", "core.call.transcript.enabled");
+/**
+ * Collaboration
+ */
 _defineProperty(FeatureRestriction, "collaboration_whiteboard_enabled", "features.collaboration.whiteboard.enabled");
 _defineProperty(FeatureRestriction, "collaboration_document_enabled", "features.collaboration.document.enabled");
+/**
+ * Moderation
+ */
 _defineProperty(FeatureRestriction, "moderation_groups_moderators_enabled", "features.moderation.groups.moderators.enabled");
 _defineProperty(FeatureRestriction, "moderation_users_block_enabled", "features.moderation.users.block.enabled");
 _defineProperty(FeatureRestriction, "moderation_groups_kick_enabled", "features.moderation.groups.kick.enabled");
@@ -392,6 +378,9 @@ _defineProperty(FeatureRestriction, "moderation_data_masking_enabled", "features
 _defineProperty(FeatureRestriction, "moderation_malware_scanner_enabled", "features.moderation.malware-scanner.enabled");
 _defineProperty(FeatureRestriction, "moderation_sentiment_analysis_enabled", "features.moderation.sentiment-analysis.enabled");
 _defineProperty(FeatureRestriction, "moderation_inflight_message_moderation_enabled", "features.moderation.inflight-message-moderation.enabled");
+/**
+ * User Engagement
+ */
 _defineProperty(FeatureRestriction, "reactions_enabled", "features.ue.reactions.enabled");
 _defineProperty(FeatureRestriction, "emojis_enabled", "features.ue.emojis.enabled");
 _defineProperty(FeatureRestriction, "stickers_enabled", "features.ue.stickers.enabled");
@@ -401,12 +390,18 @@ _defineProperty(FeatureRestriction, "polls_enabled", "features.ue.polls.enabled"
 _defineProperty(FeatureRestriction, "live_reactions_enabled", "features.ue.live-reactions.enabled");
 _defineProperty(FeatureRestriction, "smart_replies_enabled", "features.ue.smart-replies.enabled");
 _defineProperty(FeatureRestriction, "mentions_enabled", "features.ue.mentions.enabled");
+/**
+ * User Experience
+ */
 _defineProperty(FeatureRestriction, "thumbnail_generation_enabled", "features.ux.thumbnail-generation.enabled");
 _defineProperty(FeatureRestriction, "link_preview_enabled", "features.ux.link-preview.enabled");
 _defineProperty(FeatureRestriction, "messages_saved_enabled", "features.ux.messages.saved.enabled");
 _defineProperty(FeatureRestriction, "messages_pinned_enabled", "features.ux.messages.pinned.enabled");
 _defineProperty(FeatureRestriction, "rich_media_preview_enabled", "features.ux.rich-media-preview.enabled");
 _defineProperty(FeatureRestriction, "voice_transcription_enabled", "features.ux.voice-transcription.enabled");
+/**
+ * Extensions slug
+ */
 _defineProperty(FeatureRestriction, "dataMasking", "data-masking");
 _defineProperty(FeatureRestriction, "profanityFilter", "profanity-filter");
 _defineProperty(FeatureRestriction, "thumbnailGeneration", "thumbnail-generator");

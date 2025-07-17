@@ -1,18 +1,22 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.filter.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatMessageComposer = void 0;
-require("core-js/modules/es.string.trim.js");
-require("core-js/modules/es.object.assign.js");
 require("core-js/modules/es.json.stringify.js");
+require("core-js/modules/es.object.assign.js");
+require("core-js/modules/es.string.trim.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _phosphorReact = require("phosphor-react");
+var _react2 = require("@chakra-ui/react");
 var _Extensions = require("../Extensions");
 var _ = require("..");
 var _CometChatContext = require("../../../util/CometChatContext");
@@ -21,7 +25,6 @@ var enums = _interopRequireWildcard(require("../../../util/enums.js"));
 var _SoundManager = require("../../../util/SoundManager");
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
 var _addCircleFilled = _interopRequireDefault(require("./resources/add-circle-filled.svg"));
 var _video = _interopRequireDefault(require("./resources/video.svg"));
 var _audioFile = _interopRequireDefault(require("./resources/audio-file.svg"));
@@ -35,15 +38,21 @@ var _close = _interopRequireDefault(require("./resources/close.svg"));
 var _collaborativeDocument = _interopRequireDefault(require("./resources/collaborative-document.svg"));
 var _collaborativeWhiteboard = _interopRequireDefault(require("./resources/collaborative-whiteboard.svg"));
 var _heart = _interopRequireDefault(require("./resources/heart.png"));
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var _templateObject;
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _taggedTemplateLiteral(e, t) { return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } })); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatMessageComposer extends _react.default.PureComponent {
   constructor(props) {
     super(props);
+    /**
+     * if live reactions feature is disabled
+     */
     _defineProperty(this, "enableLiveReaction", () => {
       this.context.FeatureRestriction.isLiveReactionsEnabled().then(response => {
         if (response !== this.state.enableLiveReaction) {
@@ -59,6 +68,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         }
       });
     });
+    /**
+     * if polls feature is disabled
+     */
     _defineProperty(this, "enablePolls", () => {
       this.context.FeatureRestriction.isPollsEnabled().then(response => {
         if (response !== this.state.enablePolls) {
@@ -74,6 +86,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         }
       });
     });
+    /**
+     * if typing indicator feature is disabled
+     */
     _defineProperty(this, "enableTypingIndicator", () => {
       this.context.FeatureRestriction.isTypingIndicatorsEnabled().then(response => {
         if (response !== this.state.enableTypingIndicator) {
@@ -89,6 +104,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         }
       });
     });
+    /**
+     * if stickers feature is disabled
+     */
     _defineProperty(this, "enableStickers", () => {
       this.context.FeatureRestriction.isStickersEnabled().then(response => {
         if (response !== this.state.enableStickers) {
@@ -104,6 +122,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         }
       });
     });
+    /**
+     * if uploding photos, videos feature is disabled
+     */
     _defineProperty(this, "enablePhotosVideos", () => {
       this.context.FeatureRestriction.isPhotosVideosEnabled().then(response => {
         if (response !== this.state.enablePhotosVideos) {
@@ -119,6 +140,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         }
       });
     });
+    /**
+     * if uploding files feature is disabled
+     */
     _defineProperty(this, "enableFiles", () => {
       this.context.FeatureRestriction.isFilesEnabled().then(response => {
         if (response !== this.state.enableFiles) {
@@ -134,6 +158,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         }
       });
     });
+    /**
+     * if sending emojis feature is disabled
+     */
     _defineProperty(this, "enableEmojis", () => {
       this.context.FeatureRestriction.isEmojisEnabled().then(response => {
         if (response !== this.state.enableEmojis) {
@@ -149,6 +176,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         }
       });
     });
+    /**
+     * if sharing collborative document feature is disabled
+     */
     _defineProperty(this, "enableCollaborativeDocument", () => {
       this.context.FeatureRestriction.isCollaborativeDocumentEnabled().then(response => {
         if (response !== this.state.enableCollaborativeDocument) {
@@ -164,6 +194,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         }
       });
     });
+    /**
+     * if sharing collborative whiteboard feature is disabled
+     */
     _defineProperty(this, "enableCollaborativeWhiteboard", () => {
       this.context.FeatureRestriction.isCollaborativeWhiteBoardEnabled().then(response => {
         if (response !== this.state.enableCollaborativeWhiteboard) {
@@ -205,7 +238,6 @@ class CometChatMessageComposer extends _react.default.PureComponent {
         event.currentTarget.textContent = messageInput;
         //return false;
       }
-
       this.setState({
         messageInput: elem.innerText,
         messageType: "text"
@@ -635,14 +667,14 @@ class CometChatMessageComposer extends _react.default.PureComponent {
       this.animationInProgress = false;
     });
     _defineProperty(this, "sendTransientMessage", () => {
-      var _this$context, _this$context2, _this$context3, _this$context3$item, _this$context4, _this$context4$item;
+      var _this$context, _this$context2, _this$context3, _this$context4;
       //fetching the metadata type from constants
       const metadata = {
         type: enums.CONSTANTS["METADATA_TYPE_LIVEREACTION"],
         reaction: this.props.reaction
       };
-      const receiverType = (this === null || this === void 0 ? void 0 : (_this$context = this.context) === null || _this$context === void 0 ? void 0 : _this$context.type) === _chat.CometChat.ACTION_TYPE.TYPE_USER ? _chat.CometChat.ACTION_TYPE.TYPE_USER : _chat.CometChat.ACTION_TYPE.TYPE_GROUP;
-      const receiverId = (this === null || this === void 0 ? void 0 : (_this$context2 = this.context) === null || _this$context2 === void 0 ? void 0 : _this$context2.type) === _chat.CometChat.ACTION_TYPE.TYPE_USER ? this === null || this === void 0 ? void 0 : (_this$context3 = this.context) === null || _this$context3 === void 0 ? void 0 : (_this$context3$item = _this$context3.item) === null || _this$context3$item === void 0 ? void 0 : _this$context3$item.uid : this === null || this === void 0 ? void 0 : (_this$context4 = this.context) === null || _this$context4 === void 0 ? void 0 : (_this$context4$item = _this$context4.item) === null || _this$context4$item === void 0 ? void 0 : _this$context4$item.guid;
+      const receiverType = (this === null || this === void 0 || (_this$context = this.context) === null || _this$context === void 0 ? void 0 : _this$context.type) === _chat.CometChat.ACTION_TYPE.TYPE_USER ? _chat.CometChat.ACTION_TYPE.TYPE_USER : _chat.CometChat.ACTION_TYPE.TYPE_GROUP;
+      const receiverId = (this === null || this === void 0 || (_this$context2 = this.context) === null || _this$context2 === void 0 ? void 0 : _this$context2.type) === _chat.CometChat.ACTION_TYPE.TYPE_USER ? this === null || this === void 0 || (_this$context3 = this.context) === null || _this$context3 === void 0 || (_this$context3 = _this$context3.item) === null || _this$context3 === void 0 ? void 0 : _this$context3.uid : this === null || this === void 0 || (_this$context4 = this.context) === null || _this$context4 === void 0 || (_this$context4 = _this$context4.item) === null || _this$context4 === void 0 ? void 0 : _this$context4.guid;
       let transientMessage = new _chat.CometChat.TransientMessage(receiverId, receiverType, metadata);
       _chat.CometChat.sendTransientMessage(transientMessage);
     });
@@ -826,11 +858,6 @@ class CometChatMessageComposer extends _react.default.PureComponent {
     this.enableCollaborativeDocument();
     this.enableCollaborativeWhiteboard();
   }
-
-  /**
-   * if live reactions feature is disabled
-   */
-
   pasteHtmlAtCaret(html, selectPastedContent) {
     var sel, range;
     const chatWindow = this.context.UIKitSettings.chatWindow;
@@ -885,12 +912,17 @@ class CometChatMessageComposer extends _react.default.PureComponent {
     const liveReactionText = _translator.default.translate("LIVE_REACTION", this.context.language);
     if (enums.CONSTANTS["LIVE_REACTIONS"].hasOwnProperty(this.props.reaction)) {
       const reactionName = this.props.reaction;
-      liveReactionBtn = (0, _react2.jsx)("div", {
+      liveReactionBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
         title: liveReactionText,
-        css: (0, _style.reactionBtnStyle)(),
         className: "button__reactions",
+        w: "40px",
+        h: "40px",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         onClick: this.startLiveReaction
-      }, (0, _react2.jsx)(_phosphorReact.Heart, {
+      }, /*#__PURE__*/_react.default.createElement(_phosphorReact.Heart, {
         color: "red",
         size: 24,
         weight: "duotone"
@@ -901,122 +933,207 @@ class CometChatMessageComposer extends _react.default.PureComponent {
       disabledState = true;
     }
     const docText = _translator.default.translate("ATTACH_FILE", this.context.language);
-    let docs = (0, _react2.jsx)("div", {
+    let docs = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: docText,
-      css: (0, _style.fileItemStyle)(_fileUpload.default, this.context),
       className: "filelist__item item__file",
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: this.context.theme.primaryColor,
       onClick: () => {
         this.openFileDialogue("file");
       }
-    }, (0, _react2.jsx)(_phosphorReact.FilePlus, {
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.FilePlus, {
       size: 24,
       weight: "duotone"
-    }), (0, _react2.jsx)("input", {
+    }), /*#__PURE__*/_react.default.createElement("input", {
       onChange: this.onFileChange,
       type: "file",
       id: "file",
-      ref: this.fileUploaderRef
+      ref: this.fileUploaderRef,
+      style: {
+        display: "none"
+      }
     }));
     const videoText = _translator.default.translate("ATTACH_VIDEO", this.context.language);
     const audioText = _translator.default.translate("ATTACH_AUDIO", this.context.language);
     const imageText = _translator.default.translate("ATTACH_IMAGE", this.context.language);
-    let avp = (0, _react2.jsx)(_react.default.Fragment, null, (0, _react2.jsx)("div", {
+    let avp = /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: videoText,
-      css: (0, _style.fileItemStyle)(_video.default, this.context),
       className: "filelist__item item__video",
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: this.context.theme.primaryColor,
       onClick: () => {
         this.openFileDialogue("video");
       }
-    }, (0, _react2.jsx)(_phosphorReact.FileVideo, {
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.FileVideo, {
       size: 24,
       weight: "duotone"
-    }), (0, _react2.jsx)("input", {
+    }), /*#__PURE__*/_react.default.createElement("input", {
       onChange: this.onVideoChange,
       accept: "video/*",
       type: "file",
-      ref: this.videoUploaderRef
-    })), (0, _react2.jsx)("div", {
+      ref: this.videoUploaderRef,
+      style: {
+        display: "none"
+      }
+    })), /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: audioText,
-      css: (0, _style.fileItemStyle)(_audioFile.default, this.context),
       className: "filelist__item item__audio",
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: this.context.theme.primaryColor,
       onClick: () => {
         this.openFileDialogue("audio");
       }
-    }, (0, _react2.jsx)(_phosphorReact.FileAudio, {
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.FileAudio, {
       size: 24,
       weight: "duotone"
-    }), (0, _react2.jsx)("input", {
+    }), /*#__PURE__*/_react.default.createElement("input", {
       onChange: this.onAudioChange,
       accept: "audio/*",
       type: "file",
-      ref: this.audioUploaderRef
-    })), (0, _react2.jsx)("div", {
+      ref: this.audioUploaderRef,
+      style: {
+        display: "none"
+      }
+    })), /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: imageText,
-      css: (0, _style.fileItemStyle)(_image.default, this.context),
       className: "filelist__item item__image",
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: this.context.theme.primaryColor,
       onClick: () => {
         this.openFileDialogue("image");
       }
-    }, (0, _react2.jsx)(_phosphorReact.FileImage, {
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.FileImage, {
       size: 24,
       weight: "duotone"
-    }), (0, _react2.jsx)("input", {
+    }), /*#__PURE__*/_react.default.createElement("input", {
       onChange: this.onImageChange,
       accept: "image/*",
       type: "file",
-      ref: this.imageUploaderRef
+      ref: this.imageUploaderRef,
+      style: {
+        display: "none"
+      }
     })));
     const pollText = _translator.default.translate("CREATE_POLL", this.context.language);
-    let createPollBtn = (0, _react2.jsx)("div", {
+    let createPollBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: pollText,
-      css: (0, _style.fileItemStyle)(_polls.default, this.context),
       className: "filelist__item item__poll",
-      onClick: this.toggleCreatePoll
-    }, (0, _react2.jsx)("i", null));
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: this.context.theme.primaryColor,
+      onClick: this.toggleCreatePoll,
+      sx: {
+        mask: "url(".concat(_polls.default, ") center center no-repeat"),
+        backgroundColor: this.context.theme.primaryColor
+      }
+    });
     const collaborativeDocText = _translator.default.translate("COLLABORATE_USING_DOCUMENT", this.context.language);
-    let collaborativeDocBtn = (0, _react2.jsx)("div", {
+    let collaborativeDocBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: collaborativeDocText,
-      css: (0, _style.fileItemStyle)(_collaborativeDocument.default, this.context),
       className: "filelist__item item__document",
-      onClick: this.toggleCollaborativeDocument
-    }, (0, _react2.jsx)("i", null));
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: this.context.theme.primaryColor,
+      onClick: this.toggleCollaborativeDocument,
+      sx: {
+        mask: "url(".concat(_collaborativeDocument.default, ") center center no-repeat"),
+        backgroundColor: this.context.theme.primaryColor
+      }
+    });
     const collaborativeBoardText = _translator.default.translate("COLLABORATE_USING_WHITEBOARD", this.context.language);
-    let collaborativeBoardBtn = (0, _react2.jsx)("div", {
+    let collaborativeBoardBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: collaborativeBoardText,
-      css: (0, _style.fileItemStyle)(_collaborativeWhiteboard.default, this.context),
       className: "filelist__item item__whiteboard",
-      onClick: this.toggleCollaborativeBoard
-    }, (0, _react2.jsx)("i", null));
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: this.context.theme.primaryColor,
+      onClick: this.toggleCollaborativeBoard,
+      sx: {
+        mask: "url(".concat(_collaborativeWhiteboard.default, ") center center no-repeat"),
+        backgroundColor: this.context.theme.primaryColor
+      }
+    });
     const emojiText = _translator.default.translate("EMOJI", this.context.language);
-    let emojiBtn = (0, _react2.jsx)("div", {
+    let emojiBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: emojiText,
-      css: (0, _style.emojiButtonStyle)(_emoji.default, this.context),
       className: "button__emoji",
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       onClick: () => {
         this.toggleEmojiPicker();
         this.setState({
           messageToReact: ""
         });
       }
-    }, (0, _react2.jsx)(_phosphorReact.SmileySticker, {
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.SmileySticker, {
       color: "#fcba03",
       size: 24,
       weight: "duotone"
     }));
     const StickerText = _translator.default.translate("STICKER", this.context.language);
-    let stickerBtn = (0, _react2.jsx)("div", {
+    let stickerBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: StickerText,
-      css: (0, _style.stickerBtnStyle)(_stickers.default, this.context),
       className: "button__sticker",
-      onClick: this.toggleStickerPicker
-    }, (0, _react2.jsx)("i", null));
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      onClick: this.toggleStickerPicker,
+      sx: {
+        mask: "url(".concat(_stickers.default, ") center center no-repeat"),
+        backgroundColor: this.context.theme.primaryColor
+      }
+    });
     const sendMessageText = _translator.default.translate("SEND_MESSAGE", this.context.language);
-    let sendBtn = (0, _react2.jsx)("div", {
+    let sendBtn = /*#__PURE__*/_react.default.createElement(_react2.Box, {
       title: sendMessageText,
-      css: (0, _style.sendButtonStyle)(_sendMessage.default, this.context),
       className: "button__send",
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       onClick: this.sendTextMessage
-    }, (0, _react2.jsx)(_phosphorReact.PaperPlaneRight, {
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.PaperPlaneRight, {
       color: "#3182CE",
       size: 24,
       weight: "duotone"
@@ -1065,31 +1182,44 @@ class CometChatMessageComposer extends _react.default.PureComponent {
       sendBtn = null;
     }
     const attachText = _translator.default.translate("ATTACH", this.context.language);
-    let attach = (0, _react2.jsx)("div", {
-      css: (0, _style.stickyAttachmentStyle)(),
-      className: "input__sticky__attachment"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.stickyAttachButtonStyle)(_addCircleFilled.default, this.context),
+    let attach = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "input__sticky__attachment",
+      position: "relative"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "attachment__icon",
+      w: "40px",
+      h: "40px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       onClick: this.toggleFilePicker,
       title: attachText
-    }, (0, _react2.jsx)(_phosphorReact.Plus, {
+    }, /*#__PURE__*/_react.default.createElement(_phosphorReact.Plus, {
       size: 24,
       weight: "duotone"
-    })), (0, _react2.jsx)("div", {
-      css: (0, _style.filePickerStyle)(this.state),
+    })), /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "attachment__filepicker",
+      display: this.state.showFilePicker ? "block" : "none",
+      position: "absolute",
+      bottom: "50px",
+      left: "0",
+      bg: this.context.theme.backgroundColor.white,
+      border: "1px solid ".concat(this.context.theme.borderColor.primary),
+      borderRadius: "8px",
+      p: "8px",
+      zIndex: "100",
       dir: _translator.default.getDirection(this.context.language)
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.fileListStyle)(),
-      className: "filepicker__filelist"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "filepicker__filelist",
+      gap: "8px"
     }, avp, docs, createPollBtn, collaborativeDocBtn, collaborativeBoardBtn)));
     if (avp === null && docs === null && createPollBtn === null && collaborativeDocBtn === null && collaborativeBoardBtn === null) {
       attach = null;
     }
     let createPoll = null;
     if (this.state.createPoll) {
-      createPoll = (0, _react2.jsx)(_Extensions.CometChatCreatePoll, {
+      createPoll = /*#__PURE__*/_react.default.createElement(_Extensions.CometChatCreatePoll, {
         close: this.closeCreatePoll,
         actionGenerated: this.actionHandler
       });
@@ -1115,16 +1245,34 @@ class CometChatMessageComposer extends _react.default.PureComponent {
       if (profaneData && profaneData.hasOwnProperty("profanity") && profaneData.hasOwnProperty("message_clean") && profaneData.profanity === "yes") {
         messageText = profaneData.message_clean;
       }
-      editPreview = (0, _react2.jsx)("div", {
-        css: (0, _style.editPreviewContainerStyle)(this.context, _react2.keyframes)
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.previewHeadingStyle)()
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.previewTextStyle)()
-      }, _translator.default.translate("EDIT_MESSAGE", this.context.language)), (0, _react2.jsx)("span", {
-        css: (0, _style.previewCloseStyle)(_close.default, this.context),
-        onClick: this.closeEditPreview
-      })), (0, _react2.jsx)("div", null, messageText));
+      const slideAnimation = (0, _react2.keyframes)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n        from { bottom: -60px }\n        to { bottom: 0px }\n      "])));
+      editPreview = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        p: "7px",
+        bg: this.context.theme.backgroundColor.white,
+        borderColor: this.context.theme.borderColor.primary,
+        borderWidth: "1px 1px 1px 5px",
+        borderStyle: "solid",
+        color: this.context.theme.color.helpText,
+        fontSize: "13px",
+        position: "relative",
+        sx: {
+          animation: "".concat(slideAnimation, " 0.5s ease-out")
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+        alignItems: "center",
+        justifyContent: "space-between"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        py: "5px"
+      }, _translator.default.translate("EDIT_MESSAGE", this.context.language)), /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        cursor: "pointer",
+        w: "20px",
+        h: "20px",
+        onClick: this.closeEditPreview,
+        sx: {
+          mask: "url(".concat(_close.default, ") center center no-repeat"),
+          backgroundColor: this.context.theme.primaryColor
+        }
+      })), /*#__PURE__*/_react.default.createElement(_react2.Box, null, messageText));
     }
     let smartReplyPreview = null;
     if (this.state.replyPreview) {
@@ -1132,7 +1280,7 @@ class CometChatMessageComposer extends _react.default.PureComponent {
       const smartReplyData = (0, _common.checkMessageForExtensionsData)(message, "smart-reply");
       if (smartReplyData && smartReplyData.hasOwnProperty("error") === false) {
         const options = [smartReplyData["reply_positive"], smartReplyData["reply_neutral"], smartReplyData["reply_negative"]];
-        smartReplyPreview = (0, _react2.jsx)(_Extensions.CometChatSmartReplyPreview, {
+        smartReplyPreview = /*#__PURE__*/_react.default.createElement(_Extensions.CometChatSmartReplyPreview, {
           options: options,
           clicked: this.sendReplyMessage,
           close: this.clearReplyPreview
@@ -1141,28 +1289,37 @@ class CometChatMessageComposer extends _react.default.PureComponent {
     }
     let stickerViewer = null;
     if (this.state.stickerViewer) {
-      stickerViewer = (0, _react2.jsx)(_Extensions.CometChatStickerKeyboard, {
+      stickerViewer = /*#__PURE__*/_react.default.createElement(_Extensions.CometChatStickerKeyboard, {
         actionGenerated: this.actionHandler
       });
     }
     let emojiViewer = null;
     if (this.state.emojiViewer) {
-      emojiViewer = (0, _react2.jsx)(_.CometChatEmojiKeyboard, {
+      emojiViewer = /*#__PURE__*/_react.default.createElement(_.CometChatEmojiKeyboard, {
         onClick: this.emojiClicked
       });
     }
-    return (0, _react2.jsx)("div", {
-      css: (0, _style.chatComposerStyle)(this.context),
-      className: "chat__composer"
-    }, editPreview, smartReplyPreview, stickerViewer, emojiViewer, (0, _react2.jsx)("div", {
-      css: (0, _style.composerInputStyle)(),
-      className: "composer__input"
-    }, (0, _react2.jsx)("div", {
+    return /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "chat__composer",
+      p: "16px",
+      bg: this.context.theme.backgroundColor.white,
+      zIndex: "1",
+      order: "3",
+      position: "relative",
+      flex: "none",
+      minH: "105px"
+    }, editPreview, smartReplyPreview, stickerViewer, emojiViewer, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "composer__input",
+      position: "relative"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+      className: "input__inner",
       tabIndex: "-1",
-      css: (0, _style.inputInnerStyle)(this.props, this.state, this.context),
-      className: "input__inner"
-    }, (0, _react2.jsx)("div", {
-      css: (0, _style.messageInputStyle)(disabledState),
+      border: "1px solid ".concat(this.context.theme.borderColor.primary),
+      borderRadius: "8px",
+      bg: this.context.theme.backgroundColor.white,
+      position: "relative",
+      overflow: "hidden"
+    }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "input__message-input",
       contentEditable: "true",
       placeholder: _translator.default.translate("ENTER_YOUR_MESSAGE_HERE", this.context.language),
@@ -1170,13 +1327,36 @@ class CometChatMessageComposer extends _react.default.PureComponent {
       onInput: this.changeHandler,
       onBlur: event => this.endTyping(event),
       onKeyDown: this.sendMessageOnEnter,
-      ref: this.messageInputRef
-    }), (0, _react2.jsx)("div", {
-      css: (0, _style.inputStickyStyle)(disabledState, attach, this.context),
-      className: "input__sticky"
-    }, attach, (0, _react2.jsx)("div", {
-      css: (0, _style.stickyButtonStyle)(this.state),
-      className: "input__sticky__buttons"
+      ref: this.messageInputRef,
+      minH: "40px",
+      maxH: "120px",
+      overflow: "auto",
+      p: "8px 60px 8px 16px",
+      outline: "none",
+      color: this.context.theme.color.primary,
+      opacity: disabledState ? 0.5 : 1,
+      pointerEvents: disabledState ? "none" : "auto",
+      sx: {
+        "&::before": {
+          content: "\"".concat(_translator.default.translate("ENTER_YOUR_MESSAGE_HERE", this.context.language), "\""),
+          position: "absolute",
+          color: this.context.theme.color.helpText,
+          pointerEvents: "none",
+          display: this.state.messageInput ? "none" : "block"
+        }
+      }
+    }), /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "input__sticky",
+      position: "absolute",
+      right: "8px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      alignItems: "center",
+      gap: "4px"
+    }, attach, /*#__PURE__*/_react.default.createElement(_react2.Flex, {
+      className: "input__sticky__buttons",
+      alignItems: "center",
+      gap: "4px"
     }, stickerBtn, emojiBtn, sendBtn, liveReactionBtn)))), createPoll);
   }
 }

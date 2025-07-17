@@ -7,14 +7,16 @@ exports.linkify = exports.getUnixTimestamp = exports.getTimeStampForLastMessage 
 require("core-js/modules/es.regexp.constructor.js");
 require("core-js/modules/es.regexp.exec.js");
 require("core-js/modules/es.regexp.to-string.js");
-require("core-js/modules/es.string.replace.js");
 require("core-js/modules/es.string.match.js");
-require("core-js/modules/es.string.trim.js");
-require("core-js/modules/es.string.starts-with.js");
+require("core-js/modules/es.string.replace.js");
 require("core-js/modules/es.string.split.js");
+require("core-js/modules/es.string.starts-with.js");
+require("core-js/modules/es.string.trim.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.for-each.js");
 var _dateformat = _interopRequireDefault(require("dateformat"));
 var _translator = _interopRequireDefault(require("../resources/localization/translator"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 /* eslint-disable no-useless-concat */
 /* eslint-disable no-extend-native */
 

@@ -1,15 +1,19 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
+require("core-js/modules/esnext.iterator.filter.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.CometChatMessages = void 0;
-require("core-js/modules/web.dom-collections.iterator.js");
-require("core-js/modules/es.object.assign.js");
 require("core-js/modules/es.array.sort.js");
+require("core-js/modules/es.object.assign.js");
 require("core-js/modules/es.string.trim.js");
+require("core-js/modules/esnext.iterator.constructor.js");
+require("core-js/modules/esnext.iterator.for-each.js");
+require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireDefault(require("react"));
-var _react2 = require("@emotion/react");
+var _react2 = require("@chakra-ui/react");
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _chat = require("@cometchat-pro/chat");
 var _ = require("..");
@@ -24,13 +28,13 @@ var _SoundManager = require("../../../util/SoundManager");
 var _CometChatEvent = require("../../../util/CometChatEvent");
 var _theme = require("../../../resources/theme");
 var _translator = _interopRequireDefault(require("../../../resources/localization/translator"));
-var _style = require("./style");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 class CometChatMessages extends _react.default.PureComponent {
   constructor(props) {
     super(props);
@@ -142,7 +146,7 @@ class CometChatMessages extends _react.default.PureComponent {
             var _this$props;
             if ((_this$props = this.props) !== null && _this$props !== void 0 && _this$props.actionGenerated) {
               var _this$props2;
-              (_this$props2 = this.props) === null || _this$props2 === void 0 ? void 0 : _this$props2.actionGenerated(action, messages);
+              (_this$props2 = this.props) === null || _this$props2 === void 0 || _this$props2.actionGenerated(action, messages);
             }
             break;
           }
@@ -311,13 +315,13 @@ class CometChatMessages extends _react.default.PureComponent {
     _defineProperty(this, "errorHandler", errorCode => {
       if (typeof this.toastRef.setError === "function") {
         var _this$toastRef;
-        (_this$toastRef = this.toastRef) === null || _this$toastRef === void 0 ? void 0 : _this$toastRef.setError(errorCode);
+        (_this$toastRef = this.toastRef) === null || _this$toastRef === void 0 || _this$toastRef.setError(errorCode);
       }
     });
     _defineProperty(this, "infoMessageHandler", infoCode => {
       if (typeof this.toastRef.setInfo === "function") {
         var _this$toastRef2;
-        (_this$toastRef2 = this.toastRef) === null || _this$toastRef2 === void 0 ? void 0 : _this$toastRef2.setInfo(infoCode);
+        (_this$toastRef2 = this.toastRef) === null || _this$toastRef2 === void 0 || _this$toastRef2.setInfo(infoCode);
       }
     });
     _defineProperty(this, "appendMemberAddedMessage", messages => {
@@ -483,6 +487,9 @@ class CometChatMessages extends _react.default.PureComponent {
         viewdetailscreen: false
       });
     });
+    /*
+    Updating parent message of threaded conversation, when the message is edited or deleted
+    */
     _defineProperty(this, "updateParentThreadedMessage", (message, action) => {
       if (this.state.threadmessageview === false || message.id !== this.state.threadmessageparent.id) {
         return false;
@@ -591,7 +598,6 @@ class CometChatMessages extends _react.default.PureComponent {
           _CometChatEvent.CometChatEvent.triggerHandler("updateLastMessage", _objectSpread({}, deletedMessage));
           //this.getContext().setLastMessage(deletedMessage);
         }
-
         this.removeMessages([deletedMessage]);
         this.updateParentThreadedMessage(deletedMessage, "delete");
       }).catch(error => this.errorHandler("SOMETHING_WRONG"));
@@ -699,6 +705,7 @@ class CometChatMessages extends _react.default.PureComponent {
         this.markMessagesAsRead(true);
       }
     });
+    //messages are deleted
     _defineProperty(this, "removeMessages", messages => {
       const deletedMessage = messages[0];
       const messagelist = [...this.state.messageList];
@@ -717,6 +724,7 @@ class CometChatMessages extends _react.default.PureComponent {
         });
       }
     });
+    //messages are fetched, scroll to bottom
     _defineProperty(this, "prependMessagesAndScrollToBottom", messages => {
       const messageList = [...messages, ...this.state.messageList];
       this.setState({
@@ -724,6 +732,7 @@ class CometChatMessages extends _react.default.PureComponent {
         scrollToBottom: true
       });
     });
+    //messages are fetched from backend
     _defineProperty(this, "prependMessages", messages => {
       const messageList = [...messages, ...this.state.messageList];
       this.setState({
@@ -731,6 +740,7 @@ class CometChatMessages extends _react.default.PureComponent {
         scrollToBottom: false
       });
     });
+    //message is received or composed & sent
     _defineProperty(this, "appendMessage", message => {
       let messages = [...this.state.messageList, ...message];
       this.setState({
@@ -738,6 +748,7 @@ class CometChatMessages extends _react.default.PureComponent {
         scrollToBottom: true
       });
     });
+    //message status is updated
     _defineProperty(this, "updateMessages", messages => {
       this.setState({
         messageList: messages,
@@ -919,17 +930,17 @@ class CometChatMessages extends _react.default.PureComponent {
      * If used as standalone component
      */
     if (this.props._parent.trim().length === 0 && this.props.chatWithUser.trim().length === 0 && this.props.chatWithGroup.trim().length === 0) {
-      return (0, _react2.jsx)(_CometChatContext.CometChatContextProvider, {
+      return /*#__PURE__*/_react.default.createElement(_CometChatContext.CometChatContextProvider, {
         ref: el => this.contextProviderRef = el,
         _component: enums.CONSTANTS["MESSAGES_COMPONENT"],
         user: this.props.chatWithUser,
         group: this.props.chatWithGroup
-      }, (0, _react2.jsx)("div", null));
+      }, /*#__PURE__*/_react.default.createElement("div", null));
     } else if (this.props._parent.trim().length && Object.keys(this.getContext().item).length === 0) {
       return null;
     }
     let blockedUser = null;
-    let messageList = (0, _react2.jsx)(_.CometChatMessageList, {
+    let messageList = /*#__PURE__*/_react.default.createElement(_.CometChatMessageList, {
       ref: el => {
         this.messageListRef = el;
       },
@@ -938,7 +949,7 @@ class CometChatMessages extends _react.default.PureComponent {
       scrollToBottom: this.state.scrollToBottom,
       actionGenerated: this.actionHandler
     });
-    let messageComposer = (0, _react2.jsx)(_.CometChatMessageComposer, {
+    let messageComposer = /*#__PURE__*/_react.default.createElement(_.CometChatMessageComposer, {
       ref: el => {
         this.composerRef = el;
       },
@@ -952,24 +963,59 @@ class CometChatMessages extends _react.default.PureComponent {
     if (this.state.unreadMessages.length) {
       const unreadMessageCount = this.state.unreadMessages.length;
       const messageText = unreadMessageCount > 1 ? "".concat(unreadMessageCount, " ").concat(_translator.default.translate("NEW_MESSAGES", this.props.lang)) : "".concat(unreadMessageCount, " ").concat(_translator.default.translate("NEW_MESSAGE", this.props.lang));
-      newMessageIndicator = (0, _react2.jsx)("div", {
-        css: (0, _style.messagePaneTopStyle)(),
-        className: "message_pane__top"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.messagePaneBannerStyle)(this.props),
-        className: "message_pane__banner"
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.messagePaneUnreadBannerStyle)(),
+      newMessageIndicator = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "message_pane__top",
+        top: "75px",
+        position: "absolute",
+        width: "auto",
+        right: "auto",
+        left: "50%",
+        fontWeight: "700",
+        zIndex: 200,
+        transform: "translateX(-50%)"
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "message_pane__banner",
+        marginBottom: 0,
+        display: "block",
+        fontSize: "13px",
+        flex: "1",
+        background: this.props.theme.color.blue,
+        borderRadius: "6px",
+        zIndex: 200
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
         className: "message_pane__unread_banner__banner",
+        height: "28px",
+        borderRadius: "14px",
+        display: "flex",
+        flex: "1",
+        alignItems: "center",
         title: _translator.default.translate("JUMP", this.props.lang)
-      }, (0, _react2.jsx)("button", {
+      }, /*#__PURE__*/_react.default.createElement(_react2.Button, {
         type: "button",
-        css: (0, _style.messagePaneUnreadBannerMessageStyle)(this.props),
         className: "message_pane__unread_banner__msg",
-        onClick: this.jumpToMessages
-      }, (0, _react2.jsx)("span", {
-        css: (0, _style.iconArrowDownStyle)(),
-        className: "icon--arrow-down"
+        p: "0 16px",
+        flex: "1",
+        textAlign: "center",
+        textShadow: "0 1px rgba(0, 0, 0, .15)",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        color: this.props.theme.color.white,
+        onClick: this.jumpToMessages,
+        bg: "transparent",
+        border: "none",
+        cursor: "pointer",
+        _hover: {
+          bg: "transparent"
+        }
+      }, /*#__PURE__*/_react.default.createElement(_react2.Text, {
+        className: "icon--arrow-down",
+        position: "relative",
+        display: "inline-flex",
+        height: "20px",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingRight: "8px"
       }, "\u2193", " "), messageText))));
     }
 
@@ -980,15 +1026,23 @@ class CometChatMessages extends _react.default.PureComponent {
     if (((_this$getContext3 = this.getContext()) === null || _this$getContext3 === void 0 ? void 0 : _this$getContext3.type) === _chat.CometChat.RECEIVER_TYPE.USER && Object.keys(this.getContext().item).length && this.getContext().item.blockedByMe) {
       messageComposer = null;
       messageList = null;
-      blockedUser = (0, _react2.jsx)(_.CometChatBlockedUser, {
+      blockedUser = /*#__PURE__*/_react.default.createElement(_.CometChatBlockedUser, {
         user: this.item
       });
     }
     let liveReactionView = null;
     if (this.state.liveReaction) {
-      liveReactionView = (0, _react2.jsx)("div", {
-        css: (0, _style.reactionsWrapperStyle)()
-      }, (0, _react2.jsx)(_.CometChatLiveReactions, {
+      liveReactionView = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        top: 0,
+        right: 0,
+        zIndex: 2,
+        display: "flex",
+        justifyContent: "left",
+        alignItems: "center"
+      }, /*#__PURE__*/_react.default.createElement(_.CometChatLiveReactions, {
         reaction: this.reactionName,
         theme: this.props.theme,
         lang: this.props.lang
@@ -1001,10 +1055,10 @@ class CometChatMessages extends _react.default.PureComponent {
     let incomingCallView = null;
     let incomingDirectCallView = null;
     if (this.props._parent.trim().length === 0) {
-      incomingCallView = (0, _react2.jsx)(_Calls.CometChatIncomingCall, {
+      incomingCallView = /*#__PURE__*/_react.default.createElement(_Calls.CometChatIncomingCall, {
         actionGenerated: this.actionHandler
       });
-      incomingDirectCallView = (0, _react2.jsx)(_Calls.CometChatIncomingDirectCall, {
+      incomingDirectCallView = /*#__PURE__*/_react.default.createElement(_Calls.CometChatIncomingDirectCall, {
         actionGenerated: this.actionHandler
       });
     }
@@ -1013,12 +1067,12 @@ class CometChatMessages extends _react.default.PureComponent {
     let outgoingDirectCallView = null;
     let outgoingCallView = null;
     if (Object.keys(this.props.widgetsettings).length === 0) {
-      outgoingCallView = (0, _react2.jsx)(_Calls.CometChatOutgoingCall, {
+      outgoingCallView = /*#__PURE__*/_react.default.createElement(_Calls.CometChatOutgoingCall, {
         ref: el => this.outgoingCallRef = el,
         lang: this.props.lang,
         actionGenerated: this.actionHandler
       });
-      outgoingDirectCallView = (0, _react2.jsx)(_Calls.CometChatOutgoingDirectCall, {
+      outgoingDirectCallView = /*#__PURE__*/_react.default.createElement(_Calls.CometChatOutgoingDirectCall, {
         ref: el => this.outgoingDirectCallRef = el,
         lang: this.props.lang,
         actionGenerated: this.actionHandler
@@ -1027,18 +1081,58 @@ class CometChatMessages extends _react.default.PureComponent {
     let detailScreen = null;
     if (this.state.viewdetailscreen) {
       if (this.getContext().type === _chat.CometChat.ACTION_TYPE.TYPE_USER) {
-        detailScreen = (0, _react2.jsx)("div", {
-          css: (0, _style.chatSecondaryStyle)(this.props),
-          className: "chat__secondary-view"
-        }, (0, _react2.jsx)(_Users.CometChatUserDetails, {
+        detailScreen = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+          className: "chat__secondary-view",
+          float: "right",
+          borderLeft: "1px solid ".concat(this.props.theme.borderColor.primary),
+          height: "100%",
+          width: "400px",
+          display: "flex",
+          flexDirection: "column",
+          order: 3,
+          sx: _objectSpread(_objectSpread({}, this.props._parent.trim().length === 0 ? {
+            borderRight: "1px solid ".concat(this.props.theme.borderColor.primary),
+            borderBottom: "1px solid ".concat(this.props.theme.borderColor.primary)
+          } : {}), {}, {
+            [this.props.theme.breakPoints[1]]: {
+              position: "absolute !important",
+              right: "0 !important",
+              top: "0",
+              bottom: "0",
+              width: "100% !important",
+              zIndex: "2",
+              backgroundColor: this.props.theme.backgroundColor.white
+            }
+          })
+        }, /*#__PURE__*/_react.default.createElement(_Users.CometChatUserDetails, {
           lang: this.props.lang,
           actionGenerated: this.actionHandler
         }));
       } else if (this.getContext().type === _chat.CometChat.ACTION_TYPE.TYPE_GROUP) {
-        detailScreen = (0, _react2.jsx)("div", {
-          css: (0, _style.chatSecondaryStyle)(this.props),
-          className: "chat__secondary-view"
-        }, (0, _react2.jsx)(_Groups.CometChatGroupDetails, {
+        detailScreen = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+          className: "chat__secondary-view",
+          float: "right",
+          borderLeft: "1px solid ".concat(this.props.theme.borderColor.primary),
+          height: "100%",
+          width: "400px",
+          display: "flex",
+          flexDirection: "column",
+          order: 3,
+          sx: _objectSpread(_objectSpread({}, this.props._parent.trim().length === 0 ? {
+            borderRight: "1px solid ".concat(this.props.theme.borderColor.primary),
+            borderBottom: "1px solid ".concat(this.props.theme.borderColor.primary)
+          } : {}), {}, {
+            [this.props.theme.breakPoints[1]]: {
+              position: "absolute !important",
+              right: "0 !important",
+              top: "0",
+              bottom: "0",
+              width: "100% !important",
+              zIndex: "2",
+              backgroundColor: this.props.theme.backgroundColor.white
+            }
+          })
+        }, /*#__PURE__*/_react.default.createElement(_Groups.CometChatGroupDetails, {
           lang: this.props.lang,
           actionGenerated: this.actionHandler
         }));
@@ -1046,10 +1140,30 @@ class CometChatMessages extends _react.default.PureComponent {
     }
     let threadMessageView = null;
     if (this.state.threadmessageview) {
-      threadMessageView = (0, _react2.jsx)("div", {
-        css: (0, _style.chatSecondaryStyle)(this.props),
-        className: "chat__secondary-view"
-      }, (0, _react2.jsx)(_.CometChatMessageThread, {
+      threadMessageView = /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        className: "chat__secondary-view",
+        float: "right",
+        borderLeft: "1px solid ".concat(this.props.theme.borderColor.primary),
+        height: "100%",
+        width: "400px",
+        display: "flex",
+        flexDirection: "column",
+        order: 3,
+        sx: _objectSpread(_objectSpread({}, this.props._parent.trim().length === 0 ? {
+          borderRight: "1px solid ".concat(this.props.theme.borderColor.primary),
+          borderBottom: "1px solid ".concat(this.props.theme.borderColor.primary)
+        } : {}), {}, {
+          [this.props.theme.breakPoints[1]]: {
+            position: "absolute !important",
+            right: "0 !important",
+            top: "0",
+            bottom: "0",
+            width: "100% !important",
+            zIndex: "2",
+            backgroundColor: this.props.theme.backgroundColor.white
+          }
+        })
+      }, /*#__PURE__*/_react.default.createElement(_.CometChatMessageThread, {
         activeTab: this.state.activeTab,
         threadItem: this.state.threadmessageitem,
         threadType: this.state.threadmessagetype,
@@ -1060,21 +1174,60 @@ class CometChatMessages extends _react.default.PureComponent {
     }
     let originalImageView = null;
     if (this.state.viewOriginalImage) {
-      originalImageView = (0, _react2.jsx)(_.CometChatImageViewer, {
+      originalImageView = /*#__PURE__*/_react.default.createElement(_.CometChatImageViewer, {
         close: () => this.toggleOriginalImageView(false),
         message: this.state.viewOriginalImage
       });
     }
-    let messageComponent = (0, _react2.jsx)(_react.default.Fragment, null, (0, _react2.jsx)("div", {
-      css: (0, _style.chatWrapperStyle)(this.props, this.state),
+    let messageComponent = /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "main__chat",
-      dir: _translator.default.getDirection(this.props.lang)
-    }, (0, _react2.jsx)(_.CometChatMessageHeader, {
+      dir: _translator.default.getDirection(this.props.lang),
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      boxSizing: "border-box",
+      position: "relative",
+      fontFamily: this.props.theme.fontFamily,
+      sx: _objectSpread(_objectSpread({}, this.props._parent.trim().length === 0 ? this.state.viewdetailscreen || this.state.threadmessageview ? {
+        borderLeft: "1px solid ".concat(this.props.theme.borderColor.primary),
+        borderBottom: "1px solid ".concat(this.props.theme.borderColor.primary)
+      } : {
+        borderLeft: "1px solid ".concat(this.props.theme.borderColor.primary),
+        borderRight: "1px solid ".concat(this.props.theme.borderColor.primary),
+        borderBottom: "1px solid ".concat(this.props.theme.borderColor.primary)
+      } : {}), {}, {
+        width: this.state.threadmessageview || this.state.viewdetailscreen ? "calc(100% - 400px)" : "100%",
+        [this.props.theme.breakPoints[1]]: {
+          width: this.state.threadmessageview || this.state.viewdetailscreen ? "100%" : "100%"
+        },
+        [this.props.theme.breakPoints[3]]: {
+          width: this.state.threadmessageview || this.state.viewdetailscreen ? "0" : "100%",
+          display: this.state.threadmessageview || this.state.viewdetailscreen ? "none" : "flex"
+        },
+        "*": {
+          boxSizing: "border-box",
+          fontFamily: this.props.theme.fontFamily,
+          "::-webkit-scrollbar": {
+            width: "8px",
+            height: "4px"
+          },
+          "::-webkit-scrollbar-track": {
+            background: "#ffffff00"
+          },
+          "::-webkit-scrollbar-thumb": {
+            background: "#ccc",
+            "&:hover": {
+              background: "#aaa"
+            }
+          }
+        }
+      })
+    }, /*#__PURE__*/_react.default.createElement(_.CometChatMessageHeader, {
       lang: this.props.lang,
       sidebar: this.props.sidebar,
       viewdetail: this.props.viewdetail === false ? false : true,
       actionGenerated: this.actionHandler
-    }), messageList, liveReactionView, messageComposer, blockedUser, newMessageIndicator), (0, _react2.jsx)(_Shared.CometChatToastNotification, {
+    }), messageList, liveReactionView, messageComposer, blockedUser, newMessageIndicator), /*#__PURE__*/_react.default.createElement(_Shared.CometChatToastNotification, {
       ref: el => this.toastRef = el,
       lang: this.props.lang
     }), originalImageView, detailScreen, threadMessageView, incomingCallView, outgoingCallView, incomingDirectCallView, outgoingDirectCallView);
@@ -1083,13 +1236,15 @@ class CometChatMessages extends _react.default.PureComponent {
     If used as a standalone component
     **/
     if (this.props._parent.trim().length === 0) {
-      messageWrapper = (0, _react2.jsx)(_CometChatContext.CometChatContextProvider, {
+      messageWrapper = /*#__PURE__*/_react.default.createElement(_CometChatContext.CometChatContextProvider, {
         ref: el => this.contextProviderRef = el,
         user: this.props.chatWithUser,
         group: this.props.chatWithGroup,
         language: this.props.lang
-      }, (0, _react2.jsx)("div", {
-        css: (0, _style.chatContainerStyle)()
+      }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
+        display: "flex",
+        width: "100%",
+        height: "100%"
       }, messageComponent));
     }
     return messageWrapper;
