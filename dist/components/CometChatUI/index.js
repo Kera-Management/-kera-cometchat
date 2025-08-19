@@ -123,12 +123,15 @@ class CometChatUI extends _react.default.Component {
     }, /*#__PURE__*/_react.default.createElement(_react2.Box, {
       className: "cometchat cometchat--unified",
       dir: _translator.default.getDirection(this.props.lang),
+      rounded: "lg",
+      overflow: "hidden",
       display: "flex",
       height: "100%",
       width: "100%",
       boxSizing: "border-box",
       fontFamily: this.props.theme.fontFamily,
-      border: "1px solid #E2E8F0",
+      border: "1px solid ",
+      borderColor: "border",
       position: "relative",
       sx: {
         "*": {
