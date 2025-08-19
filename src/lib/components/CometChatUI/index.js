@@ -132,12 +132,15 @@ class CometChatUI extends React.Component {
         <Box
           className="cometchat cometchat--unified"
           dir={Translator.getDirection(this.props.lang)}
+          rounded="lg"
+          overflow="hidden"
           display="flex"
           height="100%"
           width="100%"
           boxSizing="border-box"
           fontFamily={this.props.theme.fontFamily}
-          border="1px solid #E2E8F0"
+          border="1px solid "
+          borderColor="border"
           position="relative"
           sx={{
             "*": {
@@ -199,9 +202,10 @@ class CometChatUI extends React.Component {
             display="flex"
             flexDirection="row"
             sx={{
-              [`@media ${this.props.theme.breakPoints[1]}, ${this.props.theme.breakPoints[2]}`]: {
-                width: "100%",
-              },
+              [`@media ${this.props.theme.breakPoints[1]}, ${this.props.theme.breakPoints[2]}`]:
+                {
+                  width: "100%",
+                },
             }}
           >
             {messageScreen}
