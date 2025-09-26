@@ -957,7 +957,8 @@ class CometChatMessages extends _react.default.PureComponent {
       replyPreview: this.state.replyPreview,
       reaction: this.reactionName,
       messageToReact: this.state.messageToReact,
-      actionGenerated: this.actionHandler
+      actionGenerated: this.actionHandler,
+      onMessageSend: this.props.onMessageSend
     });
     let newMessageIndicator = null;
     if (this.state.unreadMessages.length) {
@@ -1260,7 +1261,8 @@ CometChatMessages.defaultProps = {
   _parent: "",
   widgetsettings: {},
   chatWithUser: "",
-  chatWithGroup: ""
+  chatWithGroup: "",
+  onMessageSend: undefined
 };
 CometChatMessages.propTypes = {
   lang: _propTypes.default.string,
@@ -1268,5 +1270,6 @@ CometChatMessages.propTypes = {
   _parent: _propTypes.default.string,
   widgetsettings: _propTypes.default.object,
   chatWithUser: _propTypes.default.string,
-  chatWithGroup: _propTypes.default.string
+  chatWithGroup: _propTypes.default.string,
+  onMessageSend: _propTypes.default.func
 };

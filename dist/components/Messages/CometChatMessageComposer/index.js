@@ -418,6 +418,9 @@ class CometChatMessageComposer extends _react.default.PureComponent {
           _id: textMessage._id
         });
         this.props.actionGenerated(enums.ACTIONS["MESSAGE_SENT"], [newMessageObj]);
+        if (typeof this.props.onMessageSend === "function") {
+          this.props.onMessageSend(message);
+        }
       }).catch(error => {
         const newMessageObj = _objectSpread(_objectSpread({}, textMessage), {}, {
           error: error
@@ -1366,9 +1369,11 @@ exports.CometChatMessageComposer = CometChatMessageComposer;
 _defineProperty(CometChatMessageComposer, "contextType", _CometChatContext.CometChatContext);
 CometChatMessageComposer.defaultProps = {
   theme: _theme.theme,
-  reaction: "heart"
+  reaction: "heart",
+  onMessageSend: undefined
 };
 CometChatMessageComposer.propTypes = {
   theme: _propTypes.default.object,
-  reaction: _propTypes.default.string
+  reaction: _propTypes.default.string,
+  onMessageSend: _propTypes.default.func
 };

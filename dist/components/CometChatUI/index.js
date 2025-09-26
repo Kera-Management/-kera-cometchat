@@ -113,7 +113,8 @@ class CometChatUI extends _react.default.Component {
       theme: this.props.theme,
       lang: this.props.lang,
       _parent: "unified",
-      actionGenerated: this.actionHandler
+      actionGenerated: this.actionHandler,
+      onMessageSend: this.props.onMessageSend
     });
     return /*#__PURE__*/_react.default.createElement(_CometChatContext.CometChatContextProvider, {
       ref: el => this.contextProviderRef = el,
@@ -211,11 +212,13 @@ CometChatUI.defaultProps = {
   lang: _translator.default.getDefaultLanguage(),
   theme: _theme.theme,
   chatWithUser: "",
-  chatWithGroup: ""
+  chatWithGroup: "",
+  onMessageSend: undefined
 };
 CometChatUI.propTypes = {
   lang: _propTypes.default.string,
   theme: _propTypes.default.object,
   chatWithUser: _propTypes.default.string,
-  chatWithGroup: _propTypes.default.string
+  chatWithGroup: _propTypes.default.string,
+  onMessageSend: _propTypes.default.func
 };

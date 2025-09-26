@@ -1,6 +1,6 @@
 {
   "name": "@kera-management/cometchat",
-  "version": "3.1.7",
+  "version": "3.1.8",
   "description": "Comet chat ui personalized for kera",
   "publishConfig": {
     "@Kera-Management:registry": "https://npm.pkg.github.com"
