@@ -1101,6 +1101,7 @@ class CometChatMessages extends React.PureComponent {
         reaction={this.reactionName}
         messageToReact={this.state.messageToReact}
         actionGenerated={this.actionHandler}
+        onMessageSend={this.props.onMessageSend}
       />
     );
 
@@ -1500,6 +1501,7 @@ CometChatMessages.defaultProps = {
   widgetsettings: {},
   chatWithUser: "",
   chatWithGroup: "",
+  onMessageSend: undefined,
 };
 
 CometChatMessages.propTypes = {
@@ -1509,6 +1511,7 @@ CometChatMessages.propTypes = {
   widgetsettings: PropTypes.object,
   chatWithUser: PropTypes.string,
   chatWithGroup: PropTypes.string,
+  onMessageSend: PropTypes.func,
 };
 
 export { CometChatMessages };

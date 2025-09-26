@@ -119,6 +119,7 @@ class CometChatUI extends React.Component {
         lang={this.props.lang}
         _parent="unified"
         actionGenerated={this.actionHandler}
+        onMessageSend={this.props.onMessageSend}
       />
     );
 
@@ -232,6 +233,7 @@ CometChatUI.defaultProps = {
   theme: theme,
   chatWithUser: "",
   chatWithGroup: "",
+  onMessageSend: undefined,
 };
 
 CometChatUI.propTypes = {
@@ -239,6 +241,7 @@ CometChatUI.propTypes = {
   theme: PropTypes.object,
   chatWithUser: PropTypes.string,
   chatWithGroup: PropTypes.string,
+  onMessageSend: PropTypes.func,
 };
 
 export { CometChatUI };

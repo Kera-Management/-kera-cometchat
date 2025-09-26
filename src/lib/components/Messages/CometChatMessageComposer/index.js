@@ -668,6 +668,9 @@ class CometChatMessageComposer extends React.PureComponent {
         this.props.actionGenerated(enums.ACTIONS["MESSAGE_SENT"], [
           newMessageObj,
         ]);
+        if (typeof this.props.onMessageSend === "function") {
+          this.props.onMessageSend(message);
+        }
       })
       .catch((error) => {
         const newMessageObj = { ...textMessage, error: error };
@@ -1736,11 +1739,13 @@ class CometChatMessageComposer extends React.PureComponent {
 CometChatMessageComposer.defaultProps = {
   theme: theme,
   reaction: "heart",
+  onMessageSend: undefined,
 };
 
 CometChatMessageComposer.propTypes = {
   theme: PropTypes.object,
   reaction: PropTypes.string,
+  onMessageSend: PropTypes.func,
 };
 
 export { CometChatMessageComposer };
